@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+			 x:Class="TodoREST.TodoItemPage" 
+			 Title="Todo">
+
+    
+  <ScrollView>    
+	<StackLayout 
+        Margin="20"
+        VerticalOptions="StartAndExpand">
+
+		<Label Text="Todo Item" />
+        <Entry x:Name="notesEntry" Text="{Binding Path=TodoTask}" Placeholder="Task" 
+               TextChanged="Handle_NotesChanged"/> 
+
+        <Label Text="Responsible" />
+        <Entry x:Name="nameEntry" Text="{Binding Path=Author}" Placeholder="optional" 
+               Keyboard="Email"/>
+
+        <Label Text="Completed By" />
+        <Entry x:Name="completedByEntry" Text="{Binding Path=CompletedBy}" Placeholder="optional" 
+               Keyboard="Email"
+               TextChanged="Handle_CompletedByChanged"/>
+
+        <StackLayout Grid.Row="2" Orientation="Horizontal">
+            <Label Text="Done" />
+            <Switch x:Name="doneSwitch" IsToggled="{Binding Path=Done}" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="2" Orientation="Horizontal">
+            <Label Text="Created" />
+            <Label x:Name="notesDttmCreated" Text="{Binding Path=DttmCreated}" />
+        </StackLayout>
+
+        <StackLayout Grid.Row="2" Orientation="Horizontal">
+            <Label Text="Updated" />
+            <Label x:Name="notesDttmLastUpdated" Text="{Binding Path=DttmLastUpdated}" />
+        </StackLayout>
+
+        <!--- 
+        <Label Text="Created" />
+        <Label x:Name="notesDttmCreated" Text="{Binding Path=DttmCreated}" />
+        -->
+
+		<Button x:Name="SaveButton"   Text="Save"   Clicked="OnSaveActivated" IsEnabled="false"/>
+		<Button x:Name="DeleteButton" Text="Delete" Clicked="OnDeleteActivated" IsEnabled="false" />
+		<Button x:Name="CancelButton" Text="Cancel" Clicked="OnCancelActivated" />
+        
+	</StackLayout>
+  </ScrollView>
+
+</ContentPage>
