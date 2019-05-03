@@ -51,7 +51,7 @@ namespace TodoREST
                 // var _page = new Page();
                 Debug.WriteLine(@"               ERROR {0}", ex.Message);
                 Debug.WriteLine(@"Unsuccessful connect to URI {0} at {1}", uri, System.DateTime.Now);
-                await App._todoListPage.DisplayAlert(
+                await App._mainPage.DisplayAlert(
                     "Connection Issue",
                     "Connection to  " + uri + "@" + System.DateTime.Now + " revealed: " + ex.Message,
                     "OK"
@@ -89,7 +89,7 @@ namespace TodoREST
             catch (Exception ex)
             {
                 Debug.WriteLine(@"               ERROR {0}", ex.Message);
-                await App._todoListPage.DisplayAlert(
+                await App._mainPage.DisplayAlert(
                     "Connection Issue",
                     "Connection to  " + uri + "@" + System.DateTime.Now + " revealed: " + ex.Message,
                     "OK"
@@ -114,7 +114,7 @@ namespace TodoREST
             catch (Exception ex)
             {
                 Debug.WriteLine(@"               ERROR {0}", ex.Message);
-                await App._todoListPage.DisplayAlert(
+                await App._mainPage.DisplayAlert(
                     "Connection Issue",
                     "Connection to  " + uri + "@" + System.DateTime.Now + " revealed: " + ex.Message,
                     "OK"

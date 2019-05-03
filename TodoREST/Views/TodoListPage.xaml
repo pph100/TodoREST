@@ -6,6 +6,7 @@
     x:Name="_todoListPage"
     Title="Todo">
 
+    <!-- 
 	<ContentPage.ToolbarItems>
 		<ToolbarItem Text="+" Clicked="OnAddItemClicked">
 			<ToolbarItem.Icon>
@@ -15,6 +16,7 @@
 			</ToolbarItem.Icon>
 		</ToolbarItem>
 	</ContentPage.ToolbarItems>
+    -->
 
 	<ListView x:Name="listView" Margin="20" ItemSelected="OnItemSelected" >
 		<ListView.ItemTemplate>

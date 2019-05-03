@@ -3,21 +3,23 @@ using Xamarin.Forms;
 
 namespace TodoREST
 {
-    public partial class TodoListPage : ContentPage
+    public partial class TabPage : TabbedPage
     {
         // bool alertShown = false;
 
-        public TodoListPage()
+        public TabPage()
         {
             InitializeComponent();
         }
 
+        /*
         protected async override void OnAppearing()
         {
             base.OnAppearing();
 
-            listView.ItemsSource = await App.TodoManager.GetTasksAsync();
+            // listView.ItemsSource = await App.TodoManager.GetTasksAsync();
         }
+        */
 
         void OnAddItemClicked(object sender, EventArgs e)
         {

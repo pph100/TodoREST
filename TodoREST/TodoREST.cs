@@ -7,14 +7,18 @@ namespace TodoREST
     public class App : Application
     {
         public static TodoItemManager TodoManager { get; private set; }
-        public static TodoListPage _todoListPage = new TodoListPage();
+        // public static TodoListPage _todoListPage = new TodoListPage();
+        public static TabPage _mainPage = new TabPage();
 
 
         public App()
         {
             TodoManager = new TodoItemManager(new RestService());
-            MainPage = new NavigationPage(new TodoListPage());
+            // MainPage = new NavigationPage(new TodoListPage());
+
+            // MainPage = new NavigationPage(new TabPage());
             // MainPage = new NavigationPage(_todoListPage);
+            MainPage = new NavigationPage(_mainPage);
         }
 
         protected override void OnStart()
