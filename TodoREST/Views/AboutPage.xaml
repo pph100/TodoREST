@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             x:Class="TodoREST.AboutPage">
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+        x:Class="TodoREST.AboutPage"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib" 
+        Title="About">
+
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
             <Label Text="This is application TodoREST V1.0"/>
         </StackLayout>
     </ContentPage.Content>

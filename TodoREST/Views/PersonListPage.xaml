@@ -2,17 +2,16 @@
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-    x:Class="TodoREST.TodoListPage" 
-    x:Name="_todoListPage"
-    Title="To-Dos">
+    x:Class="TodoREST.PersonListPage" 
+    x:Name="_personListPage"
+    Title="Personen">
 
-	<ListView x:Name="listView" Margin="20" ItemSelected="OnItemSelected" >
+	<ListView x:Name="personListView" Margin="20" ItemSelected="OnItemSelected" >
 		<ListView.ItemTemplate>
 			<DataTemplate>
 				<ViewCell>
 					<StackLayout Padding="20,0,0,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
-                        <Label Text="{Binding TodoTask}" VerticalTextAlignment="Center" />
-						<Image Source="check.png" IsVisible="{Binding Done}" />
+                        <Label Text="{Binding Name}" VerticalTextAlignment="Center" />
 					</StackLayout>
 				</ViewCell>
 			</DataTemplate>

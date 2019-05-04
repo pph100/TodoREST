@@ -7,6 +7,7 @@ namespace TodoREST
     public class App : Application
     {
         public static TodoItemManager TodoManager { get; private set; }
+        public static PersonManager PersonManager { get; private set; }
         // public static TodoListPage _todoListPage = new TodoListPage();
         public static TabPage _mainPage = new TabPage();
 
@@ -14,6 +15,7 @@ namespace TodoREST
         public App()
         {
             TodoManager = new TodoItemManager(new RestService());
+            PersonManager = new PersonManager(new PersonService());
             // MainPage = new NavigationPage(new TodoListPage());
 
             // MainPage = new NavigationPage(new TabPage());

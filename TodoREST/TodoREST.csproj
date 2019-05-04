@@ -23,11 +23,42 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="ITextToSpeech.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Update="Views\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\PersonPage.xaml.cs">
       <DependentUpon>PersonPage.xaml</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="AboutPage.xaml~" />
+    <None Remove="Constants.cs~" />
+    <None Remove="PersonPage.xaml~" />
+    <None Remove="TodoREST.cs~" />
+    <None Remove="Views\TodoItemPage.xaml~" />
+    <None Remove="Views\TodoItemPage.xaml.cs~" />
+    <None Remove="Views\TodoItemPage.xaml~" />
+    <None Remove="Views\TodoListPage.xaml.cs~" />
+    <None Remove="Models\TodoItem.cs~" />
+    <None Remove="Views\PersonPage.xaml~" />
+    <None Remove="Views\TodoItemPage.xaml~" />
+    <None Remove="Constants.cs~" />
+    <None Remove="Data\IRestService.cs~" />
+    <None Remove="Data\RestService.cs~" />
+    <None Remove="Data\PersonService.cs~" />
+    <None Remove="Views\TabPage.xaml~" />
+    <None Remove="Data\PersonService.cs~" />
+    <None Remove="Data\PersonManager.cs~" />
+    <None Remove="Views\PersonListPage.xaml.cs~" />
+    <None Remove="Views\PersonPage.xaml.cs~" />
+    <None Remove="Views\PersonPage.xaml~" />
+    <None Remove="Views\TabPage.xaml.cs~" />
+    <None Remove="Views\TodoListPage.xaml~" />
+    <None Remove="Views\PersonListPage.xaml.cs~" />
+    <None Remove="Views\PersonListPage.xaml~" />
+    <None Remove="Views\AboutPage.xaml~" />
   </ItemGroup>
 </Project>

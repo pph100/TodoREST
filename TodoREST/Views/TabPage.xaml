@@ -17,11 +17,20 @@
 		</ToolbarItem>
 	</TabbedPage.ToolbarItems>
     
-    <local:TodoListPage Title="Todo List"/>
+    <local:TodoListPage 
+        Title="Aufgaben"
+        Appearing="Handle_Appearing_ToDoPage"
+        x:Name="AufgabenPage"/>
     
-    <local:PersonPage Title="Personen"/>
+    <local:PersonListPage 
+        Title="Personen"
+        Appearing="Handle_Appearing_PersonPage"
+        x:Name="PersonenPage"/>
     
-    <local:AboutPage Title="About"/>
+    <local:AboutPage 
+        Title="Über" 
+        Appearing="Handle_Appearing_OtherPage"
+        x:Name="AboutPage"/>
     
 
 </TabbedPage>

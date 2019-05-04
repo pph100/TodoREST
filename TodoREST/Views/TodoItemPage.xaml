@@ -14,8 +14,8 @@
 		<Label Text="Todo Item" />
         <Entry x:Name="notesEntry" Text="{Binding Path=TodoTask}" Placeholder="Task" 
                TextChanged="Handle_NotesChanged"/> 
-
-        <Label Text="Responsible" />
+ 
+        <Label Text="Responsible" />  
         <Entry x:Name="nameEntry" Text="{Binding Path=Author}" Placeholder="optional" 
                Keyboard="Email"/>
 
