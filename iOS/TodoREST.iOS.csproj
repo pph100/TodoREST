@@ -103,6 +103,9 @@
     <BundleResource Include="Resources\check.png" />
     <BundleResource Include="Resources\check%402x.png" />
     <BundleResource Include="Resources\plus.png" />
+    <BundleResource Include="Resources\Ex%403x.png" />
+    <BundleResource Include="Resources\Ex%402x.png" />
+    <BundleResource Include="Resources\Ex.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -119,6 +122,9 @@
   <ItemGroup>
     <ITunesArtwork Include="ITunesArtwork" />
     <ITunesArtwork Include="ITunesArtwork%402x" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

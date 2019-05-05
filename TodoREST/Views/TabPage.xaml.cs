@@ -5,7 +5,17 @@ namespace TodoREST
 {
     public partial class TabPage : TabbedPage
     {
-        int activeTabIndex = -1;
+        // int activeTabIndex = -1;
+
+        enum TabIndexes : int
+        {
+            iNone = -1,
+            iTodoTab = 0,
+            iPersonTab = 1,
+            iAboutTab = 2
+        };
+
+        TabIndexes activeTabIndex = TabIndexes.iNone;
 
         public TabPage()
         {
@@ -16,7 +26,7 @@ namespace TodoREST
         {
             switch (activeTabIndex)
             {
-                case 0:         // ToDo Tab ist aktiv
+                case TabIndexes.iTodoTab:         // ToDo Tab ist aktiv -> neues Todo
                     var todoItem = new TodoItem()
                     {
                         ID = Guid.NewGuid().ToString(),
@@ -27,7 +37,7 @@ namespace TodoREST
                     Navigation.PushAsync(todoPage);
                     break;
 
-                case 1:
+                case TabIndexes.iPersonTab:         // PersonPage ist aktiv -> neue Person
                     var personItem = new PersonItem()
                     {
                         ID = Guid.NewGuid().ToString(),
@@ -45,17 +55,17 @@ namespace TodoREST
 
         void Handle_Appearing_ToDoPage(object sender, System.EventArgs e)
         {
-            activeTabIndex = 0;
+            activeTabIndex = TabIndexes.iTodoTab;
         }
 
         void Handle_Appearing_PersonPage(object sender, System.EventArgs e)
         {
-            activeTabIndex = 1;
+            activeTabIndex = TabIndexes.iPersonTab;
         }
 
         void Handle_Appearing_OtherPage(object sender, System.EventArgs e)
         {
-            activeTabIndex = -1;
+            activeTabIndex = TabIndexes.iNone;
         }
 
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)

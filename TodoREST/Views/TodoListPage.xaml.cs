@@ -16,7 +16,15 @@ namespace TodoREST
         {
             base.OnAppearing();
 
-            listView.ItemsSource = await App.TodoManager.GetTasksAsync();
+            var todoList = await App.TodoManager.GetTasksAsync();
+            listView.ItemsSource = todoList;
+
+            foreach (var _todoItem in todoList)
+            {
+                if (_todoItem.Urgent)
+                {
+                }
+            }
         }
 
         void OnAddItemClicked(object sender, EventArgs e)

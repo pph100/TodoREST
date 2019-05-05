@@ -9,10 +9,82 @@ namespace TodoREST
 
         bool isNewItem;
 
+        public TodoItemPage(bool isNew = false)
+        {
+            InitializeComponent();
+
+            isNewItem = isNew;
+            if (isNew)
+            {
+                DeleteButton.IsEnabled = false;
+            }
+            else
+            {
+                DeleteButton.IsEnabled = true;
+            }
+        }
+
+
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var Personlist = await App.PersonManager.GetTasksAsync();
+            var NameList = new System.Collections.Generic.List<String>();
+            object _responsibleSelectedItem = null,
+                    _completedSelectedItem = null;
+
+            foreach (PersonItem p in Personlist)
+            {
+                NameList.Add(p.Name);
+            }
+
+            if (!isNewItem)
+            {
+                _responsibleSelectedItem = responsiblePicker.SelectedItem;
+                _completedSelectedItem = completedPicker.SelectedItem;
+            }
+
+            // populate responsiblePicker
+            responsiblePicker.ItemsSource = NameList;
+
+            if (!isNewItem)
+            {
+                if (_responsibleSelectedItem == null)
+                {
+                    responsiblePicker.SelectedItem = null;
+                    responsiblePicker.Title = "Select a Person";
+                }
+                else
+                {
+                    responsiblePicker.SelectedItem = _responsibleSelectedItem;
+                    responsiblePicker.Title = _responsibleSelectedItem.ToString();
+                }
+
+            }
+
+            // populate completedPicker
+            completedPicker.ItemsSource = NameList;
+
+            if (!isNewItem)
+            {
+                if (_completedSelectedItem == null)
+                {
+                    completedPicker.SelectedItem = null;
+                    completedPicker.Title = "Select a Person";
+                }
+                else
+                {
+                    completedPicker.SelectedItem = _completedSelectedItem;
+                    completedPicker.Title = _completedSelectedItem.ToString();
+                }
+            }
+        }
 
         void Handle_CompletedByChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
-            if (completedByEntry.Text.Length > 0)
+            if (completedPicker.Title.Length > 0)
+            // if (completedByEntry.Text.Length > 0)
             {
                 doneSwitch.IsToggled = true;
             }
@@ -31,20 +103,6 @@ namespace TodoREST
             else
             {
                 SaveButton.IsEnabled = false;
-            }
-        }
-
-        public TodoItemPage(bool isNew = false)
-        {
-            InitializeComponent();
-            isNewItem = isNew;
-            if (isNew)
-            {
-                DeleteButton.IsEnabled = false;
-            }
-            else
-            {
-                DeleteButton.IsEnabled = true;
             }
         }
 

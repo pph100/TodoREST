@@ -11,7 +11,11 @@
 
             <Label Text="Name" />
             <Entry x:Name="personEntry" Text="{Binding Path=Name}" 
-               Keyboard="Email" TextChanged="Handle_NameChanged"/>
+               TextChanged="Handle_NameChanged"/>
+
+            <Label Text="E-Mail" />
+            <Entry x:Name="personEmailEntry" Text="{Binding Path=Email}" 
+               Keyboard="Email" />
 
             <StackLayout Grid.Row="2" Orientation="Horizontal">
                 <Label Text="Created" />

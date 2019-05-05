@@ -11,9 +11,24 @@
 			<DataTemplate>
 				<ViewCell>
 					<StackLayout Padding="20,0,0,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
-                        <Label Text="{Binding TodoTask}" VerticalTextAlignment="Center" />
-						<Image Source="check.png" IsVisible="{Binding Done}" />
-					</StackLayout>
+
+                        <Image Source="ex.png" IsVisible="{Binding Urgent}" />
+
+                        <Label 
+                            x:Name="listItem"
+                            Text="{Binding TodoTask}" 
+                            VerticalTextAlignment="Center" />
+						
+                        <Label VerticalTextAlignment="Center" Text="( " />
+                        <Label
+                            x:Name="listResp"
+                            Text="{Binding Author}"
+                            VerticalTextAlignment="Center" />
+                        <Label VerticalTextAlignment="Center" Text=" )" />
+                        
+                        <Image Source="check.png" IsVisible="{Binding Done}" />
+					
+                    </StackLayout>
 				</ViewCell>
 			</DataTemplate>
 		</ListView.ItemTemplate>

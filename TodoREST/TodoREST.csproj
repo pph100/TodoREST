@@ -60,5 +60,10 @@
     <None Remove="Views\PersonListPage.xaml.cs~" />
     <None Remove="Views\PersonListPage.xaml~" />
     <None Remove="Views\AboutPage.xaml~" />
+    <None Remove="TodoREST.cs~" />
+    <None Remove="Data\TodoService.cs~" />
+    <None Remove="Views\TodoItemPage.xaml~" />
+    <None Remove="Models\TodoItem.cs~" />
+    <None Remove="Views\TodoListPage.xaml.cs~" />
   </ItemGroup>
 </Project>

@@ -8,18 +8,15 @@ namespace TodoREST
     {
         public static TodoItemManager TodoManager { get; private set; }
         public static PersonManager PersonManager { get; private set; }
-        // public static TodoListPage _todoListPage = new TodoListPage();
-        public static TabPage _mainPage = new TabPage();
 
+        public static TabPage _mainPage = new TabPage();
 
         public App()
         {
-            TodoManager = new TodoItemManager(new RestService());
+            TodoManager = new TodoItemManager(new TodoService());
+            // TodoManager = new TodoItemManager(new RestService());
             PersonManager = new PersonManager(new PersonService());
-            // MainPage = new NavigationPage(new TodoListPage());
 
-            // MainPage = new NavigationPage(new TabPage());
-            // MainPage = new NavigationPage(_todoListPage);
             MainPage = new NavigationPage(_mainPage);
         }
 

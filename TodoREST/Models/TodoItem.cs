@@ -17,5 +17,7 @@ namespace TodoREST
         public String DttmLastUpdated { get; set; }
 
         public String CompletedBy { get; set; }
+
+        public bool Urgent { get; set; }
     }
 }

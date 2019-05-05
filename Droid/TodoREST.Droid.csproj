@@ -78,6 +78,12 @@
   <ItemGroup>
     <Folder Include="Resources\layout\" />
     <Folder Include="Resources\values\" />
+    <Folder Include="Resources\drawable-xxxhdpi\" />
+    <Folder Include="Resources\drawable-xxhdpi\" />
+    <Folder Include="Resources\drawable-xhdpi\" />
+    <Folder Include="Resources\drawable-hdpi\" />
+    <Folder Include="Resources\drawable-mdpi\" />
+    <Folder Include="Resources\drawable-ldpi\" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />
@@ -87,6 +93,13 @@
     <AndroidResource Include="Resources\drawable\check.png" />
     <AndroidResource Include="Resources\drawable\check2x.png" />
     <AndroidResource Include="Resources\drawable\plus.png" />
+    <AndroidResource Include="Resources\drawable\Ex.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\Ex.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\Ex.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\Ex.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\Ex.png" />
+    <AndroidResource Include="Resources\drawable-mdpi\Ex.png" />
+    <AndroidResource Include="Resources\drawable-ldpi\Ex.png" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Tabbar.axml" />
