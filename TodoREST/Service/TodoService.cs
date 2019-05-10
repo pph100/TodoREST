@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -10,7 +11,7 @@ using Xamarin.Forms;
 
 namespace TodoREST
 {
-    public class TodoService : IRestService
+    public class TodoService : ITodoService
     {
         HttpClient client;
 
@@ -35,17 +36,30 @@ namespace TodoREST
         {
             Items = new List<TodoItem>();
 
-            var uri = new Uri(string.Format(Constants.RestUrl, string.Empty));
+            // var uri = new Uri(string.Format(Constants.RestUrl, string.Empty));
+            var uri = new Uri(string.Format(Constants.RestUrlOrdered));
 
             try
             {
-                Debug.WriteLine(@"Trying to connect to URI {0} at {1}", uri, System.DateTime.Now);
                 var response = await client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
-                    Debug.WriteLine(@"Successful connect to URI {0} at {1}", uri, System.DateTime.Now);
                     var content = await response.Content.ReadAsStringAsync();
                     Items = JsonConvert.DeserializeObject<List<TodoItem>>(content);
+
+                    foreach(var i in Items)
+                    {
+                        if (i.Due != null && i.Due.Length > 10)
+                        {
+                            // CultureInfo MyCultureInfo = new CultureInfo("de-DE");
+                            // DateTime MyDateTime = DateTime.Parse(i.Due, MyCultureInfo);
+
+                            // DateTime MyDateTime = DateTime.Parse(i.Due);
+                            // i.Due = MyDateTime.ToString("MM/dd/yyyy");
+                            String temp = i.Due.Substring(1, 10);
+                            i.Due = temp;
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -68,8 +82,25 @@ namespace TodoREST
         {
             var uri = new Uri(string.Format(Constants.RestUrl, string.Empty));
 
-            try
-            {
+            // reformat before save
+            try { 
+                if(item.Due != null && item.Due.Length > 10)
+                {
+                    // DateTime MyDateTime = DateTime.Parse(item.Due, new CultureInfo("de-DE"));
+                    // item.Due = MyDateTime.ToString("MM/dd/yyyy");
+                    string temp = item.Due.Substring(1, 10);
+                    item.Due = temp;
+                }
+
+                if(item.Due == null)
+                {
+                    string MyDateTime = DateTime.Now.ToString("MM/dd/yyyy");
+                    if (MyDateTime.Length > 10)
+                        item.Due = MyDateTime.Substring(1, 10);
+                    else
+                        item.Due = MyDateTime;
+                }
+
                 var json = JsonConvert.SerializeObject(item);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
@@ -6,6 +6,20 @@ namespace TodoREST
 {
     public partial class TodoItemPage : ContentPage
     {
+        public void Handle_doneChanged(object sender, EventArgs e)
+        {
+            if ( (sender as Switch).IsToggled)
+            {
+                completedPicker.IsEnabled = true;
+                if ( (completedPicker.Items.Count > 0) && (completedPicker.SelectedItem == null) )
+                    completedPicker.Focus();
+            }
+            else
+            {
+                completedPicker.IsEnabled = false;
+            }
+        }
+
 
         bool isNewItem;
 
@@ -23,7 +37,6 @@ namespace TodoREST
                 DeleteButton.IsEnabled = true;
             }
         }
-
 
         protected async override void OnAppearing()
         {

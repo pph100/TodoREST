@@ -33,7 +33,8 @@ namespace TodoREST
         {
             Items = new List<TodoItem>();
 
-            var uri = new Uri(string.Format(Constants.RestUrl, string.Empty));
+            var uri = new Uri(string.Format(Constants.RestUrlOrdered));
+            // var uri = new Uri(string.Format(Constants.RestUrl, string.Empty));
 
             try
             {

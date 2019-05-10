@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <ReleaseVersion>1.2</ReleaseVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -11,6 +12,7 @@
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
     <PackageReference Include="Xamarin.Forms" Version="3.6.0.220655" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +26,10 @@
 
   <ItemGroup>
     <Compile Remove="ITextToSpeech.cs" />
+    <Compile Remove="Data\RestService.cs" />
+    <Compile Remove="App\DatePickerRenderer.cs" />
+    <Compile Remove="App\EmptyClass.cs" />
+    <Compile Remove="App\CustomDatePicker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\AboutPage.xaml.cs">
@@ -65,5 +71,32 @@
     <None Remove="Views\TodoItemPage.xaml~" />
     <None Remove="Models\TodoItem.cs~" />
     <None Remove="Views\TodoListPage.xaml.cs~" />
+    <None Remove="Views\TodoListPage.xaml~" />
+    <None Remove="Views\TodoItemPage.xaml.cs~" />
+    <None Remove="Data\IRestService.cs~" />
+    <None Remove="Data\ITodoService.cs~" />
+    <None Remove="Constants.cs~" />
+    <None Remove="Data\TodoService.cs~" />
+    <None Remove="Views\TodoListPage.xaml~" />
+    <None Remove="Views\TodoListPage.xaml.cs~" />
+    <None Remove="Models\TodoItem.cs~" />
+    <None Remove="Data\TodoItemManager.cs~" />
+    <None Remove="App\TodoREST.cs~" />
+    <None Remove="Views\TodoListPage.xaml~" />
+    <None Remove="Interface\IPersonService.cs~" />
+    <None Remove="Service\TodoService.cs~" />
+    <None Remove="App\Constants.cs~" />
+    <None Remove="Views\TodoItemPage.xaml~" />
+    <None Remove="Views\TodoListPage.xaml~" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Service\" />
+    <Folder Include="App\" />
+    <Folder Include="Interface\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\Library\Frameworks\Xamarin.Android.framework\Versions\9.2.3-0\lib\xamarin.android\xbuild-frameworks\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

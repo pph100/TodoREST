@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Forms;
 
 namespace TodoREST
 {
@@ -19,5 +20,10 @@ namespace TodoREST
         public String CompletedBy { get; set; }
 
         public bool Urgent { get; set; }
+
+        public String Due { get; set; }
+
+        // public Color MyColor { get; set; }
+
     }
 }

@@ -1,12 +1,11 @@
-﻿using System;
+using System;
+using System.Globalization;
 using Xamarin.Forms;
 
 namespace TodoREST
 {
     public partial class TodoListPage : ContentPage
     {
-        // bool alertShown = false;
-
         public TodoListPage()
         {
             InitializeComponent();
@@ -18,13 +17,6 @@ namespace TodoREST
 
             var todoList = await App.TodoManager.GetTasksAsync();
             listView.ItemsSource = todoList;
-
-            foreach (var _todoItem in todoList)
-            {
-                if (_todoItem.Urgent)
-                {
-                }
-            }
         }
 
         void OnAddItemClicked(object sender, EventArgs e)
@@ -32,7 +24,8 @@ namespace TodoREST
             var todoItem = new TodoItem()
             {
                 ID = Guid.NewGuid().ToString(),
-                DttmCreated = System.DateTime.Now.ToString()
+                DttmCreated = System.DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("de-DE")),
+                Due = System.DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("de-DE"))
             };
             var todoPage = new TodoItemPage(true);
             todoPage.BindingContext = todoItem;
@@ -47,5 +40,6 @@ namespace TodoREST
             todoPage.BindingContext = todoItem;
             Navigation.PushAsync(todoPage);
         }
+
     }
 }

@@ -9,27 +9,52 @@
 	<ListView x:Name="listView" Margin="20" ItemSelected="OnItemSelected" >
 		<ListView.ItemTemplate>
 			<DataTemplate>
-				<ViewCell>
-					<StackLayout Padding="20,0,0,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
 
-                        <Image Source="ex.png" IsVisible="{Binding Urgent}" />
+                <ViewCell x:Name="viewCell">
+                    <StackLayout Padding="20,0,0,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
 
                         <Label 
-                            x:Name="listItem"
+                            x:Name="dueDate"
+                            Text="{Binding Due, StringFormat='{}{0:dd.MM.yyyy}'}" 
+                            VerticalTextAlignment="Center"/>
+                            <!-- Text="{Binding Due}"  -->
+                        
+                        <Label VerticalTextAlignment="Center" Text=": " />
+
+                        <Label  
+                            x:Name="taskItem"
                             Text="{Binding TodoTask}" 
-                            VerticalTextAlignment="Center" />
-						
-                        <Label VerticalTextAlignment="Center" Text="( " />
+                            VerticalTextAlignment="Center">
+                        
+                            <Label.Triggers>
+                                <!-- <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference xDummy}, Path=IsVisible}" Value="true"> -->
+                                <DataTrigger TargetType="Label" Binding="{Binding Urgent}" Value="true">
+                                    <Setter Property="TextColor" Value="Red" />
+                                    <Setter Property="FontAttributes" Value="Bold" />
+                                </DataTrigger>
+                            </Label.Triggers> 
+                            
+                        </Label>
+                        
+                        <Label VerticalTextAlignment="Center" Text=" (" />
+
                         <Label
                             x:Name="listResp"
                             Text="{Binding Author}"
                             VerticalTextAlignment="Center" />
-                        <Label VerticalTextAlignment="Center" Text=" )" />
+                        
+                        <Label VerticalTextAlignment="Center" Text=")" />
+
+                        <!-- 
+                            <Image x:Name="xDummy" Source="ex.png" IsVisible="{Binding Urgent}" IsEnabled="false"/>
+                            <Label VerticalTextAlignment="Center" Text=" " />
+                        -->
                         
                         <Image Source="check.png" IsVisible="{Binding Done}" />
 					
                     </StackLayout>
-				</ViewCell>
+                </ViewCell>
+
 			</DataTemplate>
 		</ListView.ItemTemplate>
 	</ListView>

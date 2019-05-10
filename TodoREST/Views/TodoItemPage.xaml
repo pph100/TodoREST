@@ -4,7 +4,21 @@
              xmlns:sys="clr-namespace:System;assembly=mscorlib" 
              x:Class="TodoREST.TodoItemPage" 
              Title="Todo">
-
+    
+    <!-- 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Entry">
+                <Style.Triggers>
+                    <Trigger TargetType="Entry"
+                             Property="IsFocused" Value="True">
+                        <Setter Property="BackgroundColor" Value="Yellow" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    -->
     
   <ScrollView>    
     <StackLayout 
@@ -17,11 +31,11 @@
                TextChanged="Handle_NotesChanged"/> 
  
 
-        <StackLayout Grid.Row="2" Orientation="Horizontal">
-            <Label Text="Important" />
-            <Switch x:Name="highPrioritySwitch" IsToggled="{Binding Path=Urgent}" />
-        </StackLayout>
-        
+        <Label Text="Termin" />
+        <!--- <DatePicker x:Name="dueEntry" Date="{Binding Path=Due, StringFormat='{0:dd.MM.yyyy}'}" /> -->
+        <DatePicker x:Name="dueEntry" Date="{Binding Path=Due}" />
+        <!-- <Entry x:Name="dueEntry" Text="{Binding Due}" Placeholder="Datum" />  -->
+ 
             
         <Label Text="Responsible" />  
         <Picker 
@@ -31,27 +45,40 @@
         </Picker>
 
 
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Important" />
+            <Switch x:Name="highPrioritySwitch" IsToggled="{Binding Path=Urgent}" />
+        </StackLayout>
+
+
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Completed" />
+            <Switch x:Name="doneSwitch" IsToggled="{Binding Path=Done}" PropertyChanged="Handle_doneChanged" />
+        </StackLayout>
+        <!-- 
+        <StackLayout Grid.Row="2" Orientation="Horizontal">
+            <Label Text="Completed" />
+            <Switch x:Name="doneSwitch" IsToggled="{Binding Path=Done}" />
+        </StackLayout>
+        -->
+
+        
         <Label Text="Completed By" />
         <Picker 
             x:Name="completedPicker"
             SelectedItem="{Binding Path=CompletedBy}" 
+            IsEnabled="{Binding Path=Done}"
             Title="select Person" >
         </Picker>
 
 
-        <StackLayout Grid.Row="2" Orientation="Horizontal">
-            <Label Text="Done" />
-            <Switch x:Name="doneSwitch" IsToggled="{Binding Path=Done}" />
-        </StackLayout>
-
-
-        <StackLayout Grid.Row="2" Orientation="Horizontal">
+        <StackLayout Orientation="Horizontal">
             <Label Text="Created" />
             <Label x:Name="notesDttmCreated" Text="{Binding Path=DttmCreated}" />
         </StackLayout>
         
             
-        <StackLayout Grid.Row="2" Orientation="Horizontal">
+        <StackLayout Orientation="Horizontal">
             <Label Text="Updated" />
             <Label x:Name="notesDttmLastUpdated" Text="{Binding Path=DttmLastUpdated}" />
         </StackLayout>

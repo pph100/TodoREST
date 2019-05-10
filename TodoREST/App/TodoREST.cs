@@ -14,7 +14,6 @@ namespace TodoREST
         public App()
         {
             TodoManager = new TodoItemManager(new TodoService());
-            // TodoManager = new TodoItemManager(new RestService());
             PersonManager = new PersonManager(new PersonService());
 
             MainPage = new NavigationPage(_mainPage);
@@ -36,4 +35,3 @@ namespace TodoREST
         }
     }
 }
-

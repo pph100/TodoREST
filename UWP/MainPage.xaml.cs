@@ -8,7 +8,7 @@
         public MainPage()
         {
             this.InitializeComponent();
-            TodoREST.App.Speech = new Speech();
+            // TodoREST.App.Speech = new Speech();
             this.LoadApplication(new TodoREST.App());
         }
     }
