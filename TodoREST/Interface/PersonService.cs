@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Xamarin.Forms;
 
 namespace TodoREST
 {
@@ -35,11 +33,11 @@ namespace TodoREST
 
             try
             {
-                Debug.WriteLine(@"Trying to connect to URI {0} at {1}", uri, System.DateTime.Now);
+                // Debug.WriteLine(@"Trying to connect to URI {0} at {1}", uri, System.DateTime.Now);
                 var response = await client.GetAsync(uri);
                 if (response.IsSuccessStatusCode)
                 {
-                    Debug.WriteLine(@"Successful connect to URI {0} at {1}", uri, System.DateTime.Now);
+                    // Debug.WriteLine(@"Successful connect to URI {0} at {1}", uri, System.DateTime.Now);
                     var content = await response.Content.ReadAsStringAsync();
                     Items = JsonConvert.DeserializeObject<List<PersonItem>>(content);
                 }
@@ -77,10 +75,10 @@ namespace TodoREST
                     response = await client.PutAsync(uri, content);
                 }
 
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine(@"               TodoItem successfully saved.");
-                }
+                // if (response.IsSuccessStatusCode)
+                // {
+                    // Debug.WriteLine(@"               TodoItem successfully saved.");
+                // }
 
             }
             catch (Exception ex)
@@ -102,10 +100,10 @@ namespace TodoREST
             {
                 var response = await client.DeleteAsync(uri);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    Debug.WriteLine(@"               TodoItem successfully deleted.");
-                }
+                // if (response.IsSuccessStatusCode)
+                // {
+                    // Debug.WriteLine(@"               TodoItem successfully deleted.");
+                // }
 
             }
             catch (Exception ex)
