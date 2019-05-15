@@ -56,16 +56,19 @@ namespace TodoREST
         void Handle_Appearing_ToDoPage(object sender, System.EventArgs e)
         {
             activeTabIndex = TabIndexes.iTodoTab;
+            Title = "Aufgaben";
         }
 
         void Handle_Appearing_PersonPage(object sender, System.EventArgs e)
         {
             activeTabIndex = TabIndexes.iPersonTab;
+            Title = "Personen";
         }
 
         void Handle_Appearing_OtherPage(object sender, System.EventArgs e)
         {
             activeTabIndex = TabIndexes.iNone;
+            Title = "Über";
         }
 
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)

@@ -5,7 +5,7 @@
     xmlns:local="clr-namespace:TodoREST"
     x:Class="TodoREST.TabPage" 
     x:Name="_todoTabPage"
-    Title="TodoTab">
+    Title="Aufgaben">
 
 	<TabbedPage.ToolbarItems>
 		<ToolbarItem Text="+" Clicked="OnAddItemClicked">

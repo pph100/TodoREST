@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <ReleaseVersion>1.2</ReleaseVersion>
+    <ReleaseVersion>1.5</ReleaseVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -88,11 +88,15 @@
     <None Remove="App\Constants.cs~" />
     <None Remove="Views\TodoItemPage.xaml~" />
     <None Remove="Views\TodoListPage.xaml~" />
+    <None Remove="App\Constants.cs~" />
+    <None Remove="Service\PersonService.cs~" />
+    <None Remove="App\Constants.cs~" />
+    <None Remove="Interface\TodoService.cs~" />
+    <None Remove="*\*~" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Service\" />
     <Folder Include="App\" />
-    <Folder Include="Interface\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">

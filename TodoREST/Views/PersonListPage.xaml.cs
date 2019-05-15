@@ -37,5 +37,6 @@ namespace TodoREST
             personPage.BindingContext = personItem;
             Navigation.PushAsync(personPage);
         }
+
     }
 }

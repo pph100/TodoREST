@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace TodoREST
@@ -9,23 +10,38 @@ namespace TodoREST
         public TodoListPage()
         {
             InitializeComponent();
+
+            listView.RefreshCommand = new Command(async () =>
+            {
+                await RefreshData();
+                listView.IsRefreshing = false;
+            });
+        }
+
+        private async Task RefreshData()
+        {
+            var todoList = await App.TodoManager.GetTasksAsync();
+            listView.ItemsSource = todoList;
         }
 
         protected async override void OnAppearing()
         {
             base.OnAppearing();
 
-            var todoList = await App.TodoManager.GetTasksAsync();
-            listView.ItemsSource = todoList;
+            await this.RefreshData();
+
+            // var todoList = await App.TodoManager.GetTasksAsync();
+            // listView.ItemsSource = todoList;
         }
 
         void OnAddItemClicked(object sender, EventArgs e)
         {
             var todoItem = new TodoItem()
             {
-                ID = Guid.NewGuid().ToString(),
-                DttmCreated = System.DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("de-DE")),
-                Due = System.DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("de-DE"))
+                ID = Guid.NewGuid().ToString()
+                ,
+                DttmCreated = System.DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("de-DE"))
+                // , Due = System.DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("de-DE"))
             };
             var todoPage = new TodoItemPage(true);
             todoPage.BindingContext = todoItem;
@@ -39,6 +55,35 @@ namespace TodoREST
 
             todoPage.BindingContext = todoItem;
             Navigation.PushAsync(todoPage);
+        }
+
+        public async void OnComplete(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            var todoItem = mi.BindingContext as TodoItem;
+            todoItem.Done = !todoItem.Done;
+            todoItem.DttmLastUpdated = System.DateTime.Now.ToString();
+            await App.TodoManager.SaveTaskAsync(todoItem, false);
+            await RefreshData();
+        }
+
+        public async void OnUrgent(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            var todoItem = mi.BindingContext as TodoItem;
+            todoItem.Urgent = !todoItem.Urgent;
+            todoItem.DttmLastUpdated = System.DateTime.Now.ToString();
+            await App.TodoManager.SaveTaskAsync(todoItem, false);
+            await RefreshData();
+        }
+
+        public async void OnDelete(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            var todoItem = mi.BindingContext as TodoItem;
+            todoItem.DttmLastUpdated = System.DateTime.Now.ToString();
+            await App.TodoManager.DeleteTaskAsync(todoItem);
+            await RefreshData();
         }
 
     }

@@ -6,12 +6,14 @@ namespace TodoREST
 {
     public partial class TodoItemPage : ContentPage
     {
+        bool isNewItem;
+
         public void Handle_doneChanged(object sender, EventArgs e)
         {
-            if ( (sender as Switch).IsToggled)
+            if ((sender as Switch).IsToggled)
             {
                 completedPicker.IsEnabled = true;
-                if ( (completedPicker.Items.Count > 0) && (completedPicker.SelectedItem == null) )
+                if ((completedPicker.Items.Count > 0) && (completedPicker.SelectedItem == null))
                     completedPicker.Focus();
             }
             else
@@ -19,9 +21,6 @@ namespace TodoREST
                 completedPicker.IsEnabled = false;
             }
         }
-
-
-        bool isNewItem;
 
         public TodoItemPage(bool isNew = false)
         {
@@ -41,11 +40,12 @@ namespace TodoREST
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            dueEntry.SetValue(DatePicker.MinimumDateProperty, DateTime.Now);
 
             var Personlist = await App.PersonManager.GetTasksAsync();
             var NameList = new System.Collections.Generic.List<String>();
             object _responsibleSelectedItem = null,
-                    _completedSelectedItem = null;
+                   _completedSelectedItem = null;
 
             foreach (PersonItem p in Personlist)
             {
@@ -92,12 +92,17 @@ namespace TodoREST
                     completedPicker.Title = _completedSelectedItem.ToString();
                 }
             }
+
+            if (isNewItem)
+            {
+                notesEntry.Focus();
+            }
+
         }
 
         void Handle_CompletedByChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             if (completedPicker.Title.Length > 0)
-            // if (completedByEntry.Text.Length > 0)
             {
                 doneSwitch.IsToggled = true;
             }

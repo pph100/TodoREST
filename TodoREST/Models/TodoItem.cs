@@ -13,17 +13,17 @@ namespace TodoREST
 
         public bool Done { get; set; }
 
-        public String DttmCreated { get; set; }
+        public string DttmCreated { get; set; }
 
-        public String DttmLastUpdated { get; set; }
+        public string DttmLastUpdated { get; set; }
 
-        public String CompletedBy { get; set; }
+        public string CompletedBy { get; set; }
 
         public bool Urgent { get; set; }
 
-        public String Due { get; set; }
+        // public string Due { get; set; }
 
-        // public Color MyColor { get; set; }
+        public DateTime DueDate { get; set; }
 
     }
 }

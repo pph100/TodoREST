@@ -21,14 +21,14 @@ namespace TodoREST
         public TodoService()
         {
             // var _timeoutSeconds = 10; 
-            var authData = string.Format("{0}:{1}", Constants.Username, Constants.Password);
-            var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
+            // var authData = string.Format("{0}:{1}", Constants.Username, Constants.Password);
+            // var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
 
             client = new HttpClient();
             // client.Timeout = TimeSpan.FromSeconds(_timeoutSeconds);
 
             client.MaxResponseContentBufferSize = 256000;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+            // client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
         }
 
 
@@ -47,17 +47,14 @@ namespace TodoREST
                     var content = await response.Content.ReadAsStringAsync();
                     Items = JsonConvert.DeserializeObject<List<TodoItem>>(content);
 
-                    foreach(var i in Items)
+                    foreach (var i in Items)
                     {
-                        if (i.Due != null && i.Due.Length > 10)
+                        if (i.DueDate == null)
                         {
-                            // CultureInfo MyCultureInfo = new CultureInfo("de-DE");
-                            // DateTime MyDateTime = DateTime.Parse(i.Due, MyCultureInfo);
-
-                            // DateTime MyDateTime = DateTime.Parse(i.Due);
-                            // i.Due = MyDateTime.ToString("MM/dd/yyyy");
-                            String temp = i.Due.Substring(1, 10);
-                            i.Due = temp;
+                            CultureInfo MyCultureInfo = new CultureInfo("de-DE");
+                            string MyDate = DateTime.Now.ToString("dd.MM.yyyy");
+                            string MyTime = "15:00:00";
+                            i.DueDate = DateTime.Parse(MyDate + " " + MyTime, MyCultureInfo);
                         }
                     }
                 }
@@ -78,27 +75,58 @@ namespace TodoREST
         }
 
 
-        public async Task SaveTodoItemAsync(TodoItem item, bool isNewItem = false)
+        async Task ITodoService.SaveTodoItemAsync(TodoItem item, bool isNewItem = false)
         {
             var uri = new Uri(string.Format(Constants.RestUrl, string.Empty));
 
             // reformat before save
-            try { 
-                if(item.Due != null && item.Due.Length > 10)
+            try
+            {
+                /*
+                if (item.Due != null && item.Due.Length > 10)
                 {
                     // DateTime MyDateTime = DateTime.Parse(item.Due, new CultureInfo("de-DE"));
                     // item.Due = MyDateTime.ToString("MM/dd/yyyy");
-                    string temp = item.Due.Substring(1, 10);
+                    String temp = item.Due.Substring(1, 10);
                     item.Due = temp;
                 }
 
-                if(item.Due == null)
+                if (item.Due == null)
                 {
-                    string MyDateTime = DateTime.Now.ToString("MM/dd/yyyy");
+                    // string MyDateTime = DateTime.Now.ToString("MM/dd/yyyy");
+                    MyDateTime = DateTime.Now.ToString("dd.MM.yyyy");
                     if (MyDateTime.Length > 10)
+                    {
                         item.Due = MyDateTime.Substring(1, 10);
+                        CultureInfo MyCultureInfo = new CultureInfo("de-DE");
+                        item.DueDate = DateTime.Parse(item.Due, MyCultureInfo);
+                    }
                     else
+                    {
                         item.Due = MyDateTime;
+                    }
+                }
+                */
+
+                if (item.DueDate == null)
+                {
+                    CultureInfo MyCultureInfo = new CultureInfo("de-DE");
+                    string MyDate = DateTime.Now.ToString("dd.MM.yyyy");
+                    string MyTime = "15:00:00";     // hack w/Mitternacht
+                    item.DueDate = DateTime.Parse(MyDate + " " + MyTime, MyCultureInfo);
+                }
+
+
+                //if(item.DueDate.ToString("HH:mm") == "00:00" )
+                if ((item.DueDate.Kind == DateTimeKind.Utc)
+                    || (item.DueDate.Kind == DateTimeKind.Unspecified)
+                    || (item.DueDate.Kind == DateTimeKind.Local))
+                {
+                    CultureInfo MyCultureInfo = new CultureInfo("de-DE");
+                    string MyDate = item.DueDate.ToString("dd.MM.yyyy");
+                    string MyTime = "15:00:00";
+                    item.DueDate = DateTime.Parse(MyDate + " " + MyTime, MyCultureInfo);
+                    DateTime.SpecifyKind(item.DueDate, DateTimeKind.Local);
                 }
 
                 var json = JsonConvert.SerializeObject(item);

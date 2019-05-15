@@ -4,18 +4,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     x:Class="TodoREST.TodoListPage" 
     x:Name="_todoListPage"
-    Title="To-Dos">
+    Title="Aufgaben">
 
-	<ListView x:Name="listView" Margin="20" ItemSelected="OnItemSelected" >
+	<ListView 
+        x:Name="listView" 
+        Margin="20" 
+        ItemSelected="OnItemSelected" 
+        IsPullToRefreshEnabled="true" >
+
 		<ListView.ItemTemplate>
 			<DataTemplate>
 
                 <ViewCell x:Name="viewCell">
+
+                    <ViewCell.ContextActions>
+                        <MenuItem Clicked="OnUrgent" CommandParameter="{Binding .}" Text="wichtig" />
+                        <MenuItem Clicked="OnComplete" CommandParameter="{Binding .}" Text="fertig" />
+                        <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}" Text="löschen" IsDestructive="True" />
+                    </ViewCell.ContextActions>
+
                     <StackLayout Padding="20,0,0,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
 
                         <Label 
                             x:Name="dueDate"
-                            Text="{Binding Due, StringFormat='{}{0:dd.MM.yyyy}'}" 
+                            Text="{Binding DueDate, StringFormat='{}{0:dd\.MM\.yyyy}'}" 
                             VerticalTextAlignment="Center"/>
                             <!-- Text="{Binding Due}"  -->
                         
@@ -27,7 +39,6 @@
                             VerticalTextAlignment="Center">
                         
                             <Label.Triggers>
-                                <!-- <DataTrigger TargetType="Label" Binding="{Binding Source={x:Reference xDummy}, Path=IsVisible}" Value="true"> -->
                                 <DataTrigger TargetType="Label" Binding="{Binding Urgent}" Value="true">
                                     <Setter Property="TextColor" Value="Red" />
                                     <Setter Property="FontAttributes" Value="Bold" />
