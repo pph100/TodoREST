@@ -29,9 +29,6 @@ namespace TodoREST
             base.OnAppearing();
 
             await this.RefreshData();
-
-            // var todoList = await App.TodoManager.GetTasksAsync();
-            // listView.ItemsSource = todoList;
         }
 
         void OnAddItemClicked(object sender, EventArgs e)
@@ -39,9 +36,7 @@ namespace TodoREST
             var todoItem = new TodoItem()
             {
                 ID = Guid.NewGuid().ToString()
-                ,
-                DttmCreated = System.DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("de-DE"))
-                // , Due = System.DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("de-DE"))
+                , DttmCreated = System.DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("de-DE"))
             };
             var todoPage = new TodoItemPage(true);
             todoPage.BindingContext = todoItem;

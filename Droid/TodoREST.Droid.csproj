@@ -19,8 +19,9 @@
     <RestorePackages>true</RestorePackages>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>16b9ab36</NuGetPackageImportStamp>
-    <ReleaseVersion>1.5</ReleaseVersion>
+    <ReleaseVersion>1.6</ReleaseVersion>
     <Description>improved date handling </Description>
+    <SynchReleaseVersion>false</SynchReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

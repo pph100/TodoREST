@@ -13,7 +13,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>4dbe7b8e</NuGetPackageImportStamp>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <ReleaseVersion>1.5</ReleaseVersion>
+    <ReleaseVersion>1.6</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>

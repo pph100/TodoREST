@@ -2,10 +2,17 @@
 <ContentPage 
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:lc="clr-namespace:TodoREST"
     x:Class="TodoREST.TodoListPage" 
     x:Name="_todoListPage"
     Title="Aufgaben">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <lc:DateConverter x:Key="IsEqualOrGreaterThanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
 	<ListView 
         x:Name="listView" 
         Margin="20" 
@@ -25,12 +32,41 @@
 
                     <StackLayout Padding="20,0,0,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
 
-                        <Label 
+                        <Label
                             x:Name="dueDate"
-                            Text="{Binding DueDate, StringFormat='{}{0:dd\.MM\.yyyy}'}" 
-                            VerticalTextAlignment="Center"/>
+                            ClassId="abc"
+                            Text="{Binding DueDate, StringFormat='{}{0:dd\.MM.yyyy}'}" 
+                            VerticalTextAlignment="Center">
+                            <!-- Text="{Binding DueDate, StringFormat='{}{0:dd\.MM.yyyy}'}"  -->
                             <!-- Text="{Binding Due}"  -->
-                        
+                            <!--- Text="{Binding DueDate, StringFormat='{}{0:dd\.MM\.yyyy}'}"  -->
+                            
+                            <Label.Triggers> 
+                                    
+                                    <DataTrigger 
+                                        TargetType="Label"
+                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= -1 }" Value="True">
+
+                                        <Setter Property="TextColor" Value="OrangeRed" />
+                                        <Setter Property="FontAttributes" Value="Bold" />
+                                    </DataTrigger>
+                                
+                                    <DataTrigger 
+                                        TargetType="Label"
+                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 1 }" Value="True">
+
+                                        <Setter Property="TextColor" Value="LimeGreen" />
+                                        <Setter Property="FontAttributes" Value="None" />
+                                    </DataTrigger>
+                                
+                                        <!--                                         
+                                            TargetType="Label" 
+                                            Binding="{Binding Source={x:Reference dueDate}, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter=5 }"  
+                                        -->
+                            </Label.Triggers>
+
+                        </Label>
+                            
                         <Label VerticalTextAlignment="Center" Text=": " />
 
                         <Label  
@@ -71,3 +107,5 @@
 	</ListView>
 
 </ContentPage>
+
+
