@@ -45,7 +45,7 @@
                                     
                                     <DataTrigger 
                                         TargetType="Label"
-                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= -1 }" Value="True">
+                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 0 }" Value="True">
 
                                         <Setter Property="TextColor" Value="OrangeRed" />
                                         <Setter Property="FontAttributes" Value="Bold" />
@@ -53,16 +53,20 @@
                                 
                                     <DataTrigger 
                                         TargetType="Label"
-                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 1 }" Value="True">
+                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 2 }" Value="True">
+
+                                        <Setter Property="TextColor" Value="Default" />
+                                        <Setter Property="FontAttributes" Value="None" />
+                                    </DataTrigger>
+                                
+                                    <DataTrigger 
+                                        TargetType="Label"
+                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 4 }" Value="True">
 
                                         <Setter Property="TextColor" Value="LimeGreen" />
                                         <Setter Property="FontAttributes" Value="None" />
                                     </DataTrigger>
                                 
-                                        <!--                                         
-                                            TargetType="Label" 
-                                            Binding="{Binding Source={x:Reference dueDate}, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter=5 }"  
-                                        -->
                             </Label.Triggers>
 
                         </Label>

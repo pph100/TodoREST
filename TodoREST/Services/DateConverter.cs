@@ -8,23 +8,22 @@ namespace TodoREST
     // [ValueConversion(typeof(DateTime), typeof(bool))]
     public class DateConverter : IValueConverter
     {
+        // checks whether a given Date (value) is more than or equal X days (parameter) away from today's date
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
                 return false;
-            string o = value.ToString();
+
+            string valueString = value.ToString();
             CultureInfo MyCultureInfo = new CultureInfo("de-DE");
             int i = 0;
-
-            // o += " 15:00:00";
-            DateTime date = DateTime.Parse(o, MyCultureInfo);
+            DateTime checkDate = DateTime.Parse(valueString, MyCultureInfo);
             DateTime curDate = DateTime.Now;
 
-            // TimeSpan span = curDate.Subtract(date);
-            TimeSpan span = date.Subtract(curDate);
+            TimeSpan span = checkDate.Subtract(curDate);
 
             i = int.Parse(parameter.ToString());
-            if ((int)span.Days > i)
+            if ((int)span.Days >= i)
                 return true;
             return false;
         }
