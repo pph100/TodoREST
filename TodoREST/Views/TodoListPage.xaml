@@ -25,32 +25,81 @@
                 <ViewCell x:Name="viewCell">
 
                     <ViewCell.ContextActions>
+                        <MenuItem Clicked="OnCancel" CommandParameter="{Binding .}" Text="Abbruch" />
                         <MenuItem Clicked="OnUrgent" CommandParameter="{Binding .}" Text="wichtig" />
                         <MenuItem Clicked="OnComplete" CommandParameter="{Binding .}" Text="fertig" />
                         <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}" Text="löschen" IsDestructive="True" />
                     </ViewCell.ContextActions>
 
                     <StackLayout Padding="20,0,0,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+                    
+                        <Label
+                            x:Name="xDone"
+                            Text="{Binding Done}"
+                            IsEnabled="false"
+                            IsVisible="false" />
 
                         <Label
                             x:Name="dueDate"
                             ClassId="abc"
                             Text="{Binding DueDate, StringFormat='{}{0:dd\.MM.yyyy}'}" 
                             VerticalTextAlignment="Center">
-                            <!-- Text="{Binding DueDate, StringFormat='{}{0:dd\.MM.yyyy}'}"  -->
-                            <!-- Text="{Binding Due}"  -->
-                            <!--- Text="{Binding DueDate, StringFormat='{}{0:dd\.MM\.yyyy}'}"  -->
                             
-                            <Label.Triggers> 
+                                <Label.Triggers> 
+
+                                    <MultiTrigger TargetType="Label">
+                                        <MultiTrigger.Conditions>
+                                            <BindingCondition 
+                                                Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= -10000 }" 
+                                                Value="True" />
+                                            <BindingCondition 
+                                                Binding="{Binding Done}" 
+                                                Value="false" />
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="TextColor" Value="OrangeRed" />
+                                        <Setter Property="FontAttributes" Value="Bold" />
+                                    </MultiTrigger>
+                                            
+                                    <MultiTrigger TargetType="Label">
+                                        <MultiTrigger.Conditions>
+                                            <BindingCondition 
+                                                Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 2 }" 
+                                                Value="True" />
+                                            <BindingCondition 
+                                                Binding="{Binding Done}" 
+                                                Value="false" />
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="TextColor" Value="Default" />
+                                        <Setter Property="FontAttributes" Value="None" />
+                                    </MultiTrigger>
                                     
+                                    <MultiTrigger TargetType="Label">
+                                        <MultiTrigger.Conditions>
+                                            <BindingCondition 
+                                                Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 4 }" 
+                                                Value="True" />
+                                            <BindingCondition 
+                                                Binding="{Binding Done}" 
+                                                Value="false" />
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="TextColor" Value="LimeGreen" />
+                                        <Setter Property="FontAttributes" Value="None" />
+                                    </MultiTrigger>
+                                    
+                                <!-- 
                                     <DataTrigger 
                                         TargetType="Label"
-                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 0 }" Value="True">
+                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= -1000 }" Value="True">
 
                                         <Setter Property="TextColor" Value="OrangeRed" />
                                         <Setter Property="FontAttributes" Value="Bold" />
                                     </DataTrigger>
-                                
+                                    
+                                    <DataTrigger TargetType="Label" Binding="{Binding Done}" Value="true">
+                                        <Setter Property="TextColor" Value="LightSkyBlue" />
+                                        <Setter Property="FontAttributes" Value="Italic" />
+                                    </DataTrigger>
+
                                     <DataTrigger 
                                         TargetType="Label"
                                         Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 2 }" Value="True">
@@ -66,6 +115,7 @@
                                         <Setter Property="TextColor" Value="LimeGreen" />
                                         <Setter Property="FontAttributes" Value="None" />
                                     </DataTrigger>
+                                -->
                                 
                             </Label.Triggers>
 

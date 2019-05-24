@@ -36,7 +36,8 @@ namespace TodoREST
             var todoItem = new TodoItem()
             {
                 ID = Guid.NewGuid().ToString()
-                , DttmCreated = System.DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("de-DE"))
+                ,
+                DttmCreated = System.DateTime.Now.ToString("d", CultureInfo.CreateSpecificCulture("de-DE"))
             };
             var todoPage = new TodoItemPage(true);
             todoPage.BindingContext = todoItem;
@@ -69,6 +70,11 @@ namespace TodoREST
             todoItem.Urgent = !todoItem.Urgent;
             todoItem.DttmLastUpdated = System.DateTime.Now.ToString();
             await App.TodoManager.SaveTaskAsync(todoItem, false);
+            await RefreshData();
+        }
+
+        public async void OnCancel(object sender, EventArgs e)
+        {
             await RefreshData();
         }
 

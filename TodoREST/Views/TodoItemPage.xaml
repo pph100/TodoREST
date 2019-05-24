@@ -32,7 +32,7 @@
  
 
         <Label Text="Termin" />
-        <DatePicker x:Name="dueEntry" Date="{Binding Path=DueDate, StringFormat='{}{0:dd\.MMM\.yyyy}'}" />
+        <DatePicker x:Name="dueEntry" Date="{Binding Path=DueDate, StringFormat='{}{0:dd\.MMM\.yyyy}'}"  Format="dd.MM.yyyy" />
         <!-- <DatePicker x:Name="dueEntry" Date="{Binding Path=DueDate, StringFormat='{}{0:dd\.MM\.yyyy}'}" /> -->
         <!--- <DatePicker x:Name="dueEntry" Date="{Binding Path=DueDate, Mode='TwoWay', StringFormat='{}{0:dd\.MMM\.yyyy}'}" /> -->
         <!-- <DatePicker x:Name="dueEntry" Date="{Binding Path=Due}" /> -->
