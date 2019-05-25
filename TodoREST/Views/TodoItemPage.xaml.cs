@@ -40,7 +40,8 @@ namespace TodoREST
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            dueEntry.SetValue(DatePicker.MinimumDateProperty, DateTime.Now);
+            if (isNewItem)
+                dueEntry.SetValue(DatePicker.MinimumDateProperty, DateTime.Now);
 
             var Personlist = await App.PersonManager.GetTasksAsync();
             var NameList = new System.Collections.Generic.List<String>();
