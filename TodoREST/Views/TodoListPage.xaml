@@ -10,6 +10,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <lc:DateConverter x:Key="IsEqualOrGreaterThanConverter" />
+            <lc:EmptyStringToBoolConverter x:Key="ConvertEmptyStringIntoBoolean" />
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -86,42 +87,11 @@
                                         <Setter Property="FontAttributes" Value="None" />
                                     </MultiTrigger>
                                     
-                                <!-- 
-                                    <DataTrigger 
-                                        TargetType="Label"
-                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= -1000 }" Value="True">
-
-                                        <Setter Property="TextColor" Value="OrangeRed" />
-                                        <Setter Property="FontAttributes" Value="Bold" />
-                                    </DataTrigger>
-                                    
-                                    <DataTrigger TargetType="Label" Binding="{Binding Done}" Value="true">
-                                        <Setter Property="TextColor" Value="LightSkyBlue" />
-                                        <Setter Property="FontAttributes" Value="Italic" />
-                                    </DataTrigger>
-
-                                    <DataTrigger 
-                                        TargetType="Label"
-                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 2 }" Value="True">
-
-                                        <Setter Property="TextColor" Value="Default" />
-                                        <Setter Property="FontAttributes" Value="None" />
-                                    </DataTrigger>
-                                
-                                    <DataTrigger 
-                                        TargetType="Label"
-                                        Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 4 }" Value="True">
-
-                                        <Setter Property="TextColor" Value="LimeGreen" />
-                                        <Setter Property="FontAttributes" Value="None" />
-                                    </DataTrigger>
-                                -->
-                                
                             </Label.Triggers>
 
                         </Label>
                             
-                        <Label VerticalTextAlignment="Center" Text=": " />
+                        <Label VerticalTextAlignment="Center" Text=":" />
 
                         <Label  
                             x:Name="taskItem"
@@ -137,19 +107,31 @@
                             
                         </Label>
                         
-                        <Label VerticalTextAlignment="Center" Text=" (" />
+                        <StackLayout Orientation="Horizontal" IsVisible="{Binding Source={x:Reference listResp}, Path=Text, Converter={StaticResource ConvertEmptyStringIntoBoolean}}" >
 
-                        <Label
-                            x:Name="listResp"
-                            Text="{Binding Author}"
-                            VerticalTextAlignment="Center" />
+                            <Label VerticalTextAlignment="Center" Text="( v:" />
+
+                            <Label
+                                x:Name="listResp"
+                                Text="{Binding Author}"
+                                VerticalTextAlignment="Center" />
+                            
+                            <Label VerticalTextAlignment="Center" Text=")" />
+
+                        </StackLayout>
                         
-                        <Label VerticalTextAlignment="Center" Text=")" />
+                        <StackLayout Orientation="Horizontal" IsVisible="{Binding Source={x:Reference listCompl}, Path=Text, Converter={StaticResource ConvertEmptyStringIntoBoolean}}" >
 
-                        <!-- 
-                            <Image x:Name="xDummy" Source="ex.png" IsVisible="{Binding Urgent}" IsEnabled="false"/>
-                            <Label VerticalTextAlignment="Center" Text=" " />
-                        -->
+                            <Label VerticalTextAlignment="Center" Text="( e:" />
+
+                            <Label
+                                x:Name="listCompl"
+                                Text="{Binding CompletedBy}"
+                                VerticalTextAlignment="Center" />
+                            
+                            <Label VerticalTextAlignment="Center" Text=")" />
+
+                        </StackLayout>
                         
                         <Image Source="check.png" IsVisible="{Binding Done}" />
 					
