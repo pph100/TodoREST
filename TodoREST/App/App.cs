@@ -8,6 +8,8 @@ namespace TodoREST
     {
         public static TodoItemManager TodoManager { get; private set; }
         public static PersonManager PersonManager { get; private set; }
+        public static CryptoItemManager CryptoItemManager { get; private set; }
+        public static AssetManager AssetManager { get; private set; }
 
         public static TabPage _mainPage = new TabPage();
 
@@ -15,6 +17,8 @@ namespace TodoREST
         {
             TodoManager = new TodoItemManager(new TodoService());
             PersonManager = new PersonManager(new PersonService());
+            CryptoItemManager = new CryptoItemManager(new CryptoService());
+            AssetManager = new AssetManager(new AssetService());
 
             MainPage = new NavigationPage(_mainPage);
         }
