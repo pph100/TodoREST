@@ -13,8 +13,11 @@ namespace TodoREST
 
         public static TabPage _mainPage = new TabPage();
 
+        [System.Obsolete]
         public App()
         {
+
+            LogWarningsToApplicationOutput = true;
             TodoManager = new TodoItemManager(new TodoService());
             PersonManager = new PersonManager(new PersonService());
             CryptoItemManager = new CryptoItemManager(new CryptoService());

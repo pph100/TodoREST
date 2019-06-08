@@ -5,7 +5,7 @@
     xmlns:local="clr-namespace:TodoREST"
     x:Class="TodoREST.TabPage" 
     x:Name="_todoTabPage"
-    Title="Aufgaben">
+    Title="Tab">
 
 	<TabbedPage.ToolbarItems>
 		<ToolbarItem Text="+" Clicked="OnAddItemClicked">
@@ -16,6 +16,16 @@
 			</ToolbarItem.Icon>
 		</ToolbarItem>
 	</TabbedPage.ToolbarItems>
+    
+    <local:CryptoListPage 
+        Title="Stock"
+        Appearing="Handle_Appearing_CryptoPage"
+        x:Name="CryptoPage"/>
+    
+    <local:AssetListPage 
+        Title="Assets"
+        Appearing="Handle_Appearing_AssetPage"
+        x:Name="AssetPage"/>
     
     <local:TodoListPage 
         Title="Aufgaben"

@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>16b9ab36</NuGetPackageImportStamp>
-    <ReleaseVersion>1.7.1</ReleaseVersion>
+    <ReleaseVersion>1.9</ReleaseVersion>
     <Description>improved item list display </Description>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

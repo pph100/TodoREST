@@ -6,19 +6,18 @@ namespace TodoREST
 {
 
     // [ValueConversion(typeof(DateTime), typeof(bool))]
-    public class DoubleConverter : IValueConverter
+    public class BoolConverter : IValueConverter
     {
 
         // checks whether a given Double (value) is greater than the parameter or not and, if so, returns "true" else "false"
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || parameter == null)
+            if (value == null)
                 return false;
 
-            Double _value = (Double)value;
-            Double _parameter = (Double)parameter;
+            Boolean _value = (Boolean)value;
 
-            if (_value > _parameter)
+            if (_value == true)
                 return true;
             return false;
         }

@@ -1,14 +1,15 @@
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace TodoREST
 {
-    public partial class CryptoListPage : ContentPage
+    public partial class AssetListPage : ContentPage
     {
 
-        public CryptoListPage()
+        public AssetListPage()
         {
             InitializeComponent();
 
@@ -22,22 +23,26 @@ namespace TodoREST
 
         private async Task RefreshData()
         {
-            var cryptoList = await App.CryptoItemManager.Refresh();
+            var cryptoList = await App.AssetManager.Refresh();
             listView.ItemsSource = cryptoList;
         }
 
 
         private async Task RefreshDataAsync()
         {
-            var cryptoList = await App.CryptoItemManager.RefreshAsync();
-            listView.ItemsSource = cryptoList;
+            var cryptoList = await App.AssetManager.RefreshAsync();
+            foreach (var _crypto in cryptoList)
+            {
+                _crypto.AssetValue = App.CryptoItemManager.getAssetPriceByTicker(_crypto.AssetTicker);
+            }
+            var newlist = cryptoList.OrderByDescending(x => x.AssetValue).ToList();
+            listView.ItemsSource = newlist;
         }
 
 
         void OnAssetSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var cryptoItem = e.SelectedItem as CryptoItem;
-            var asset = App.CryptoItemManager.FindAssetByTicker(cryptoItem.ticker.cryptoCode);
+            var asset = e.SelectedItem as Asset;
             var assetPage = new AssetPage();
 
             assetPage.BindingContext = asset;
@@ -48,11 +53,17 @@ namespace TodoREST
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            await RefreshData();
+            await RefreshDataAsync();
         }
 
 
         public async void OnCancel(object sender, EventArgs e)
+        {
+            await RefreshData();
+        }
+
+
+        public async void OnCopyToNew(object sender, EventArgs e)
         {
             await RefreshData();
         }

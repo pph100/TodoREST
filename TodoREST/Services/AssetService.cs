@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -10,91 +9,97 @@ using Newtonsoft.Json;
 using Xamarin.Forms;
 using System.Net;
 using System.Web;
+using System.Globalization;
 
 namespace TodoREST
 {
-    public class CryptoService : ICryptoService
+    public class AssetService : IAssetService
     {
-        HttpClient cryptoClient;
+        HttpClient assetClient;
 
-        public List<CryptoItem> Items { get; private set; }
+        public List<Asset> Assets { get; private set; }
 
-        public CryptoItem _item { get; private set; }
+        public Asset _asset { get; private set; }
 
-        public CryptoService()
+
+        public AssetService()
         {
-            cryptoClient = new HttpClient();
-            cryptoClient.MaxResponseContentBufferSize = 256000;
-            // cryptoClient.DefaultRequestHeaders.Authorization = new AuthenticatierValue("Apikey", Constants.CryptoCompareAPIKey);
-            Items = new List<CryptoItem>();
-            _item = new CryptoItem();
+            assetClient = new HttpClient();
+            assetClient.MaxResponseContentBufferSize = 256000;
+            Assets = new List<Asset>();
+            _asset = new Asset();
         }
 
-        public async Task<List<CryptoItem>> RefreshData()
+
+        public async Task<List<Asset>> RefreshData()
         {
-            if (Items == null || Items.Count < 1)
+            if (Assets == null || Assets.Count < 1)
             {
-                Items = await this.RefreshDataAsync();
+                Assets = await this.RefreshDataAsync();
             }
-            return Items;
-
+            return Assets;
         }
 
-        public async Task<List<CryptoItem>> RefreshDataAsync()
+
+        public async Task<Asset> FindAssetByTicker(string tag)
         {
-            // Items = new List<CryptoItem>();
-            // _item = null;
-            string[] _ccyPairs = {
-                "BTC-EUR",
-                "LTC-EUR",
-                "BCH-EUR",
-                "IOTA-EUR",
-                "XRP-EUR",
-                "ETH-EUR",
-                "BSV-EUR",
-                "TRX-EUR",
-                "SWFTC-EUR",
-                "DOGE-EUR",
-                "GNT-EUR",
-                "BCN-EUR"
-             };
-
-            foreach (var _ccyPair in _ccyPairs)
+            if (Assets == null || Assets.Count < 1)
             {
-                var uri = new Uri(string.Format(Constants.CN_BaseURL, _ccyPair));
+                Assets = await this.RefreshDataAsync();
+            }
 
-                try
+            foreach (var asset in Assets)
+            {
+                if (asset.AssetTicker.Equals(tag))
                 {
-                    var response = await cryptoClient.GetAsync(uri);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var content = await response.Content.ReadAsStringAsync();
-                        _item = JsonConvert.DeserializeObject<CryptoItem>(content);
+                    _asset = asset;
+                    break;
+                }
 
-                        if (_item.ticker != null && _item.ticker.@base != "")
+            }
+            return _asset;
+        }
+
+
+        public async Task<List<Asset>> RefreshDataAsync()
+        {
+            var uri = new Uri(string.Format(Constants.AssetUrl, string.Empty));
+
+            try
+            {
+                var response = await assetClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Assets = JsonConvert.DeserializeObject<List<Asset>>(content);
+
+                    foreach (var __asset in Assets)
+                    {
+                        if (__asset.AssetValue == null)
                         {
-                            string MyDate = DateTime.Now.ToString("dd.MM.yy HH:mm:ss");
-                            _item.DttmLastUpdated = MyDate;
-                            _item.ticker.cryptoCode = _item.ticker.@base;
-                            _item.stock = "3.041";
-                            _item.value = (Double.Parse(_item.stock) * Double.Parse(_item.ticker.price)).ToString();
-                            Items.Add(_item);
+                            __asset.prettyValue = "N/A";
+                        }
+                        else
+                        {
+                            var prettyPrice = (Double.Parse(__asset.AssetValue, new CultureInfo("en-US")));
+                            __asset.prettyValue = prettyPrice > 2.0 ? prettyPrice.ToString("C2", new CultureInfo("de-DE")) : prettyPrice.ToString("C4", new CultureInfo("de-DE"));
                         }
                     }
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(@"               ERROR {0}", ex.Message);
-                    Debug.WriteLine(@"Unsuccessful connect to URI {0} at {1}", uri, System.DateTime.Now);
-                    await App._mainPage.DisplayAlert(
-                        "Connection Issue",
-                        "Connection to  " + uri + "@" + System.DateTime.Now + " revealed: " + ex.Message,
-                        "OK"
-                    );
+
                 }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"               ERROR {0}", ex.Message);
+                Debug.WriteLine(@"Unsuccessful connect to URI {0} at {1}", uri, System.DateTime.Now);
+                await App._mainPage.DisplayAlert(
+                    "Connection Issue",
+                    "Connection to  " + uri + "@" + System.DateTime.Now + " revealed: " + ex.Message,
+                    "OK"
+                );
+            }
 
-            return Items;
+            return Assets;
         }
 
     }

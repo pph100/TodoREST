@@ -3,22 +3,76 @@
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     xmlns:lc="clr-namespace:TodoREST"
-    x:Class="TodoREST.TodoListPage" 
-    x:Name="_todoListPage"
-    Title="Aufgaben">
-
+    x:Class="TodoREST.CryptoListPage" 
+    x:Name="_cryptoListPage"
+    Title="Stock">
+    <!-- xmlns:cs="clr-namespace:TodoREST.CryptoService; assembly=TodoREST.CryptoService" -->
+    
     <ContentPage.Resources>
         <ResourceDictionary>
-            <lc:DateConverter x:Key="IsEqualOrGreaterThanConverter" />
-            <lc:EmptyStringToBoolConverter x:Key="ConvertEmptyStringIntoBoolean" />
+            <lc:BoolConverter x:Key="BoolConverter" />
         </ResourceDictionary>
-    </ContentPage.Resources>
+    </ContentPage.Resources>    
     
 	<ListView 
         x:Name="listView" 
         Margin="20" 
-        ItemSelected="OnItemSelected" 
+        ItemSelected="OnAssetSelected" 
         IsPullToRefreshEnabled="true" >
+        
+        <ListView.Header>
+             <Grid HorizontalOptions="FillAndExpand">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label x:Name="xNameLabel" Text="Name"           TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="0" VerticalTextAlignment="Center" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer  Tapped="NameTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Stock"          TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="1" VerticalTextAlignment="Center" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="StockTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Price"          TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="2" VerticalTextAlignment="Center" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="PriceTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Value"          TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="3" VerticalTextAlignment="Center" >
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="ValueTapped"/>
+                    </Label.GestureRecognizers>
+                </Label>
+
+            </Grid>
+        </ListView.Header>
+
+        <ListView.Footer>
+            <Grid HorizontalOptions="FillAndExpand">
+            
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"  />
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+            
+            <!-- 
+                <Label Text=""           TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="0" />
+                <Label Text=""           TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="1" />
+            -->
+                <Label x:Name="xSum"   Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="2" HorizontalOptions="EndAndExpand" />
+                <Label x:Name="xTotal" Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="3" />
+            
+            </Grid>
+        </ListView.Footer>
 
 		<ListView.ItemTemplate>
 			<DataTemplate>
@@ -27,115 +81,94 @@
 
                     <ViewCell.ContextActions>
                         <MenuItem Clicked="OnCancel" CommandParameter="{Binding .}" Text="Abbruch" />
-                        <MenuItem Clicked="OnUrgent" CommandParameter="{Binding .}" Text="wichtig" />
-                        <MenuItem Clicked="OnComplete" CommandParameter="{Binding .}" Text="fertig" />
-                        <MenuItem Clicked="OnDelete" CommandParameter="{Binding .}" Text="löschen" IsDestructive="True" />
                     </ViewCell.ContextActions>
 
-                    <StackLayout Padding="20,0,0,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+                    <Grid HorizontalOptions="FillAndExpand">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
                     
-                        <Label
-                            x:Name="xDone"
-                            Text="{Binding Done}"
-                            IsEnabled="false"
-                            IsVisible="false" />
+                        <!-- 
+                        <Label x:Name="xStayedFlat"
+                               Text="{Binding stayedFlat}"
+                               IsEnabled="false"
+                               IsVisible="false" />
+
+                        <Label x:Name="xIncreased"
+                               Text="{Binding increased}"
+                               IsEnabled="false"
+                               IsVisible="false" />
+
+                        <Label x:Name="xDecreased"
+                               Text="{Binding decreased}"
+                               IsEnabled="false"
+                               IsVisible="false" />
+                       -->
 
                         <Label
-                            x:Name="dueDate"
-                            ClassId="abc"
-                            Text="{Binding DueDate, StringFormat='{}{0:dd\.MM.yyyy}'}" 
+                            x:Name="xBase"
+                            Text="{Binding Path=cryptoName}"
+                            Grid.Column="0"
+                            VerticalTextAlignment="Center">
+                        </Label>
+
+                        <Label  
+                            x:Name="xStock"
+                            Text="{Binding Path=stock}" 
+                            Grid.Column="1"
+                            VerticalTextAlignment="Center">
+                        </Label>
+                        
+                        <Label  
+                            x:Name="xPrice"
+                            Text="{Binding Path=prettyPrice}" 
+                            Grid.Column="2"
                             VerticalTextAlignment="Center">
                             
                                 <Label.Triggers> 
 
                                     <MultiTrigger TargetType="Label">
                                         <MultiTrigger.Conditions>
-                                            <BindingCondition 
-                                                Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= -10000 }" 
-                                                Value="True" />
-                                            <BindingCondition 
-                                                Binding="{Binding Done}" 
-                                                Value="false" />
+                                            <BindingCondition Binding="{Binding decreased}" Value="True" />
                                         </MultiTrigger.Conditions>
                                         <Setter Property="TextColor" Value="OrangeRed" />
+                                        <Setter Property="FontAttributes" Value="Bold" />
+                                    </MultiTrigger>
+
+                                    <MultiTrigger TargetType="Label">
+                                        <MultiTrigger.Conditions>
+                                            <BindingCondition Binding="{Binding increased}" Value="True" />
+                                        </MultiTrigger.Conditions>
+                                        <Setter Property="TextColor" Value="Green" />
                                         <Setter Property="FontAttributes" Value="Bold" />
                                     </MultiTrigger>
                                             
                                     <MultiTrigger TargetType="Label">
                                         <MultiTrigger.Conditions>
-                                            <BindingCondition 
-                                                Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 2 }" 
-                                                Value="True" />
-                                            <BindingCondition 
-                                                Binding="{Binding Done}" 
-                                                Value="false" />
+                                            <BindingCondition Binding="{Binding stayedFlat}" Value="True" />
                                         </MultiTrigger.Conditions>
                                         <Setter Property="TextColor" Value="Default" />
                                         <Setter Property="FontAttributes" Value="None" />
                                     </MultiTrigger>
-                                    
-                                    <MultiTrigger TargetType="Label">
-                                        <MultiTrigger.Conditions>
-                                            <BindingCondition 
-                                                Binding="{Binding Source={x:Reference dueDate}, Path=Text, Converter={StaticResource IsEqualOrGreaterThanConverter}, ConverterParameter= 4 }" 
-                                                Value="True" />
-                                            <BindingCondition 
-                                                Binding="{Binding Done}" 
-                                                Value="false" />
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="TextColor" Value="LimeGreen" />
-                                        <Setter Property="FontAttributes" Value="None" />
-                                    </MultiTrigger>
-                                    
+                                            
                             </Label.Triggers>
-
-                        </Label>
                             
-                        <Label VerticalTextAlignment="Center" Text=":" />
-
+                        </Label>
+                        
                         <Label  
-                            x:Name="taskItem"
-                            Text="{Binding TodoTask}" 
+                            x:Name="xValue"
+                            Text="{Binding value}" 
+                            Grid.Column="3"
+                            FontFamily="Bold"
                             VerticalTextAlignment="Center">
-                        
-                            <Label.Triggers>
-                                <DataTrigger TargetType="Label" Binding="{Binding Urgent}" Value="true">
-                                    <Setter Property="TextColor" Value="Red" />
-                                    <Setter Property="FontAttributes" Value="Bold" />
-                                </DataTrigger>
-                            </Label.Triggers> 
-                            
                         </Label>
+                     </Grid>
                         
-                        <StackLayout Orientation="Horizontal" IsVisible="{Binding Source={x:Reference listResp}, Path=Text, Converter={StaticResource ConvertEmptyStringIntoBoolean}}" >
-
-                            <Label VerticalTextAlignment="Center" Text="( v:" />
-
-                            <Label
-                                x:Name="listResp"
-                                Text="{Binding Author}"
-                                VerticalTextAlignment="Center" />
-                            
-                            <Label VerticalTextAlignment="Center" Text=")" />
-
-                        </StackLayout>
-                        
-                        <StackLayout Orientation="Horizontal" IsVisible="{Binding Source={x:Reference listCompl}, Path=Text, Converter={StaticResource ConvertEmptyStringIntoBoolean}}" >
-
-                            <Label VerticalTextAlignment="Center" Text="( e:" />
-
-                            <Label
-                                x:Name="listCompl"
-                                Text="{Binding CompletedBy}"
-                                VerticalTextAlignment="Center" />
-                            
-                            <Label VerticalTextAlignment="Center" Text=")" />
-
-                        </StackLayout>
-                        
-                        <Image Source="check.png" IsVisible="{Binding Done}" />
-					
-                    </StackLayout>
                 </ViewCell>
 
 			</DataTemplate>

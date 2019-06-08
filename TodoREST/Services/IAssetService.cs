@@ -3,9 +3,10 @@ using System.Threading.Tasks;
 
 namespace TodoREST
 {
-    public interface ICryptoService
+    public interface IAssetService
     {
-        Task<List<CryptoItem>> RefreshDataAsync();
-        Task<List<CryptoItem>> RefreshData();
+        Task<List<Asset>> RefreshDataAsync();
+        Task<List<Asset>> RefreshData();
+        Task<Asset> FindAssetByTicker(string tag);
     }
 }

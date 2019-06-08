@@ -7,6 +7,7 @@ namespace TodoREST
 {
     public partial class TodoListPage : ContentPage
     {
+
         public TodoListPage()
         {
             InitializeComponent();
@@ -18,11 +19,13 @@ namespace TodoREST
             });
         }
 
+
         private async Task RefreshData()
         {
             var todoList = await App.TodoManager.GetTasksAsync();
             listView.ItemsSource = todoList;
         }
+
 
         protected async override void OnAppearing()
         {
@@ -30,6 +33,7 @@ namespace TodoREST
 
             await this.RefreshData();
         }
+
 
         void OnAddItemClicked(object sender, EventArgs e)
         {
@@ -44,6 +48,7 @@ namespace TodoREST
             Navigation.PushAsync(todoPage);
         }
 
+
         void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var todoItem = e.SelectedItem as TodoItem;
@@ -52,6 +57,7 @@ namespace TodoREST
             todoPage.BindingContext = todoItem;
             Navigation.PushAsync(todoPage);
         }
+
 
         public async void OnComplete(object sender, EventArgs e)
         {
@@ -63,6 +69,7 @@ namespace TodoREST
             await RefreshData();
         }
 
+
         public async void OnUrgent(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
@@ -73,10 +80,12 @@ namespace TodoREST
             await RefreshData();
         }
 
+
         public async void OnCancel(object sender, EventArgs e)
         {
             await RefreshData();
         }
+
 
         public async void OnDelete(object sender, EventArgs e)
         {

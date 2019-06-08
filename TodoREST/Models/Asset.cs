@@ -5,26 +5,30 @@ namespace TodoREST
 {
 
     // for CryptoNator API
-    public class TickerItem
+    public class Asset
     {
-        public string @base { get; set; }
-        public string cryptoCode { get; set; }
-        public string target { get; set; }
-        public string price { get; set; }
-        public string volume { get; set; }
-        public string change { get; set; }
+        public string id { get; set; }
+        public string AssetTicker { get; set; }     // code, like "BTC" or "ETH"
+        public string AssetName { get; set; }       // name, like "Bitcoin" or "Ethereum"
+        public string AssetStock { get; set; }
+        public string SearchString { get; set; }
+        public string AssetClass { get; set; }      // e.g. "Crypto" or "Commodity"
+        public string AssetValue { get; set; }      // float: price of asset per piece
+        public string prettyValue { get; set; }      // float: price of asset per piece
+        public string AssetValueDttm { get; set; }      // float: price of asset per piece
+        public bool IncludeInList { get; set; }     // flag: include this asset in list?
+        public string DttmCreated { get; set; }
+        public string DttmLastUpdated { get; set; }
     }
 
-    public class CryptoItem
+    public class Stock
     {
-        public TickerItem ticker { get; set; }
-        public int timestamp { get; set; }
-        public bool success { get; set; }
-        public string error { get; set; }
-        // added by me
-        public string stock { get; set; }
-        public string value { get; set; }
-        public string cryptoName { get; set; }
+        public string id { get; set; }
+        public string AssetName { get; set; }       // name, like above
+        public string AssetValue { get; set; }      // float: price of asset per piece
+        public string AssetStock { get; set; }      // float: number of items per asset in Stock
+        public string AssetTotalValue { get; set; } // float: number * price
+        public string DttmCreated { get; set; }
         public string DttmLastUpdated { get; set; }
     }
 }

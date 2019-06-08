@@ -4,28 +4,68 @@ using System.Threading.Tasks;
 
 namespace TodoREST
 {
-    public class TodoItemManager
+    public class CryptoItemManager
     {
-        ITodoService restService;
+        ICryptoService cryptoService;
 
-        public TodoItemManager(ITodoService service)
+
+        public CryptoItemManager(ICryptoService service)
         {
-            restService = service;
+            cryptoService = service;
         }
 
-        public Task<List<TodoItem>> GetTasksAsync()
+
+        public Task<List<CryptoItem>> Refresh()
         {
-            return restService.RefreshDataAsync();
+            return cryptoService.RefreshData();
         }
 
-        public Task SaveTaskAsync(TodoItem item, bool isNewItem = false)
+
+        public Task<List<CryptoItem>> RefreshAsync()
         {
-            return restService.SaveTodoItemAsync(item, isNewItem);
+            return cryptoService.RefreshDataAsync();
         }
 
-        public Task DeleteTaskAsync(TodoItem item)
+
+        public Task SaveAssetAsync(Asset item, bool isNewItem)
         {
-            return restService.DeleteTodoItemAsync(item.ID);
+            return cryptoService.SaveAssetAsync(item, isNewItem);
         }
+
+
+        public Asset FindAssetByTicker(string ticker)
+        {
+            return cryptoService.FindAssetByTicker(ticker);
+        }
+
+
+        internal Task SaveAssetValues(List<CryptoItem> cryptoList)
+        {
+            return cryptoService.SaveAssetValues(cryptoList);
+        }
+
+        public string getTotalValue()
+        {
+            return cryptoService.getTotalValue();
+        }
+
+
+        public int getNumberOfCryptoItems()
+        {
+            return cryptoService.getNumberOfCryptoItems();
+        }
+
+
+        public int getNumberOfAssetItems()
+        {
+            return cryptoService.getNumberOfAssetItems();
+        }
+
+
+        public string getAssetPriceByTicker(string ticker)
+        {
+            return cryptoService.GetAssetPriceByTicker(ticker);
+        }
+
     }
 }

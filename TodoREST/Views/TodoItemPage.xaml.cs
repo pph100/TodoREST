@@ -22,6 +22,7 @@ namespace TodoREST
             }
         }
 
+
         public TodoItemPage(bool isNew = false)
         {
             InitializeComponent();
@@ -36,6 +37,7 @@ namespace TodoREST
                 DeleteButton.IsEnabled = true;
             }
         }
+
 
         protected async override void OnAppearing()
         {
@@ -101,6 +103,7 @@ namespace TodoREST
 
         }
 
+
         void Handle_CompletedByChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
             if (completedPicker.Title.Length > 0)
@@ -112,6 +115,7 @@ namespace TodoREST
                 doneSwitch.IsToggled = false;
             }
         }
+
 
         void Handle_NotesChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
         {
@@ -125,6 +129,7 @@ namespace TodoREST
             }
         }
 
+
         async void OnSaveActivated(object sender, EventArgs e)
         {
             var todoItem = (TodoItem)BindingContext;
@@ -134,12 +139,14 @@ namespace TodoREST
             await Navigation.PopAsync();
         }
 
+
         async void OnDeleteActivated(object sender, EventArgs e)
         {
             var todoItem = (TodoItem)BindingContext;
             await App.TodoManager.DeleteTaskAsync(todoItem);
             await Navigation.PopAsync();
         }
+
 
         void OnCancelActivated(object sender, EventArgs e)
         {

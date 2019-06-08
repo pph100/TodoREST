@@ -5,61 +5,36 @@ using Xamarin.Forms;
 
 namespace TodoREST
 {
-    public partial class PersonPage : ContentPage
+    public partial class AssetPage : ContentPage
     {
 
         bool isNewItem;
 
-        public PersonPage()
+        public AssetPage()
         {
             InitializeComponent();
         }
 
-        public PersonPage(bool isNew = false)
+        public AssetPage(bool isNew = false)
         {
             InitializeComponent();
             isNewItem = isNew;
-            if (isNew)
-            {
-                DeleteButton.IsEnabled = false;
-            }
-            else
-            {
-                DeleteButton.IsEnabled = true;
-            }
         }
 
-        void Handle_NameChanged(object sender, Xamarin.Forms.TextChangedEventArgs e)
-        {
-            if (personEntry.Text.Length > 0)
-            {
-                SaveButton.IsEnabled = true;
-            }
-            else
-            {
-                SaveButton.IsEnabled = false;
-            }
-        }
-
-        async void OnSaveActivated(object sender, EventArgs e)
-        {
-            var personItem = (PersonItem)BindingContext;
-
-            personItem.DttmLastUpdated = System.DateTime.Now.ToString();
-            await App.PersonManager.SaveTaskAsync(personItem, isNewItem);
-            await Navigation.PopAsync();
-        }
-
-        async void OnDeleteActivated(object sender, EventArgs e)
-        {
-            var personItem = (PersonItem)BindingContext;
-            await App.PersonManager.DeleteTaskAsync(personItem);
-            await Navigation.PopAsync();
-        }
 
         void OnCancelActivated(object sender, EventArgs e)
         {
             Navigation.PopAsync();
+        }
+
+
+        async void OnSaveActivated(object sender, EventArgs e)
+        {
+            var asset = (Asset)BindingContext;
+
+            asset.DttmLastUpdated = System.DateTime.Now.ToString("dd.MM.yy HH:mm:ss");
+            await App.CryptoItemManager.SaveAssetAsync(asset, isNewItem);
+            await Navigation.PopAsync();
         }
 
     }

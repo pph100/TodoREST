@@ -3,9 +3,9 @@
     xmlns="http://xamarin.com/schemas/2014/forms" 
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
     xmlns:lc="clr-namespace:TodoREST"
-    x:Class="TodoREST.CryptoListPage" 
-    x:Name="_cryptoListPage"
-    Title="Cryptos">
+    x:Class="TodoREST.AssetListPage" 
+    x:Name="_assetListPage"
+    Title="Assets">
 
 	<ListView 
         x:Name="listView" 
@@ -18,15 +18,15 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
-                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label Text="Code"  TextColor="Black" BackgroundColor="LightBlue" Grid.Column="0" />
-                <Label Text="Stock" TextColor="Black" BackgroundColor="LightBlue" Grid.Column="1" />
-                <Label Text="Price" TextColor="Black" BackgroundColor="LightBlue" Grid.Column="2" />
-                <Label Text="Value" TextColor="Black" BackgroundColor="LightBlue" Grid.Column="3" />
+                <Label Text="Ticker" TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue"  Grid.Column="0" />
+                <Label Text="Name"   TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue"  Grid.Column="1" />
+                <Label Text="Stock"  TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue"  Grid.Column="2" />
+                <Label Text="Price"  TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue"  Grid.Column="3" />
 
             </Grid>
         </ListView.Header>
@@ -39,45 +39,56 @@
 
                     <ViewCell.ContextActions>
                         <MenuItem Clicked="OnCancel" CommandParameter="{Binding .}" Text="Abbruch" />
+                        <!-- <MenuItem Clicked="OnCopyToNew" CommandParameter="{Binding .}" Text="create new..." /> -->
                     </ViewCell.ContextActions>
 
                     <Grid HorizontalOptions="FillAndExpand">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="2*"></ColumnDefinition>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
-                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
                     
                         <Label
-                            x:Name="xBase"
-                            Text="{Binding Path=ticker.cryptoCode}"
+                            x:Name="xTicker"
+                            Text="{Binding Path=AssetTicker}"
                             Grid.Column="0"
                             VerticalTextAlignment="Center">
                         </Label>
 
                         <Label  
-                            x:Name="xStock"
-                            Text="{Binding Path=stock}" 
+                            x:Name="xName"
+                            Text="{Binding Path=AssetName}" 
                             Grid.Column="1"
                             VerticalTextAlignment="Center">
                         </Label>
                         
                         <Label  
-                            x:Name="xPrice"
-                            Text="{Binding Path=prettyPrice}" 
+                            x:Name="xStock"
+                            Text="{Binding Path=AssetStock}" 
                             Grid.Column="2"
                             VerticalTextAlignment="Center">
                         </Label>
                         
                         <Label  
-                            x:Name="xValue"
-                            Text="{Binding value}" 
+                            x:Name="xPrice"
+                            Text="{Binding Path=prettyValue}"
                             Grid.Column="3"
                             VerticalTextAlignment="Center">
                         </Label>
+                        
+                        <!-- 
+                        <Label  
+                            x:Name="xClass"
+                            Text="{Binding AssetClass}" 
+                            Grid.Column="4"
+                            VerticalTextAlignment="Center">
+                        </Label>
+                        -->
+
                      </Grid>
                         
                 </ViewCell>
@@ -87,5 +98,3 @@
 	</ListView>
 
 </ContentPage>
-
-

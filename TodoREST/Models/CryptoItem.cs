@@ -3,27 +3,37 @@ using Xamarin.Forms;
 
 namespace TodoREST
 {
-    public class TodoItem
+
+    // for CryptoNator API
+    public class TickerItem
     {
-        public string ID { get; set; }
+        public string @base { get; set; }
+        public string cryptoCode { get; set; }      // code, like "BTC" or "ETH"
+        public string target { get; set; }          // e.g. "EUR" or "USD". here: eur
+        public string price { get; set; }
+        public string volume { get; set; }
+        public string change { get; set; }
+    }
 
-        public string Author { get; set; }
-
-        public string TodoTask { get; set; }
-
-        public bool Done { get; set; }
-
-        public string DttmCreated { get; set; }
-
+    public class CryptoItem
+    {
+        public TickerItem ticker { get; set; }
+        public int timestamp { get; set; }
+        public bool success { get; set; }
+        public string error { get; set; }
+        // added by me
+        public string stock { get; set; }           // float
+        public string value { get; set; }           // float
+        public Double valueAsDouble { get; set; }           // float
+        public string prettyPrice { get; set; }           // float
+        public Double priceAsDouble { get; set; }           // float
+        public Double stockAsDouble { get; set; }           // float
+        public Double lastPrice { get; set; }           // float
+        public bool increased { get; set; }           // yes or no
+        public bool decreased { get; set; }           // yes or no
+        public bool stayedFlat { get; set; }           // yes or no
+        public string cryptoName { get; set; }      // "Bitcoin" or "Ethereum"
+        public string searchString { get; set; }    // @cryptoCode + "-" + @target, e.g. "BTC-EUR"
         public string DttmLastUpdated { get; set; }
-
-        public string CompletedBy { get; set; }
-
-        public bool Urgent { get; set; }
-
-        // public string Due { get; set; }
-
-        public DateTime DueDate { get; set; }
-
     }
 }

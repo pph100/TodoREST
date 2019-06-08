@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <ReleaseVersion>1.7.1</ReleaseVersion>
+    <ReleaseVersion>1.9</ReleaseVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -30,6 +30,7 @@
     <Compile Remove="App\DatePickerRenderer.cs" />
     <Compile Remove="App\EmptyClass.cs" />
     <Compile Remove="App\CustomDatePicker.cs" />
+    <Compile Remove="Views\CryptoListPage %28copy%29.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\AboutPage.xaml.cs">

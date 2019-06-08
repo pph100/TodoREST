@@ -4,23 +4,28 @@ using System.Threading.Tasks;
 
 namespace TodoREST
 {
-    public class CryptoItemManager
+    public class AssetManager
     {
-        ICryptoService cryptoService;
+        IAssetService assetService;
 
-        public CryptoItemManager(ICryptoService service)
+        public AssetManager(IAssetService service)
         {
-            cryptoService = service;
+            assetService = service;
         }
 
-        public Task<List<CryptoItem>> Refresh()
+        public Task<List<Asset>> Refresh()
         {
-            return cryptoService.RefreshData();
+            return assetService.RefreshData();
         }
 
-        public Task<List<CryptoItem>> RefreshAsync()
+        public Task<List<Asset>> RefreshAsync()
         {
-            return cryptoService.RefreshDataAsync();
+            return assetService.RefreshDataAsync();
+        }
+
+        public Task<Asset> FindAssetByTicker(string ticker)
+        {
+            return assetService.FindAssetByTicker(ticker);
         }
 
     }
