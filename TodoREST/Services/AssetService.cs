@@ -81,7 +81,7 @@ namespace TodoREST
                         }
                         else
                         {
-                            var prettyPrice = (Double.Parse(__asset.AssetValue, new CultureInfo("en-US")));
+                            var prettyPrice = (__asset.AssetClass == "Comodity") ? Double.Parse(__asset.AssetValue, new CultureInfo("de-DE")) : Double.Parse(__asset.AssetValue, new CultureInfo("en-US"));
                             __asset.prettyValue = prettyPrice > 2.0 ? prettyPrice.ToString("C2", new CultureInfo("de-DE")) : prettyPrice.ToString("C4", new CultureInfo("de-DE"));
                         }
                     }

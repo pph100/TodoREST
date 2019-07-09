@@ -17,7 +17,7 @@ namespace TodoREST
         public App()
         {
 
-            LogWarningsToApplicationOutput = true;
+            // LogWarningsToApplicationOutput = true;
             TodoManager = new TodoItemManager(new TodoService());
             PersonManager = new PersonManager(new PersonService());
             CryptoItemManager = new CryptoItemManager(new CryptoService());

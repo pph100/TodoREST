@@ -27,6 +27,7 @@ namespace TodoREST
         {
             InitializeComponent();
             sortOrder = ViewSortOrder.sortByValue;
+            xValueLabel.Text = "Value ▾";
             sortDescending = true;
 
             listView.RefreshCommand = new Command(async () =>
@@ -49,15 +50,31 @@ namespace TodoREST
                 {
                     case ViewSortOrder.sortByName:
                         newlist = newlist.OrderByDescending(x => x.cryptoName).ToList();
+                        xNameLabel.Text = "Name ▾";
+                        xPriceLabel.Text = "Price";
+                        xStockLabel.Text = "Stock";
+                        xValueLabel.Text = "Value";
                         break;
                     case ViewSortOrder.sortByPrice:
                         newlist = newlist.OrderByDescending(x => x.priceAsDouble).ToList();
+                        xPriceLabel.Text = "Price ▾";
+                        xNameLabel.Text = "Name";
+                        xStockLabel.Text = "Stock";
+                        xValueLabel.Text = "Value";
                         break;
                     case ViewSortOrder.sortByStock:
                         newlist = newlist.OrderByDescending(x => x.stockAsDouble).ToList();
+                        xNameLabel.Text = "Name";
+                        xPriceLabel.Text = "Price";
+                        xStockLabel.Text = "Stock ▾";
+                        xValueLabel.Text = "Value";
                         break;
                     case ViewSortOrder.sortByValue:
                         newlist = newlist.OrderByDescending(x => x.valueAsDouble).ToList();
+                        xNameLabel.Text = "Name";
+                        xPriceLabel.Text = "Price";
+                        xStockLabel.Text = "Stock";
+                        xValueLabel.Text = "Value ▾";
                         break;
                     default:
                         break;
@@ -69,15 +86,31 @@ namespace TodoREST
                 {
                     case ViewSortOrder.sortByName:
                         newlist = newlist.OrderBy(x => x.cryptoName).ToList();
+                        xNameLabel.Text = "Name ▴";
+                        xPriceLabel.Text = "Price";
+                        xStockLabel.Text = "Stock";
+                        xValueLabel.Text = "Value";
                         break;
                     case ViewSortOrder.sortByPrice:
                         newlist = newlist.OrderBy(x => x.priceAsDouble).ToList();
+                        xPriceLabel.Text = "Price ▴";
+                        xNameLabel.Text = "Name";
+                        xStockLabel.Text = "Stock";
+                        xValueLabel.Text = "Value";
                         break;
                     case ViewSortOrder.sortByStock:
                         newlist = newlist.OrderBy(x => x.stock).ToList();
+                        xPriceLabel.Text = "Price";
+                        xNameLabel.Text = "Name";
+                        xStockLabel.Text = "Stock ▴";
+                        xValueLabel.Text = "Value";
                         break;
                     case ViewSortOrder.sortByValue:
                         newlist = newlist.OrderBy(x => x.valueAsDouble).ToList();
+                        xPriceLabel.Text = "Price";
+                        xNameLabel.Text = "Name";
+                        xStockLabel.Text = "Stock";
+                        xValueLabel.Text = "Value ▴";
                         break;
                     default:
                         break;
@@ -100,8 +133,10 @@ namespace TodoREST
 
         private async Task RefreshDataAsync()
         {
+            listView.IsRefreshing = true;
             var cryptoList = await App.CryptoItemManager.RefreshAsync();
             await this._refresh(cryptoList);
+            listView.IsRefreshing = false;
         }
 
 
@@ -119,7 +154,9 @@ namespace TodoREST
         protected async override void OnAppearing()
         {
             base.OnAppearing();
+            listView.IsRefreshing = true;
             await RefreshDataAsync();
+            listView.IsRefreshing = false;
         }
 
 
@@ -131,22 +168,12 @@ namespace TodoREST
 
         private async void NameTapped(object sender, EventArgs e)
         {
-            // var _label = sender as Label;
+            var _label = sender as Label;
             switch (sortOrder)
             {
                 case ViewSortOrder.sortByName:
                     sortDescending = !sortDescending;
                     await this.RefreshData();
-                    /*
-                    if (sortDescending)
-                    {
-                        _label.Text += " ▾";
-                    }
-                    else
-                    {
-                        _label.Text += " ▴";
-                    }
-                    */
                     break;
 
                 default:
@@ -160,6 +187,7 @@ namespace TodoREST
 
         private async void PriceTapped(object sender, EventArgs e)
         {
+            var _label = sender as Label;
             switch (sortOrder)
             {
                 case ViewSortOrder.sortByPrice:
@@ -178,6 +206,7 @@ namespace TodoREST
 
         private async void StockTapped(object sender, EventArgs e)
         {
+            var _label = sender as Label;
             switch (sortOrder)
             {
                 case ViewSortOrder.sortByStock:
@@ -196,6 +225,7 @@ namespace TodoREST
 
         private async void ValueTapped(object sender, EventArgs e)
         {
+            var _label = sender as Label;
             switch (sortOrder)
             {
                 case ViewSortOrder.sortByValue:

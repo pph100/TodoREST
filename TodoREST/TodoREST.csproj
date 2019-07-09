@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <ReleaseVersion>1.9</ReleaseVersion>
+    <ReleaseVersion>1.9.3</ReleaseVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -31,6 +31,7 @@
     <Compile Remove="App\EmptyClass.cs" />
     <Compile Remove="App\CustomDatePicker.cs" />
     <Compile Remove="Views\CryptoListPage %28copy%29.xaml.cs" />
+    <Compile Remove="EmptyClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\AboutPage.xaml.cs">
@@ -94,10 +95,13 @@
     <None Remove="App\Constants.cs~" />
     <None Remove="Interface\TodoService.cs~" />
     <None Remove="*\*~" />
+    <None Remove="EmptyClass.cs~" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\" />
     <Folder Include="Services\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">

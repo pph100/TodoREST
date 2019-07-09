@@ -8,11 +8,11 @@ namespace TodoREST
     public class Asset
     {
         public string id { get; set; }
-        public string AssetTicker { get; set; }     // code, like "BTC" or "ETH"
-        public string AssetName { get; set; }       // name, like "Bitcoin" or "Ethereum"
+        public string AssetTicker { get; set; }     // code, like "BTC" or "ETH", "XAU", "XAG" etc
+        public string AssetName { get; set; }       // name, like "Bitcoin" or "Ethereum", "Silbermünzen", "Goldbarren" etc.
         public string AssetStock { get; set; }
         public string SearchString { get; set; }
-        public string AssetClass { get; set; }      // e.g. "Crypto" or "Commodity"
+        public string AssetClass { get; set; }      // e.g. "Crypto" or "Comodity"
         public string AssetValue { get; set; }      // float: price of asset per piece
         public string prettyValue { get; set; }      // float: price of asset per piece
         public string AssetValueDttm { get; set; }      // float: price of asset per piece

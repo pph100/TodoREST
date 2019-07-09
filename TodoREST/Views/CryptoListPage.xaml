@@ -30,24 +30,24 @@
                     <ColumnDefinition Width="3*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label x:Name="xNameLabel" Text="Name"           TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="0" VerticalTextAlignment="Center" >
+                <Label x:Name="xNameLabel" Text="Name"           TextColor="Black" FontSize="Large" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="0" VerticalTextAlignment="Center" >
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer  Tapped="NameTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Label Text="Stock"          TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="1" VerticalTextAlignment="Center" >
+                <Label x:Name="xStockLabel" Text="Stock"          TextColor="Black" FontSize="Large" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="1" VerticalTextAlignment="Center" >
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="StockTapped"/>
+                        <TapGestureRecognizer  Tapped="StockTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Label Text="Price"          TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="2" VerticalTextAlignment="Center" >
+                <Label x:Name="xPriceLabel" Text="Price"          TextColor="Black" FontSize="Large" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="2" VerticalTextAlignment="Center" >
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="PriceTapped"/>
+                        <TapGestureRecognizer  Tapped="PriceTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Label Text="Value"          TextColor="Black" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="3" VerticalTextAlignment="Center" >
+                <Label x:Name="xValueLabel" Text="Value"          TextColor="Black" FontSize="Large" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="3" VerticalTextAlignment="Center" >
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="ValueTapped"/>
+                        <TapGestureRecognizer  Tapped="ValueTapped"/>
                     </Label.GestureRecognizers>
                 </Label>
 
@@ -64,10 +64,8 @@
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
             
-            <!-- 
-                <Label Text=""           TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="0" />
-                <Label Text=""           TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="1" />
-            -->
+                <Label x:Name="xdummy1"   Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="0" HorizontalOptions="EndAndExpand" />
+                <Label x:Name="xdummy2"   Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="1" HorizontalOptions="EndAndExpand" />
                 <Label x:Name="xSum"   Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="2" HorizontalOptions="EndAndExpand" />
                 <Label x:Name="xTotal" Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="3" />
             
@@ -91,24 +89,6 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-
-                    
-                        <!-- 
-                        <Label x:Name="xStayedFlat"
-                               Text="{Binding stayedFlat}"
-                               IsEnabled="false"
-                               IsVisible="false" />
-
-                        <Label x:Name="xIncreased"
-                               Text="{Binding increased}"
-                               IsEnabled="false"
-                               IsVisible="false" />
-
-                        <Label x:Name="xDecreased"
-                               Text="{Binding decreased}"
-                               IsEnabled="false"
-                               IsVisible="false" />
-                       -->
 
                         <Label
                             x:Name="xBase"
@@ -174,6 +154,25 @@
 			</DataTemplate>
 		</ListView.ItemTemplate>
 	</ListView>
+    <!-- 
+    <OnPlatform>
+        <On Platform="macOS">
+            <Grid HorizontalOptions="FillAndExpand">
+            
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"  />
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+            
+                <Label x:Name="xSumMacOS"   Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="2" HorizontalOptions="EndAndExpand" />
+                <Label x:Name="xTotalMacOS" Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="3" />
+            
+            </Grid>
+        </On>
+    </OnPlatform>
+    -->
 
 </ContentPage>
 

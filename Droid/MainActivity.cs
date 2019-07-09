@@ -9,6 +9,7 @@ namespace TodoREST.Droid
     {
         internal static MainActivity Instance { get; private set; }
 
+        [System.Obsolete]
         protected override void OnCreate(Bundle bundle)
         {
             TabLayoutResource = Resource.Layout.Tabbar;

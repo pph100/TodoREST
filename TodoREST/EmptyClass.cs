@@ -123,7 +123,6 @@ namespace TodoREST
                                     asset.AssetValue = _item.ticker.price;
                                     asset.prettyValue = _item.prettyPrice;
                                     asset.AssetValueDttm = MyDate;
-                                    // asset.AssetStock = _item.stock;
                                 }
                             }
                             // TODO: Else-Zweig!!!
@@ -148,44 +147,57 @@ namespace TodoREST
                         // Hier weitermachen: 
                         //
                         // 1. search actual asset in comodities
-                        // 2. 
+                        // 2. update asset with latest price (bid)
+                        // 3. update CryptoItems List
                         //
+                        var uri = new Uri(string.Format(Constants.CN_BaseURL, asset.SearchString));
 
-                        foreach (var _c in Comodities)
+                        try
                         {
-                            if (_c.category == asset.AssetName)
+                            var response = await cryptoClient.GetAsync(uri);
+                            if (response.IsSuccessStatusCode)
                             {
-                                var _item = new CryptoItem();
-                                _item.ticker = new TickerItem();
-                                string MyDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+                                var content = await response.Content.ReadAsStringAsync();
+                                var _item = JsonConvert.DeserializeObject<CryptoItem>(content);
 
-                                _item.ticker.cryptoCode = asset.AssetTicker;
-                                _item.ticker.price = _c.price_per_gram;
-                                _item.stock = (Double.Parse(asset.AssetStock, new CultureInfo("en-US"))).ToString(new CultureInfo("de-DE"));
-                                _item.stockAsDouble = (Double.Parse(asset.AssetStock, new CultureInfo("en-US")));
-                                _item.cryptoName = asset.AssetName;
-                                _item.searchString = asset.SearchString;
-                                var prettyPrice = (Double.Parse(_item.ticker.price, new CultureInfo("de-DE")));
-                                _item.prettyPrice = prettyPrice > 2.0 ? prettyPrice.ToString("C2", new CultureInfo("de-DE")) : prettyPrice.ToString("C4", new CultureInfo("de-DE"));
-                                _item.priceAsDouble = (Double.Parse(_item.ticker.price, new CultureInfo("de-DE")));
-                                _item.lastPrice = (asset.AssetValue == null) ? (Double)0.0f : (Double.Parse(asset.AssetValue, new CultureInfo("de-DE")));
-                                _item.increased = _item.priceAsDouble > _item.lastPrice ? true : false;
-                                _item.stayedFlat = ((_item.priceAsDouble == _item.lastPrice) || (Math.Abs(_item.lastPrice) < 0.1));
-                                _item.decreased = (_item.priceAsDouble < _item.lastPrice);
-                                _item.lastPrice = _item.priceAsDouble;
-                                var prettyValue = (Double.Parse(asset.AssetStock, new CultureInfo("en-US")) * Double.Parse(_item.ticker.price, new CultureInfo("de-DE"))).ToString("C2", new CultureInfo("de-DE"));
-                                _item.value = prettyValue;
-                                _item.valueAsDouble = _item.priceAsDouble * _item.stockAsDouble;
-                                _total += (Double.Parse(asset.AssetStock, new CultureInfo("en-US")) * Double.Parse(_item.ticker.price, new CultureInfo("de-DE")));
-                                TotalValue = _total.ToString("C2", new CultureInfo("de-DE"));
-                                CryptoItems.Add(_item);
+                                if (_item.ticker != null && _item.ticker.@base != "")
+                                {
+                                    string MyDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+                                    _item.ticker.cryptoCode = _item.ticker.@base;
+                                    _item.stock = (Double.Parse(asset.AssetStock, new CultureInfo("en-US"))).ToString(new CultureInfo("de-DE"));
+                                    _item.stockAsDouble = (Double.Parse(asset.AssetStock, new CultureInfo("en-US")));
+                                    _item.cryptoName = asset.AssetName;
+                                    _item.searchString = asset.SearchString;
+                                    var prettyPrice = (Double.Parse(_item.ticker.price, new CultureInfo("en-US")));
+                                    _item.prettyPrice = prettyPrice > 2.0 ? prettyPrice.ToString("C2", new CultureInfo("de-DE")) : prettyPrice.ToString("C4", new CultureInfo("de-DE"));
+                                    _item.priceAsDouble = (Double.Parse(_item.ticker.price, new CultureInfo("en-US")));
+                                    _item.lastPrice = (Double.Parse(asset.AssetValue, new CultureInfo("en-US")));
+                                    _item.increased = _item.priceAsDouble > _item.lastPrice ? true : false;
+                                    _item.stayedFlat = ((_item.priceAsDouble == _item.lastPrice) || (Math.Abs(_item.lastPrice) < 0.1));
+                                    _item.decreased = (_item.priceAsDouble < _item.lastPrice);
+                                    _item.lastPrice = _item.priceAsDouble;
+                                    var prettyValue = (Double.Parse(asset.AssetStock, new CultureInfo("en-US")) * Double.Parse(_item.ticker.price, new CultureInfo("en-US"))).ToString("C2", new CultureInfo("de-DE"));
+                                    _item.value = prettyValue;
+                                    _item.valueAsDouble = _item.priceAsDouble * _item.stockAsDouble;
+                                    _total += (Double.Parse(asset.AssetStock, new CultureInfo("en-US")) * Double.Parse(_item.ticker.price, new CultureInfo("en-US")));
+                                    TotalValue = _total.ToString("C2", new CultureInfo("de-DE"));
+                                    CryptoItems.Add(_item);
 
-                                asset.AssetValue = _item.ticker.price;
-                                asset.prettyValue = _item.prettyPrice;
-                                asset.AssetValueDttm = MyDate;
-                                // asset.AssetStock = _item.stock;
-
+                                    asset.AssetValue = _item.ticker.price;
+                                    asset.prettyValue = _item.prettyPrice;
+                                    asset.AssetValueDttm = MyDate;
+                                }
                             }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine(@"               ERROR {0}", ex.Message);
+                            Debug.WriteLine(@"Unsuccessful connect to URI {0} at {1}", uri, System.DateTime.Now);
+                            await App._mainPage.DisplayAlert(
+                                "Connection Issue",
+                                "Connection to  " + uri + "@" + System.DateTime.Now + " revealed: " + ex.Message,
+                                "OK"
+                            );
                         }
 
                     }
@@ -312,52 +324,77 @@ namespace TodoREST
         }
 
 
+        public async Task<List<Asset>> RefreshComoditiesAsyncTEMP()
+        {
+            var uri = new Uri(string.Format(Constants.GoldUrl, string.Empty));
+
+            try
+            {
+                var response = await assetClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    Assets = JsonConvert.DeserializeObject<List<Asset>>(content);
+                    foreach (var asset in Assets)
+                    {
+                        if (asset.AssetValue != null && asset.AssetValue != "")
+                        {
+                            string myDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+                            asset.AssetValueDttm = myDate;
+                            Debug.WriteLine("Asset {0} with value {1} set to date {2}", asset.AssetName, asset.AssetValue, myDate);
+                        }
+                        else
+                        {
+                            Debug.WriteLine("Asset {0} seems to have no value: '{1}'!!!", asset.AssetName, asset.AssetValue);
+                        }
+                    }
+                }
+                // TODO: handle unsuccessful response
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"               ERROR {0}", ex.Message);
+                Debug.WriteLine(@"Unsuccessful connect to URI {0} at {1}", uri, System.DateTime.Now);
+                await App._mainPage.DisplayAlert(
+                    "Connection Issue",
+                    "Connection to  " + uri + "@" + System.DateTime.Now + " revealed: " + ex.Message,
+                    "OK"
+                );
+            }
+            return Assets;
+        }
+
+
         public async Task SaveAssetAsync(Asset item, bool isNewItem = false)
         {
             var uri = new Uri(string.Format(Constants.AssetUrl, string.Empty));
 
-            if (item != null)
+            try
             {
-                try
-                {
-                    Double result = (Double)0.0f;
-                    string MyDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
-                    item.DttmLastUpdated = MyDate;
-                    Double.TryParse(item.AssetStock, NumberStyles.AllowDecimalPoint, new CultureInfo("en-US"), out result);
-                    var resultStr = result.ToString();
-                    if (resultStr == null || resultStr == "0")
-                    {
-                        Double.TryParse(item.AssetStock, NumberStyles.AllowDecimalPoint, new CultureInfo("de-DE"), out result);
-                        resultStr = result.ToString();
-                        if (resultStr != null && resultStr != "0")
-                        {
-                            item.AssetStock = result.ToString(new CultureInfo("en-US"));
-                        }
+                string MyDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+                item.DttmLastUpdated = MyDate;
+                var json = JsonConvert.SerializeObject(item);
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    }
-                    var json = JsonConvert.SerializeObject(item);
-                    var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                    HttpResponseMessage response = null;
-                    if (isNewItem)
-                    {
-                        response = await cryptoClient.PostAsync(uri, content);
-                    }
-                    else
-                    {
-                        response = await cryptoClient.PutAsync(uri, content);
-                    }
-                    // TODO: handle response
-                }
-                catch (Exception ex)
+                HttpResponseMessage response = null;
+                if (isNewItem)
                 {
-                    Debug.WriteLine(@"               ERROR in function SaveAssetAsync: {0}", ex.Message);
-                    await App._mainPage.DisplayAlert(
-                        "Connection Issue",
-                        "Connection to  " + uri + "@" + System.DateTime.Now + " revealed: " + ex.Message,
-                        "OK"
-                    );
+                    response = await cryptoClient.PostAsync(uri, content);
                 }
+                else
+                {
+                    response = await cryptoClient.PutAsync(uri, content);
+                }
+                // TODO: handle response
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"               ERROR {0}", ex.Message);
+                await App._mainPage.DisplayAlert(
+                    "Connection Issue",
+                    "Connection to  " + uri + "@" + System.DateTime.Now + " revealed: " + ex.Message,
+                    "OK"
+                );
             }
         }
 
@@ -427,10 +464,7 @@ namespace TodoREST
             foreach (var item in cryptoList)
             {
                 var asset = FindAssetByTicker(item.ticker.cryptoCode);
-                if (asset != null)
-                {
-                    await this.SaveAssetAsync(asset);
-                }
+                await this.SaveAssetAsync(asset);
             }
         }
     }

@@ -16,7 +16,7 @@
             <Entry x:Name="assetTicker" Text="{Binding Path=AssetTicker}" />
 
             <Label Text="Stock" />
-            <Entry x:Name="assetStock" Text="{Binding Path=AssetStock}" Keyboard="Numeric" />
+            <Entry x:Name="assetStock" Text="{Binding Path=AssetStock}" Keyboard="Numeric"  />
 
             <StackLayout Grid.Row="2" Orientation="Horizontal">
                 <Label Text="Price as of" />
