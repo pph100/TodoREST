@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage 
-    xmlns="http://xamarin.com/schemas/2014/forms" 
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:lc="clr-namespace:TodoREST"
-    x:Class="TodoREST.CryptoListPage" 
+    x:Class="TodoREST.CryptoListPage"
     x:Name="_cryptoListPage"
     Title="Stock">
     <!-- xmlns:cs="clr-namespace:TodoREST.CryptoService; assembly=TodoREST.CryptoService" -->
-    
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <lc:BoolConverter x:Key="BoolConverter" />
         </ResourceDictionary>
-    </ContentPage.Resources>    
-    
-	<ListView 
-        x:Name="listView" 
-        Margin="20" 
-        ItemSelected="OnAssetSelected" 
-        IsPullToRefreshEnabled="true" >
-        
+    </ContentPage.Resources>
+
+    <ListView
+        x:Name="listView"
+        Margin="20"
+        ItemSelected="OnAssetSelected"
+        IsPullToRefreshEnabled="true">
+
         <ListView.Header>
-             <Grid HorizontalOptions="FillAndExpand">
+            <Grid HorizontalOptions="FillAndExpand">
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
@@ -30,24 +30,52 @@
                     <ColumnDefinition Width="3*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Label x:Name="xNameLabel" Text="Name"           TextColor="Black" FontSize="Large" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="0" VerticalTextAlignment="Center" >
+                <Label x:Name="xNameLabel"
+                       Text="Name"
+                       TextColor="Black"
+                       FontSize="Large"
+                       FontFamily="Bold"
+                       BackgroundColor="LightBlue"
+                       Grid.Column="0"
+                       VerticalTextAlignment="Center">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer  Tapped="NameTapped"/>
+                        <TapGestureRecognizer  Tapped="NameTapped" />
                     </Label.GestureRecognizers>
                 </Label>
-                <Label x:Name="xStockLabel" Text="Stock"          TextColor="Black" FontSize="Large" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="1" VerticalTextAlignment="Center" >
+                <Label x:Name="xStockLabel"
+                       Text="Stock"
+                       TextColor="Black"
+                       FontSize="Large"
+                       FontFamily="Bold"
+                       BackgroundColor="LightBlue"
+                       Grid.Column="1"
+                       VerticalTextAlignment="Center">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer  Tapped="StockTapped"/>
+                        <TapGestureRecognizer  Tapped="StockTapped" />
                     </Label.GestureRecognizers>
                 </Label>
-                <Label x:Name="xPriceLabel" Text="Price"          TextColor="Black" FontSize="Large" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="2" VerticalTextAlignment="Center" >
+                <Label x:Name="xPriceLabel"
+                       Text="Price"
+                       TextColor="Black"
+                       FontSize="Large"
+                       FontFamily="Bold"
+                       BackgroundColor="LightBlue"
+                       Grid.Column="2"
+                       VerticalTextAlignment="Center">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer  Tapped="PriceTapped"/>
+                        <TapGestureRecognizer  Tapped="PriceTapped" />
                     </Label.GestureRecognizers>
                 </Label>
-                <Label x:Name="xValueLabel" Text="Value"          TextColor="Black" FontSize="Large" FontFamily="Bold" BackgroundColor="LightBlue" Grid.Column="3" VerticalTextAlignment="Center" >
+                <Label x:Name="xValueLabel"
+                       Text="Value"
+                       TextColor="Black"
+                       FontSize="Large"
+                       FontFamily="Bold"
+                       BackgroundColor="LightBlue"
+                       Grid.Column="3"
+                       VerticalTextAlignment="Center">
                     <Label.GestureRecognizers>
-                        <TapGestureRecognizer  Tapped="ValueTapped"/>
+                        <TapGestureRecognizer  Tapped="ValueTapped" />
                     </Label.GestureRecognizers>
                 </Label>
 
@@ -56,29 +84,54 @@
 
         <ListView.Footer>
             <Grid HorizontalOptions="FillAndExpand">
-            
+
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="3*"  />
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="3*" />
                 </Grid.ColumnDefinitions>
-            
-                <Label x:Name="xdummy1"   Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="0" HorizontalOptions="EndAndExpand" />
-                <Label x:Name="xdummy2"   Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="1" HorizontalOptions="EndAndExpand" />
-                <Label x:Name="xSum"   Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="2" HorizontalOptions="EndAndExpand" />
-                <Label x:Name="xTotal" Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="3" />
-            
+
+                <Label x:Name="xdummy1"
+                       Text=""
+                       TextColor="Black"
+                       FontFamily="Bold"
+                       FontSize="Default"
+                       Grid.Column="0"
+                       HorizontalOptions="EndAndExpand" />
+                <Label x:Name="xdummy2"
+                       Text=""
+                       TextColor="Black"
+                       FontFamily="Bold"
+                       FontSize="Default"
+                       Grid.Column="1"
+                       HorizontalOptions="EndAndExpand" />
+                <Label x:Name="xSum"
+                       Text=""
+                       TextColor="Black"
+                       FontFamily="Bold"
+                       FontSize="Large"
+                       Grid.Column="2"
+                       HorizontalOptions="EndAndExpand" />
+                <Label x:Name="xTotal"
+                       Text=""
+                       TextColor="Black"
+                       FontFamily="Bold"
+                       FontSize="Large"
+                       Grid.Column="3" />
+
             </Grid>
         </ListView.Footer>
 
-		<ListView.ItemTemplate>
-			<DataTemplate>
+        <ListView.ItemTemplate>
+            <DataTemplate>
 
                 <ViewCell x:Name="viewCell">
 
                     <ViewCell.ContextActions>
-                        <MenuItem Clicked="OnCancel" CommandParameter="{Binding .}" Text="Abbruch" />
+                        <MenuItem Clicked="OnCancel"
+                                  CommandParameter="{Binding .}"
+                                  Text="Abbruch" />
                     </ViewCell.ContextActions>
 
                     <Grid HorizontalOptions="FillAndExpand">
@@ -97,63 +150,73 @@
                             VerticalTextAlignment="Center">
                         </Label>
 
-                        <Label  
+                        <Label
                             x:Name="xStock"
-                            Text="{Binding Path=stock}" 
+                            Text="{Binding Path=stock}"
                             Grid.Column="1"
                             VerticalTextAlignment="Center">
                         </Label>
-                        
-                        <Label  
+
+                        <Label
                             x:Name="xPrice"
-                            Text="{Binding Path=prettyPrice}" 
+                            Text="{Binding Path=prettyPrice}"
                             Grid.Column="2"
                             VerticalTextAlignment="Center">
-                            
-                                <Label.Triggers> 
 
-                                    <MultiTrigger TargetType="Label">
-                                        <MultiTrigger.Conditions>
-                                            <BindingCondition Binding="{Binding decreased}" Value="True" />
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="TextColor" Value="OrangeRed" />
-                                        <Setter Property="FontAttributes" Value="Bold" />
-                                    </MultiTrigger>
+                            <Label.Triggers>
 
-                                    <MultiTrigger TargetType="Label">
-                                        <MultiTrigger.Conditions>
-                                            <BindingCondition Binding="{Binding increased}" Value="True" />
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="TextColor" Value="Green" />
-                                        <Setter Property="FontAttributes" Value="Bold" />
-                                    </MultiTrigger>
-                                            
-                                    <MultiTrigger TargetType="Label">
-                                        <MultiTrigger.Conditions>
-                                            <BindingCondition Binding="{Binding stayedFlat}" Value="True" />
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="TextColor" Value="Default" />
-                                        <Setter Property="FontAttributes" Value="None" />
-                                    </MultiTrigger>
-                                            
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding decreased}"
+                                                          Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="TextColor"
+                                            Value="OrangeRed" />
+                                    <Setter Property="FontAttributes"
+                                            Value="Bold" />
+                                </MultiTrigger>
+
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding increased}"
+                                                          Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="TextColor"
+                                            Value="Green" />
+                                    <Setter Property="FontAttributes"
+                                            Value="Bold" />
+                                </MultiTrigger>
+
+                                <MultiTrigger TargetType="Label">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding stayedFlat}"
+                                                          Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="TextColor"
+                                            Value="Default" />
+                                    <Setter Property="FontAttributes"
+                                            Value="None" />
+                                </MultiTrigger>
+
                             </Label.Triggers>
-                            
+
                         </Label>
-                        
-                        <Label  
+
+                        <Label
                             x:Name="xValue"
-                            Text="{Binding value}" 
+                            Text="{Binding value}"
                             Grid.Column="3"
                             FontFamily="Bold"
                             VerticalTextAlignment="Center">
                         </Label>
-                     </Grid>
-                        
+                    </Grid>
+
                 </ViewCell>
 
-			</DataTemplate>
-		</ListView.ItemTemplate>
-	</ListView>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+
     <!-- 
     <OnPlatform>
         <On Platform="macOS">

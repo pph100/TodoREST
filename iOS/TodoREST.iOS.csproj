@@ -13,7 +13,7 @@
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>4dbe7b8e</NuGetPackageImportStamp>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <ReleaseVersion>1.9.3</ReleaseVersion>
+    <ReleaseVersion>1.9.4</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,7 +72,7 @@
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.1.0.581479" />
+    <PackageReference Include="Xamarin.Forms" Version="4.1.0.618606" />
     <PackageReference Include="Xamarin.Essentials">
       <Version>1.2.0</Version>
     </PackageReference>

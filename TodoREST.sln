@@ -349,6 +349,6 @@ Global
 		$17.inheritsSet = null
 		$17.scope = application/android+xml
 		description = REST-Api-able app to maintain ToDo-Items along with their responsible actors/persons.
-		version = 1.9.3
+		version = 1.9.4
 	EndGlobalSection
 EndGlobal
