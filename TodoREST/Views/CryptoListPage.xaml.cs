@@ -120,13 +120,14 @@ namespace TodoREST
             listView.ItemsSource = newlist;
             xTotal.Text = totalValue;
             xSum.Text = "Total:";
-            await App.CryptoItemManager.SaveAssetValues(newlist);
+            // await App.CryptoItemManager.SaveAssetValues(newlist);
         }
 
 
         private async Task RefreshData()
         {
             var cryptoList = await App.CryptoItemManager.Refresh();
+
             await this._refresh(cryptoList);
         }
 
@@ -135,19 +136,61 @@ namespace TodoREST
         {
             listView.IsRefreshing = true;
             var cryptoList = await App.CryptoItemManager.RefreshAsync();
+            // listView.IsRefreshing = false;
             await this._refresh(cryptoList);
+            await App.CryptoItemManager.SaveAssetValues(cryptoList);
             listView.IsRefreshing = false;
         }
 
 
-        void OnAssetSelected(object sender, SelectedItemChangedEventArgs e)
+        async void OnAssetSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var cryptoItem = e.SelectedItem as CryptoItem;
+            //
+            // asset-Chart anzeigen:
+            //
+            var assetHistoryPage = new AssetHistoryPage(true);
+            var assetHistory = await App.AssetHistoryManager.setAssetHistoryTicker(cryptoItem.ticker.cryptoCode);
+            await Navigation.PushAsync(assetHistoryPage);
+        }
+
+
+        async void OnAssetSelectedEdit(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            var cryptoItem = mi.BindingContext as CryptoItem;
             var asset = App.CryptoItemManager.FindAssetByTicker(cryptoItem.ticker.cryptoCode);
             var assetPage = new AssetPage();
 
             assetPage.BindingContext = asset;
-            Navigation.PushAsync(assetPage);
+            await Navigation.PushAsync(assetPage);
+        }
+
+
+
+        async void OnAssetSelectedValue(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            var cryptoItem = mi.BindingContext as CryptoItem;
+            //
+            // asset-Chart anzeigen:
+            //
+            var assetHistoryPage = new AssetHistoryPage(true);
+            var assetHistory = await App.AssetHistoryManager.setAssetHistoryTicker(cryptoItem.ticker.cryptoCode);
+            await Navigation.PushAsync(assetHistoryPage);
+        }
+
+
+        async void OnAssetSelectedTotalValue(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+            var cryptoItem = mi.BindingContext as CryptoItem;
+            //
+            // asset-Chart anzeigen:
+            //
+            var assetHistoryPage = new AssetHistoryPage(false);
+            var assetHistory = await App.AssetHistoryManager.setAssetHistoryTicker(cryptoItem.ticker.cryptoCode);
+            await Navigation.PushAsync(assetHistoryPage);
         }
 
 
@@ -155,7 +198,9 @@ namespace TodoREST
         {
             base.OnAppearing();
             listView.IsRefreshing = true;
-            await RefreshDataAsync();
+            // test: schneller?
+            // await RefreshDataAsync();
+            await RefreshData();
             listView.IsRefreshing = false;
         }
 

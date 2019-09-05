@@ -6,7 +6,6 @@
     x:Class="TodoREST.CryptoListPage"
     x:Name="_cryptoListPage"
     Title="Stock">
-    <!-- xmlns:cs="clr-namespace:TodoREST.CryptoService; assembly=TodoREST.CryptoService" -->
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -129,9 +128,23 @@
                 <ViewCell x:Name="viewCell">
 
                     <ViewCell.ContextActions>
+
                         <MenuItem Clicked="OnCancel"
                                   CommandParameter="{Binding .}"
                                   Text="Abbruch" />
+
+                        <MenuItem Clicked="OnAssetSelectedValue"
+                                  CommandParameter="{Binding .}"
+                                  Text="Chart:Value" />
+
+                        <MenuItem Clicked="OnAssetSelectedTotalValue"
+                                  CommandParameter="{Binding .}"
+                                  Text="Chart: Total Value" />
+
+                        <MenuItem Clicked="OnAssetSelectedEdit"
+                                  CommandParameter="{Binding .}"
+                                  Text="Edit Item" />
+
                     </ViewCell.ContextActions>
 
                     <Grid HorizontalOptions="FillAndExpand">
@@ -216,26 +229,6 @@
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
-
-    <!-- 
-    <OnPlatform>
-        <On Platform="macOS">
-            <Grid HorizontalOptions="FillAndExpand">
-            
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="3*"  />
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-            
-                <Label x:Name="xSumMacOS"   Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="2" HorizontalOptions="EndAndExpand" />
-                <Label x:Name="xTotalMacOS" Text="" TextColor="Black" FontFamily="Bold" FontSize="Large" Grid.Column="3" />
-            
-            </Grid>
-        </On>
-    </OnPlatform>
-    -->
 
 </ContentPage>
 

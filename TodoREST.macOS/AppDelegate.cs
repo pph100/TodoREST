@@ -35,6 +35,9 @@ namespace TodoREST.macOS
         {
             // Forms.Init();
             global::Xamarin.Forms.Forms.Init();
+
+            // Syncfusion.SfChart.XForms.MacOS.SfChartRenderer.Init();
+
             LoadApplication(new App());
             base.DidFinishLaunching(notification);
         }

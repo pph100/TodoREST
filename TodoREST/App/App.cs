@@ -10,8 +10,10 @@ namespace TodoREST
         public static PersonManager PersonManager { get; private set; }
         public static CryptoItemManager CryptoItemManager { get; private set; }
         public static AssetManager AssetManager { get; private set; }
+        public static AssetHistoryManager AssetHistoryManager { get; private set; }
 
         public static TabPage _mainPage = new TabPage();
+        // public static TabPage _mainPage;
 
         [System.Obsolete]
         public App()
@@ -22,6 +24,7 @@ namespace TodoREST
             PersonManager = new PersonManager(new PersonService());
             CryptoItemManager = new CryptoItemManager(new CryptoService());
             AssetManager = new AssetManager(new AssetService());
+            AssetHistoryManager = new AssetHistoryManager(new AssetHistoryService());
 
             MainPage = new NavigationPage(_mainPage);
         }

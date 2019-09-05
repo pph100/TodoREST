@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Foundation;
 using UIKit;
+using Xamarin.Forms.Internals;
 
 namespace TodoREST.iOS
 {
@@ -14,7 +16,9 @@ namespace TodoREST.iOS
         {
             global::Xamarin.Forms.Forms.Init();
 
+            Syncfusion.SfChart.XForms.iOS.Renderers.SfChartRenderer.Init();
             // App.Speech = new Speech();
+            Log.Listeners.Add(new DelegateLogListener((c, m) => Debug.WriteLine(m, c)));
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

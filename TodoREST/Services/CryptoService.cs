@@ -71,8 +71,13 @@ namespace TodoREST
 
         public async Task<List<CryptoItem>> RefreshDataAsync()
         {
+            /*
             Assets = await this.RefreshAssetsAsync();
             Comodities = await this.RefreshComoditiesAsync();
+            */
+
+            Assets = await this.RefreshAssets();
+            Comodities = await this.RefreshComodities();
 
             // funktioniert das???
             CryptoItems = new List<CryptoItem>();
