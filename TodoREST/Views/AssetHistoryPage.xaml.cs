@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Syncfusion.SfChart.XForms;
+using System.Globalization;
 
 namespace TodoREST
 {
@@ -41,6 +42,12 @@ namespace TodoREST
             }
 
             base.OnAppearing();
+        }
+
+        private void YAxis_LabelCreated(object sender, Syncfusion.SfChart.XForms.ChartAxisLabelEventArgs e)
+        {
+            double value = Convert.ToDouble(e.LabelContent);
+            e.LabelContent = value.ToString("#,###.##", new CultureInfo("en-US"));
         }
     }
 }
