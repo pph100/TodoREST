@@ -44,10 +44,12 @@ namespace TodoREST
             base.OnAppearing();
         }
 
+        /*
         private void YAxis_LabelCreated(object sender, Syncfusion.SfChart.XForms.ChartAxisLabelEventArgs e)
         {
             double value = Convert.ToDouble(e.LabelContent);
             e.LabelContent = value.ToString("#,###.##", new CultureInfo("en-US"));
         }
+        */
     }
 }

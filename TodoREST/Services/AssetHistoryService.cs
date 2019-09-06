@@ -108,7 +108,6 @@ namespace TodoREST
             if (_AssetHistories == null || _AssetHistories.Count < 1)
             {
                 _AssetHistory = await this.RefreshDataAsync();
-                //NotifyPropertyChanged("_AssetHistory");
                 return (_AssetHistory);
             }
             else
@@ -116,11 +115,10 @@ namespace TodoREST
                 // prüfen, ob aktuelle Liste bereits einen Eintrag für den aktuellen Ticker enthält
                 foreach (var _assetHistoryList in _AssetHistories)
                 {
-                    if (_assetHistoryList[0].AssetTicker.Equals(assetHistoryTicker))
+                    if ((_assetHistoryList[0] != null) && _assetHistoryList[0].AssetTicker.Equals(assetHistoryTicker))
                     {
                         // ja, es gibt schon einen Eintrag mit dem Ticker in der Liste
                         _AssetHistory = _assetHistoryList;
-                        // NotifyPropertyChanged("_AssetHistory");
                         return (_AssetHistory);
                     }
                 }

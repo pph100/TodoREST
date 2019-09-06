@@ -14,6 +14,7 @@ namespace TodoREST
         public string AssetStock { get; set; }
         public string avg_NK_2 { get; set; }
         public string avg_NK_4 { get; set; }
+        public string daily_value_formatted { get; set; }
         public string daily_value { get; set; }
     }
 }
