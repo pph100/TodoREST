@@ -18,7 +18,7 @@ namespace TodoREST
         [System.Obsolete]
         public App()
         {
-
+            // Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("YOUR LICENSE KEY");
             // LogWarningsToApplicationOutput = true;
             TodoManager = new TodoItemManager(new TodoService());
             PersonManager = new PersonManager(new PersonService());
