@@ -20,8 +20,8 @@ namespace TodoREST
         {
             // Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("YOUR LICENSE KEY");
             // LogWarningsToApplicationOutput = true;
-            TodoManager = new TodoItemManager(new TodoService());
-            PersonManager = new PersonManager(new PersonService());
+            // TodoManager = new TodoItemManager(new TodoService());
+            // PersonManager = new PersonManager(new PersonService());
             CryptoItemManager = new CryptoItemManager(new CryptoService());
             AssetManager = new AssetManager(new AssetService());
             AssetHistoryManager = new AssetHistoryManager(new AssetHistoryService());

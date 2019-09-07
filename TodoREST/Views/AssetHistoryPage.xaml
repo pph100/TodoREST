@@ -26,7 +26,8 @@
         </chart:SfChart.ChartBehaviors>
 
         <chart:SfChart.PrimaryAxis>
-            <chart:CategoryAxis Interval="7">
+            <chart:CategoryAxis ShowTrackballInfo="True"
+                                Interval="7">
                 <chart:CategoryAxis.Title>
                     <chart:ChartAxisTitle Text="Date" />
                 </chart:CategoryAxis.Title>

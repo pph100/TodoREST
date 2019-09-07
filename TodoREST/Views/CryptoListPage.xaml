@@ -85,10 +85,10 @@
             <Grid HorizontalOptions="FillAndExpand">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="4*" />
+                    <ColumnDefinition Width="4*" />
                 </Grid.ColumnDefinitions>
 
                 <Label x:Name="xdummy1"
@@ -129,14 +129,6 @@
 
                     <ViewCell.ContextActions>
 
-                        <MenuItem Clicked="OnCancel"
-                                  CommandParameter="{Binding .}"
-                                  Text="Abbruch" />
-
-                        <MenuItem Clicked="OnAssetSelectedValue"
-                                  CommandParameter="{Binding .}"
-                                  Text="Chart:Value" />
-
                         <MenuItem Clicked="OnAssetSelectedTotalValue"
                                   CommandParameter="{Binding .}"
                                   Text="Chart: Total Value" />
@@ -144,6 +136,14 @@
                         <MenuItem Clicked="OnAssetSelectedEdit"
                                   CommandParameter="{Binding .}"
                                   Text="Edit Item" />
+
+                        <MenuItem Clicked="OnAssetSelectedValue"
+                                  CommandParameter="{Binding .}"
+                                  Text="Chart:Value" />
+
+                        <MenuItem Clicked="OnCancel"
+                                  CommandParameter="{Binding .}"
+                                  Text="Abbruch" />
 
                     </ViewCell.ContextActions>
 
