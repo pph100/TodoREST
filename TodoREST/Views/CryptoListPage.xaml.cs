@@ -167,7 +167,6 @@ namespace TodoREST
         }
 
 
-
         async void OnAssetSelectedValue(object sender, EventArgs e)
         {
             var mi = ((MenuItem)sender);
@@ -286,5 +285,13 @@ namespace TodoREST
             }
         }
 
+
+        private async void TotalValueTapped(object sender, EventArgs e)
+        {
+            var _label = sender as Label;
+            var assetHistoryPage = new AssetHistoryPage(3);
+            // var assetHistory = await App.AssetHistoryManager.getAssetTotalHistory();
+            await Navigation.PushAsync(assetHistoryPage);
+        }
     }
 }

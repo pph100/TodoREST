@@ -10,7 +10,8 @@ namespace TodoREST
         Task<ObservableCollection<AssetHistory>> RefreshData();
         Task<ObservableCollection<AssetHistory>> setAssetHistoryTicker(string newTicker);
         Task<ObservableCollection<AssetHistory>> setAssetHistoryTicker();
-        ObservableCollection<AssetHistory> getAssetHistory();
+        Task<ObservableCollection<AssetHistory>> getAssetHistory();
         bool setJustAssetTicker(string newTicker);
+        Task<ObservableCollection<AssetTotalHistory>> getAssetTotalHistory();
     }
 }

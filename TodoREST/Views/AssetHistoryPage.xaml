@@ -42,7 +42,6 @@
             </chart:NumericalAxis>
         </chart:SfChart.SecondaryAxis>
 
-        <!-- ItemsSource="{Binding assetHistory}" -->
         <chart:SfChart.Series>
             <chart:LineSeries
                 x:Name="myLineSeries"

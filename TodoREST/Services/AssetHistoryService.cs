@@ -41,6 +41,7 @@ namespace TodoREST
 
         public List<ObservableCollection<AssetHistory>> _AssetHistories { get; private set; }
 
+        public ObservableCollection<AssetTotalHistory> _AssetTotalHistory { get; private set; }
 
         public AssetHistoryService()
         {
@@ -67,9 +68,10 @@ namespace TodoREST
         }
 
 
-        public ObservableCollection<AssetHistory> getAssetHistory()
+        public async Task<ObservableCollection<AssetHistory>> getAssetHistory()
         {
-            return _AssetHistory;
+            // return _AssetHistory;
+            return await RefreshData();
         }
 
 
@@ -94,7 +96,6 @@ namespace TodoREST
             _AssetHistory = await this.RefreshData();
             return _AssetHistory;
         }
-
 
 
         public async Task<ObservableCollection<AssetHistory>> RefreshData()
@@ -170,6 +171,33 @@ namespace TodoREST
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+
+        public async Task<ObservableCollection<AssetTotalHistory>> getAssetTotalHistory()
+        {
+            var uri = new Uri(string.Format(Constants.AssetTotalHistoryUrl));
+
+            try
+            {
+                var response = await assetHistoryClient.GetAsync(uri);
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    _AssetTotalHistory = JsonConvert.DeserializeObject<ObservableCollection<AssetTotalHistory>>(content);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"               ERROR {0}", ex.Message);
+                Debug.WriteLine(@"Unsuccessful connect to URI {0} at {1}", uri, System.DateTime.Now);
+                await App._mainPage.DisplayAlert(
+                    "Connection Issue",
+                    "Connection to  " + uri + "@" + System.DateTime.Now + " revealed: " + ex.Message,
+                    "OK"
+                );
+            }
+            return _AssetTotalHistory;
         }
     }
 

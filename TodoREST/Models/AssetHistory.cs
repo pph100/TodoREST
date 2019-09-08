@@ -17,4 +17,12 @@ namespace TodoREST
         public string daily_value_formatted { get; set; }
         public string daily_value { get; set; }
     }
+
+    public class AssetTotalHistory
+    {
+        public double daily_total { get; set; }
+        public DateTime dt { get; set; }
+        public string DT_DMY { get; set; }
+        // public string dt { get; set; }
+    }
 }

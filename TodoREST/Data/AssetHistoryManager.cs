@@ -28,10 +28,15 @@ namespace TodoREST
         }
 
 
-
-        public ObservableCollection<AssetHistory> getAssetHistory()
+        public Task<ObservableCollection<AssetHistory>> getAssetHistory()
         {
             return assetHistoryService.getAssetHistory();
+        }
+
+
+        public Task<ObservableCollection<AssetTotalHistory>> getAssetTotalHistory()
+        {
+            return assetHistoryService.getAssetTotalHistory();
         }
 
 
