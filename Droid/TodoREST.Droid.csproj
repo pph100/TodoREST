@@ -14,14 +14,14 @@
     <AndroidApplication>True</AndroidApplication>
     <AssemblyName>TodoREST.Droid</AssemblyName>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
-    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>16b9ab36</NuGetPackageImportStamp>
     <ReleaseVersion>2.0.3</ReleaseVersion>
     <Description>improved item list display </Description>
-    <AndroidSupportedAbis>arm64-v8a;x86;x86_64</AndroidSupportedAbis>
+    <AndroidSupportedAbis>arm64-v8a;x86_64;x86</AndroidSupportedAbis>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -33,19 +33,23 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
-    <AndroidSupportedAbis>arm64-v8a;armeabi-v7a;x86;x86_64</AndroidSupportedAbis>
-<AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
+<MandroidI18n>west</MandroidI18n>
+<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
 <MandroidI18n>west</MandroidI18n>
 <JavaMaximumHeapSize>2g</JavaMaximumHeapSize>
-<AndroidSupportedAbis>arm64-v8a;x86;x86_64</AndroidSupportedAbis>
+<AndroidLinkMode>None</AndroidLinkMode>
+<AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
+<AndroidEnableMultiDex>true</AndroidEnableMultiDex>
+<AndroidDexTool>d8</AndroidDexTool>
+<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" />
