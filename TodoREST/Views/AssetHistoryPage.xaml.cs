@@ -57,6 +57,10 @@ namespace TodoREST
 
             // myLineSeries.ItemsSource = newItemsSource;
 
+            NumericalAxis secondaryAxis = new NumericalAxis();
+            secondaryAxis.LabelCreated += SecondaryAxis_LabelCreated;
+            mySfChart.SecondaryAxis = secondaryAxis;
+
             myLineSeries.ItemsSource = null;
 
             switch (callType)
@@ -65,7 +69,8 @@ namespace TodoREST
                     newItemsSource = await App.AssetHistoryManager.getAssetHistory();
                     myLineSeries.ItemsSource = newItemsSource;
                     mySfChart.Title.Text = "Value History for " + newItemsSource[0].AssetName;
-                    myLineSeries.YBindingPath = "daily_avg";
+                    // myLineSeries.YBindingPath = "daily_avg";
+                    myLineSeries.YBindingPath = "avg_NK_4";
                     myLineSeries.XBindingPath = "DT_DMY";
                     break;
 
@@ -73,7 +78,8 @@ namespace TodoREST
                     newItemsSource = await App.AssetHistoryManager.getAssetHistory();
                     myLineSeries.ItemsSource = newItemsSource;
                     mySfChart.Title.Text = "Total value History for " + newItemsSource[0].AssetName;
-                    myLineSeries.YBindingPath = "daily_value";
+                    // myLineSeries.YBindingPath = "daily_value";
+                    myLineSeries.YBindingPath = "daily_value_formatted";
                     myLineSeries.XBindingPath = "DT_DMY";
                     break;
 
@@ -89,12 +95,18 @@ namespace TodoREST
             base.OnAppearing();
         }
 
-        /*
-        private void YAxis_LabelCreated(object sender, Syncfusion.SfChart.XForms.ChartAxisLabelEventArgs e)
+
+        private void SecondaryAxis_LabelCreated(object sender, Syncfusion.SfChart.XForms.ChartAxisLabelEventArgs e)
         {
-            double value = Convert.ToDouble(e.LabelContent);
-            e.LabelContent = value.ToString("#,###.##", new CultureInfo("en-US"));
+
+            var yVal = Convert.ToDouble(e.LabelContent, new CultureInfo("de-DE"));
+
+            if (yVal > 999.9)
+                e.LabelContent = yVal.ToString("C0", new CultureInfo("de-DE"));
+            else 
+                e.LabelContent = yVal > 2.0 ? yVal.ToString("C2", new CultureInfo("de-DE")) : yVal.ToString("C4", new CultureInfo("de-DE"));
         }
-        */
+
+
     }
 }

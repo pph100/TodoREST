@@ -34,7 +34,8 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
 <MandroidI18n>west</MandroidI18n>
-<EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+<AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
+<AndroidSupportedAbis>arm64-v8a;armeabi-v7a;x86;x86_64</AndroidSupportedAbis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
@@ -46,10 +47,11 @@
 <MandroidI18n>west</MandroidI18n>
 <JavaMaximumHeapSize>2g</JavaMaximumHeapSize>
 <AndroidLinkMode>None</AndroidLinkMode>
-<AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
 <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
 <AndroidDexTool>d8</AndroidDexTool>
 <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+<AndroidSupportedAbis>arm64-v8a;x86;x86_64</AndroidSupportedAbis>
+<AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" />
