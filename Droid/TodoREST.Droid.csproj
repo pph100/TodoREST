@@ -36,6 +36,15 @@
 <MandroidI18n>west</MandroidI18n>
 <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
 <AndroidSupportedAbis>arm64-v8a;armeabi-v7a;x86;x86_64</AndroidSupportedAbis>
+<CustomCommands>
+  <CustomCommands>
+    <Command>
+      <type>BeforeBuild</type>
+      <command>/Users/uli/Projects/VStudio_tools/BuildVersionUpdater.sh ${ProjectDir}/Properties/AndroidManifest.xml</command>
+      <workingdir>${ProjectDir}</workingdir>
+    </Command>
+  </CustomCommands>
+</CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
@@ -52,6 +61,15 @@
 <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
 <AndroidSupportedAbis>arm64-v8a;x86;x86_64</AndroidSupportedAbis>
 <AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
+<CustomCommands>
+  <CustomCommands>
+    <Command>
+      <type>BeforeBuild</type>
+      <command>/Users/uli/Projects/VStudio_tools/BuildVersionUpdater.sh ${ProjectDir}/Properties/AndroidManifest.xml</command>
+      <workingdir>${ProjectDir}</workingdir>
+    </Command>
+  </CustomCommands>
+</CustomCommands>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" />

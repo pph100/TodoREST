@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Xamarin.Forms;
 using System.Net;
 using System.Web;
+using System.Reflection;
 
 namespace TodoREST
 {
@@ -57,6 +58,7 @@ namespace TodoREST
 
         public async Task<List<CryptoItem>> RefreshData()
         {
+            App._debug("CryptoService:RefreshData()", "function called");
             Assets = await this.RefreshAssets();
             Comodities = await this.RefreshComodities();
 
@@ -65,6 +67,7 @@ namespace TodoREST
                 CryptoItems = await this.RefreshDataAsync();
             }
 
+            App._debug("CryptoService:RefreshData()", "function ended");
             return CryptoItems;
         }
 
@@ -76,8 +79,10 @@ namespace TodoREST
             Comodities = await this.RefreshComoditiesAsync();
             */
 
+            App._debug("CryptoService:RefreshDataAsync()", "function called, about to call RefreshAssets() and RefreshComodities()");
             Assets = await this.RefreshAssets();
             Comodities = await this.RefreshComodities();
+            App._debug("CryptoService:RefreshDataAsync()", "2 Refresh functions ended");
 
             // funktioniert das???
             CryptoItems = new List<CryptoItem>();
@@ -197,6 +202,7 @@ namespace TodoREST
                 }
             }
 
+            App._debug("CryptoService:RefreshDataAsync()", "function ended");
             return CryptoItems;
         }
 
@@ -205,6 +211,7 @@ namespace TodoREST
         {
             if (Assets == null || Assets.Count < 1)
             {
+                App._debug("CryptoService:RefreshAssets()", "function called, about to call this.RefreshAssetsAsync()");
                 Assets = await this.RefreshAssetsAsync();
             }
             return Assets;
@@ -225,24 +232,35 @@ namespace TodoREST
         {
             var uri = new Uri(string.Format(Constants.AssetUrl, string.Empty));
 
+            App._debug("CryptoService:RefreshAssetsAsync()", "function called");
             try
             {
+                App._debug("CryptoService:RefreshAssetsAsync()", "REST call starting");
                 var response = await assetClient.GetAsync(uri);
+                App._debug("CryptoService:RefreshAssetsAsync()", "REST call returned");
+
                 if (response.IsSuccessStatusCode)
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     Assets = JsonConvert.DeserializeObject<List<Asset>>(content);
+                    App._debug("CryptoService:RefreshAssetsAsync()", "Assets data structure built and parsed");
+
                     foreach (var asset in Assets)
                     {
                         if (asset.AssetValue != null && asset.AssetValue != "")
                         {
                             string myDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
                             asset.AssetValueDttm = myDate;
+#if DEBUG
                             Debug.WriteLine("Asset {0} with value {1} set to date {2}", asset.AssetName, asset.AssetValue, myDate);
+#endif
+                            // todo: hier Daten sichern in datenbank??
+                            App._debug("CryptoService:RefreshAssetsAsync()", "NEW: about to call SaveAssetAsync(" + asset.AssetTicker + ")");
+                            await this.SaveAssetAsync(asset);
                         }
                         else
                         {
-                            Debug.WriteLine("Asset {0} seems to have no value: '{1}'!!!", asset.AssetName, asset.AssetValue);
+                            Debug.WriteLine("Asset {0} has no value: '{1}'", asset.AssetName, asset.AssetValue);
                         }
                     }
                 }
@@ -258,6 +276,7 @@ namespace TodoREST
                     "OK"
                 );
             }
+            App._debug("CryptoService:RefreshAssetsAsync()", "function ended");
             return Assets;
         }
 
@@ -312,6 +331,7 @@ namespace TodoREST
                     "OK"
                 );
             }
+            // todo: hier speichern in DB
 
             return Comodities;
         }
@@ -319,6 +339,7 @@ namespace TodoREST
 
         public async Task SaveAssetAsync(Asset item, bool isNewItem = false)
         {
+            App._debug("CryptoService:SaveAssetAsync(" + item.AssetTicker + ")", "function started");
             var uri = new Uri(string.Format(Constants.AssetUrl, string.Empty));
 
             if (item != null)
@@ -343,6 +364,9 @@ namespace TodoREST
                     var json = JsonConvert.SerializeObject(item);
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
+#if DEBUG
+                    Debug.WriteLine(@"Information: asset will not be saved in database when debugging is active.", item.AssetTicker);
+#else
                     HttpResponseMessage response = null;
                     if (isNewItem)
                     {
@@ -353,6 +377,7 @@ namespace TodoREST
                         response = await cryptoClient.PutAsync(uri, content);
                     }
                     // TODO: handle response
+#endif
                 }
                 catch (Exception ex)
                 {
@@ -363,6 +388,7 @@ namespace TodoREST
                         "OK"
                     );
                 }
+                App._debug("CryptoService:SaveAssetAsync()", "function ended");
             }
         }
 
@@ -434,6 +460,7 @@ namespace TodoREST
                 var asset = FindAssetByTicker(item.ticker.cryptoCode);
                 if (asset != null)
                 {
+                    App._debug("CryptoService:SaveAssetValues()", "about to call SaveAssetAsync(" + asset.AssetTicker + ")");
                     await this.SaveAssetAsync(asset);
                 }
             }

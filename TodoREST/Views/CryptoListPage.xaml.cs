@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -32,8 +34,10 @@ namespace TodoREST
 
             listView.RefreshCommand = new Command(async () =>
             {
+                App._debug("CryptoListPage:RefreshCommand()", "function called");
                 await RefreshDataAsync();
                 listView.IsRefreshing = false;
+                App._debug("CryptoListPage:RefreshCommand()", "function ended");
             });
 
         }
@@ -41,6 +45,7 @@ namespace TodoREST
 
         private async Task _refresh(List<CryptoItem> cryptoList)
         {
+            App._debug("CryptoListPage:_refresh()", "function called");
             var totalValue = App.CryptoItemManager.getTotalValue();
             var newlist = cryptoList;
 
@@ -121,25 +126,32 @@ namespace TodoREST
             xTotal.Text = totalValue;
             xSum.Text = "Total:";
             // await App.CryptoItemManager.SaveAssetValues(newlist);
+            App._debug("CryptoListPage:_refresh()", "function ended");
         }
 
 
         private async Task RefreshData()
         {
+            App._debug("CryptoListPage:RefreshData()", "function called");
             var cryptoList = await App.CryptoItemManager.Refresh();
 
             await this._refresh(cryptoList);
+            App._debug("CryptoListPage:RefreshData()", "function ended");
         }
 
 
         private async Task RefreshDataAsync()
         {
+            App._debug("CryptoListPage:RefreshDataAsync()", "function called, calling RefreshAsync now");
             listView.IsRefreshing = true;
             var cryptoList = await App.CryptoItemManager.RefreshAsync();
             // listView.IsRefreshing = false;
             await this._refresh(cryptoList);
+            App._debug("CryptoListPage:RefreshDataAsync()", "about to call function SaveAssetValues");
+            Debug.WriteLine("Achtung: Call SaveAssetValues() aus CryptoListPage.xaml.cs!");
             await App.CryptoItemManager.SaveAssetValues(cryptoList);
             listView.IsRefreshing = false;
+            App._debug("CryptoListPage:RefreshDataAsync()", "function ended");
         }
 
 
@@ -175,6 +187,10 @@ namespace TodoREST
             // asset-Chart anzeigen:
             //
             var assetHistoryPage = new AssetHistoryPage(true);
+
+
+            App._debug("CryptoListPage:OnAssetSelectedValue()", "function called, about to call setAssetHistoryTicker(" + cryptoItem.ticker.cryptoCode + ")");
+            // rausnehmen: funktioniert das?
             var assetHistory = await App.AssetHistoryManager.setAssetHistoryTicker(cryptoItem.ticker.cryptoCode);
             await Navigation.PushAsync(assetHistoryPage);
         }
@@ -199,6 +215,7 @@ namespace TodoREST
             listView.IsRefreshing = true;
             // test: schneller?
             // await RefreshDataAsync();
+            App._debug("CryptoListPage:OnAppearing()", "function called, about to call RefreshData()");
             await RefreshData();
             listView.IsRefreshing = false;
         }
@@ -206,6 +223,7 @@ namespace TodoREST
 
         public async void OnCancel(object sender, EventArgs e)
         {
+            App._debug("CryptoListPage:OnCancel()", "function called, about to call RefreshData()");
             await RefreshData();
         }
 
