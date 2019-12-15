@@ -147,9 +147,9 @@ namespace TodoREST
             var cryptoList = await App.CryptoItemManager.RefreshAsync();
             // listView.IsRefreshing = false;
             await this._refresh(cryptoList);
-            App._debug("CryptoListPage:RefreshDataAsync()", "about to call function SaveAssetValues");
-            Debug.WriteLine("Achtung: Call SaveAssetValues() aus CryptoListPage.xaml.cs!");
-            await App.CryptoItemManager.SaveAssetValues(cryptoList);
+            // App._debug("CryptoListPage:RefreshDataAsync()", "about to call function SaveAssetValues");
+            // Debug.WriteLine("Achtung: Call SaveAssetValues() aus CryptoListPage.xaml.cs!");
+            // await App.CryptoItemManager.SaveAssetValues(cryptoList);
             listView.IsRefreshing = false;
             App._debug("CryptoListPage:RefreshDataAsync()", "function ended");
         }
@@ -214,9 +214,9 @@ namespace TodoREST
             base.OnAppearing();
             listView.IsRefreshing = true;
             // test: schneller?
-            // await RefreshDataAsync();
-            App._debug("CryptoListPage:OnAppearing()", "function called, about to call RefreshData()");
-            await RefreshData();
+            App._debug("CryptoListPage:OnAppearing()", "function called, about to call RefreshDataAsync()");
+            await RefreshDataAsync();
+            // await RefreshData();
             listView.IsRefreshing = false;
         }
 

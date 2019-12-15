@@ -29,6 +29,7 @@ namespace TodoREST
             callType = CallToBeMade.callSingleValue;
         }
 
+
         public AssetHistoryPage(bool SingleOrTotal)
         {
             InitializeComponent();
@@ -43,11 +44,13 @@ namespace TodoREST
 
         }
 
+
         public AssetHistoryPage(int CallType)
         {
             InitializeComponent();
             callType = (CallToBeMade)CallType;
         }
+
 
         protected async override void OnAppearing()
         {
@@ -58,7 +61,7 @@ namespace TodoREST
             // myLineSeries.ItemsSource = newItemsSource;
 
             NumericalAxis secondaryAxis = new NumericalAxis();
-            secondaryAxis.LabelCreated += SecondaryAxis_LabelCreated;
+            secondaryAxis.LabelCreated += SecondaryAxis_LabelCreated;       // set CallBack function, see below
             mySfChart.SecondaryAxis = secondaryAxis;
 
             myLineSeries.ItemsSource = null;
@@ -69,17 +72,21 @@ namespace TodoREST
                     newItemsSource = await App.AssetHistoryManager.getAssetHistory();
                     myLineSeries.ItemsSource = newItemsSource;
                     mySfChart.Title.Text = "Value History for " + newItemsSource[0].AssetName;
-                    // myLineSeries.YBindingPath = "daily_avg";
-                    myLineSeries.YBindingPath = "avg_NK_4";
+                    myLineSeries.YBindingPath = "daily_avg";
+                    // myLineSeries.YBindingPath = "avg_NK_4";
                     myLineSeries.XBindingPath = "DT_DMY";
                     break;
 
                 case CallToBeMade.callTotalValue:
+                    // newItemsSource = await App.AssetHistoryManager.getAssetHistory();
                     newItemsSource = await App.AssetHistoryManager.getAssetHistory();
                     myLineSeries.ItemsSource = newItemsSource;
                     mySfChart.Title.Text = "Total value History for " + newItemsSource[0].AssetName;
-                    // myLineSeries.YBindingPath = "daily_value";
+#if RELEASE
                     myLineSeries.YBindingPath = "daily_value_formatted";
+#else
+                    myLineSeries.YBindingPath = "daily_value";
+#endif
                     myLineSeries.XBindingPath = "DT_DMY";
                     break;
 
@@ -103,7 +110,7 @@ namespace TodoREST
 
             if (yVal > 999.9)
                 e.LabelContent = yVal.ToString("C0", new CultureInfo("de-DE"));
-            else 
+            else
                 e.LabelContent = yVal > 2.0 ? yVal.ToString("C2", new CultureInfo("de-DE")) : yVal.ToString("C4", new CultureInfo("de-DE"));
         }
 

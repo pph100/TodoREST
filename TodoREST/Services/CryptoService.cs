@@ -72,6 +72,7 @@ namespace TodoREST
         }
 
 
+        // diese funktion liefert richtige werte!!
         public async Task<List<CryptoItem>> RefreshDataAsync()
         {
             /*
@@ -80,8 +81,16 @@ namespace TodoREST
             */
 
             App._debug("CryptoService:RefreshDataAsync()", "function called, about to call RefreshAssets() and RefreshComodities()");
-            Assets = await this.RefreshAssets();
-            Comodities = await this.RefreshComodities();
+            if (Assets == null || Assets.Count < 1)
+            {
+                Assets = await this.RefreshAssets();
+            }
+
+            /* nicht benötigt? */
+            if (Comodities == null || Comodities.Count < 1)
+            {
+                Comodities = await this.RefreshComodities();
+            }
             App._debug("CryptoService:RefreshDataAsync()", "2 Refresh functions ended");
 
             // funktioniert das???
@@ -100,6 +109,7 @@ namespace TodoREST
 
                         try
                         {
+                            double EPSILON = 0.01;
                             var response = await cryptoClient.GetAsync(uri);
                             if (response.IsSuccessStatusCode)
                             {
@@ -115,14 +125,17 @@ namespace TodoREST
                                     _item.stockAsDouble = (Double.Parse(asset.AssetStock, new CultureInfo("en-US")));
                                     _item.cryptoName = asset.AssetName;
                                     _item.searchString = asset.SearchString;
+
                                     var prettyPrice = (Double.Parse(_item.ticker.price, new CultureInfo("en-US")));
                                     _item.prettyPrice = prettyPrice > 2.0 ? prettyPrice.ToString("C2", new CultureInfo("de-DE")) : prettyPrice.ToString("C4", new CultureInfo("de-DE"));
                                     _item.priceAsDouble = (Double.Parse(_item.ticker.price, new CultureInfo("en-US")));
                                     _item.lastPrice = (Double.Parse(asset.AssetValue, new CultureInfo("en-US")));
                                     _item.increased = _item.priceAsDouble > _item.lastPrice ? true : false;
-                                    _item.stayedFlat = ((_item.priceAsDouble == _item.lastPrice) || (Math.Abs(_item.lastPrice) < 0.1));
-                                    _item.decreased = (_item.priceAsDouble < _item.lastPrice);
+                                    // _item.decreased = (_item.priceAsDouble < _item.lastPrice);
+                                    _item.decreased = _item.priceAsDouble < _item.lastPrice ? true : false;
+                                    _item.stayedFlat = ((Math.Abs(_item.priceAsDouble - _item.lastPrice) < EPSILON) || (Math.Abs(_item.lastPrice) < 0.1));
                                     _item.lastPrice = _item.priceAsDouble;
+
                                     var prettyValue = (Double.Parse(asset.AssetStock, new CultureInfo("en-US")) * Double.Parse(_item.ticker.price, new CultureInfo("en-US"))).ToString("C2", new CultureInfo("de-DE"));
                                     _item.value = prettyValue;
                                     _item.valueAsDouble = _item.priceAsDouble * _item.stockAsDouble;
@@ -163,6 +176,8 @@ namespace TodoREST
 
                         foreach (var _c in Comodities)
                         {
+                            double EPSILON = 0.1;
+
                             if (_c.category == asset.AssetName)
                             {
                                 var _item = new CryptoItem();
@@ -175,14 +190,19 @@ namespace TodoREST
                                 _item.stockAsDouble = (Double.Parse(asset.AssetStock, new CultureInfo("en-US")));
                                 _item.cryptoName = asset.AssetName;
                                 _item.searchString = asset.SearchString;
+
                                 var prettyPrice = (Double.Parse(_item.ticker.price, new CultureInfo("de-DE")));
                                 _item.prettyPrice = prettyPrice > 2.0 ? prettyPrice.ToString("C2", new CultureInfo("de-DE")) : prettyPrice.ToString("C4", new CultureInfo("de-DE"));
                                 _item.priceAsDouble = (Double.Parse(_item.ticker.price, new CultureInfo("de-DE")));
                                 _item.lastPrice = (asset.AssetValue == null) ? (Double)0.0f : (Double.Parse(asset.AssetValue, new CultureInfo("de-DE")));
+
                                 _item.increased = _item.priceAsDouble > _item.lastPrice ? true : false;
-                                _item.stayedFlat = ((_item.priceAsDouble == _item.lastPrice) || (Math.Abs(_item.lastPrice) < 0.1));
-                                _item.decreased = (_item.priceAsDouble < _item.lastPrice);
+                                // _item.decreased = (_item.priceAsDouble < _item.lastPrice);
+                                _item.decreased = _item.priceAsDouble < _item.lastPrice ? true : false;
+                                _item.stayedFlat = ((Math.Abs(_item.priceAsDouble - _item.lastPrice) < EPSILON) || (Math.Abs(_item.lastPrice) < 0.001));
+
                                 _item.lastPrice = _item.priceAsDouble;
+
                                 var prettyValue = (Double.Parse(asset.AssetStock, new CultureInfo("en-US")) * Double.Parse(_item.ticker.price, new CultureInfo("de-DE"))).ToString("C2", new CultureInfo("de-DE"));
                                 _item.value = prettyValue;
                                 _item.valueAsDouble = _item.priceAsDouble * _item.stockAsDouble;
@@ -193,11 +213,28 @@ namespace TodoREST
                                 asset.AssetValue = _item.ticker.price;
                                 asset.prettyValue = _item.prettyPrice;
                                 asset.AssetValueDttm = MyDate;
-                                // asset.AssetStock = _item.stock;
 
                             }
                         }
 
+                    }
+
+                    App._debug("CryptoService:RefreshDataAsync()", "NEW: about to call SaveAssetAsync(" + asset.AssetTicker + ")");
+                    // remove "await" for test purposes
+                    // await this.SaveAssetAsync(asset);
+                    try
+                    {
+                        SaveAssetAsync(asset).ConfigureAwait(false);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(@"               ERROR {0}", ex.Message);
+                        Debug.WriteLine(@"Unsuccessful call to save data in DB @{0}", System.DateTime.Now);
+                        await App._mainPage.DisplayAlert(
+                            "Issue with saving data in DB",
+                            "Attempt to save Data in DB for Asset " + asset.AssetTicker + " @" + System.DateTime.Now + " revealed: " + ex.Message,
+                            "OK"
+                        );
                     }
                 }
             }
@@ -207,6 +244,7 @@ namespace TodoREST
         }
 
 
+        // hier sind zur Laufzeit beim erstn Call falsche Werte!
         public async Task<List<Asset>> RefreshAssets()
         {
             if (Assets == null || Assets.Count < 1)
@@ -230,6 +268,7 @@ namespace TodoREST
 
         public async Task<List<Asset>> RefreshAssetsAsync()
         {
+            // achtung: diese funktion holt sich die daten aus der datenbank, nicht vom externen Provider!!!!
             var uri = new Uri(string.Format(Constants.AssetUrl, string.Empty));
 
             App._debug("CryptoService:RefreshAssetsAsync()", "function called");
@@ -254,9 +293,9 @@ namespace TodoREST
 #if DEBUG
                             Debug.WriteLine("Asset {0} with value {1} set to date {2}", asset.AssetName, asset.AssetValue, myDate);
 #endif
-                            // todo: hier Daten sichern in datenbank??
-                            App._debug("CryptoService:RefreshAssetsAsync()", "NEW: about to call SaveAssetAsync(" + asset.AssetTicker + ")");
-                            await this.SaveAssetAsync(asset);
+                            // temporär deaktivieren, weil hier wohl falsche Werte stehen. 
+                            // App._debug("CryptoService:RefreshAssetsAsync()", "NEW: about to call SaveAssetAsync(" + asset.AssetTicker + ")");
+                            // await this.SaveAssetAsync(asset);
                         }
                         else
                         {
@@ -365,7 +404,7 @@ namespace TodoREST
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 #if DEBUG
-                    Debug.WriteLine(@"Information: asset will not be saved in database when debugging is active.", item.AssetTicker);
+                    Debug.WriteLine(@"Information: asset " + item.AssetTicker + " will not be saved with value " + item.prettyValue + " in database when debugging is active.");
 #else
                     HttpResponseMessage response = null;
                     if (isNewItem)
