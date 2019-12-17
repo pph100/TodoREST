@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="net.upworx.TodoREST" android:versionName="2.0.46.0" android:versionCode="127">
-  <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="28" />
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-  <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-  <uses-permission android:name="android.permission.INTERNET" />
-  <application android:label="TodoREST" android:icon="@drawable/icon" android:usesCleartextTraffic="true"></application>
+	<uses-sdk android:minSdkVersion="23" android:targetSdkVersion="28" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<application android:label="TodoREST" android:icon="@drawable/icon" android:usesCleartextTraffic="true"></application>
 </manifest>
