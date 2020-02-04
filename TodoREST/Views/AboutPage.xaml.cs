@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -23,7 +24,9 @@ namespace TodoREST
 
                 // Application Build Number (1)
                 var build = AppInfo.BuildString;
-
+                // var buildVersion = Assembly.GetEntryAssembly().GetName().Version;
+                // var buildDateTime = new DateTime(2000, 1, 1).Add(new TimeSpan(TimeSpan.TicksPerDay * buildVersion.Build + TimeSpan.TicksPerSecond * 2 * buildVersion.Revision));
+                // build += " built: " + buildDateTime.ToString();
                 xAppInfo.Text += appName;
                 xPackageName.Text += packageName;
                 xVersion.Text += version;

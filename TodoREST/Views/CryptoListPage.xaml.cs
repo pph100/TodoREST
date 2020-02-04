@@ -215,8 +215,8 @@ namespace TodoREST
             listView.IsRefreshing = true;
             // test: schneller?
             App._debug("CryptoListPage:OnAppearing()", "function called, about to call RefreshDataAsync()");
-            await RefreshDataAsync();
-            // await RefreshData();
+            // await RefreshDataAsync();
+            await RefreshData();
             listView.IsRefreshing = false;
         }
 

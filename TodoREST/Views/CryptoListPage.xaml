@@ -79,7 +79,7 @@
 
                         <MenuItem Clicked="OnAssetSelectedValue" CommandParameter="{Binding .}" Text="Chart:Value" />
 
-                        <MenuItem Clicked="OnCancel" CommandParameter="{Binding .}" Text="Abbruch" />
+                        <MenuItem Clicked="OnCancel" CommandParameter="{Binding .}" Text="Cancel" />
 
                     </ViewCell.ContextActions>
 

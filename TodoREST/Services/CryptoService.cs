@@ -58,13 +58,22 @@ namespace TodoREST
 
         public async Task<List<CryptoItem>> RefreshData()
         {
-            App._debug("CryptoService:RefreshData()", "function called");
-            Assets = await this.RefreshAssets();
-            Comodities = await this.RefreshComodities();
+            if (Assets == null || Assets.Count < 1)
+            {
+                Assets = await this.RefreshAssets();
+                App._debug("CryptoService:RefreshData()", "RefreshAssets() called");
+            }
+
+            if (Comodities == null || Comodities.Count < 1)
+            {
+                Comodities = await this.RefreshComodities();
+                App._debug("CryptoService:RefreshData()", "RefreshComodities() called");
+            }
 
             if (CryptoItems == null || CryptoItems.Count < 1)
             {
                 CryptoItems = await this.RefreshDataAsync();
+                App._debug("CryptoService:RefreshData()", "RefreshDataAsync() called");
             }
 
             App._debug("CryptoService:RefreshData()", "function ended");
@@ -80,18 +89,17 @@ namespace TodoREST
             Comodities = await this.RefreshComoditiesAsync();
             */
 
-            App._debug("CryptoService:RefreshDataAsync()", "function called, about to call RefreshAssets() and RefreshComodities()");
             if (Assets == null || Assets.Count < 1)
             {
                 Assets = await this.RefreshAssets();
+                App._debug("CryptoService:RefreshDataAsync()", "RefreshAssets() called");
             }
 
-            /* nicht benötigt? */
             if (Comodities == null || Comodities.Count < 1)
             {
                 Comodities = await this.RefreshComodities();
+                App._debug("CryptoService:RefreshDataAsync()", "RefreshComodities() called");
             }
-            App._debug("CryptoService:RefreshDataAsync()", "2 Refresh functions ended");
 
             // funktioniert das???
             CryptoItems = new List<CryptoItem>();
@@ -219,12 +227,14 @@ namespace TodoREST
 
                     }
 
-                    App._debug("CryptoService:RefreshDataAsync()", "NEW: about to call SaveAssetAsync(" + asset.AssetTicker + ")");
+                    // 
                     // remove "await" for test purposes
                     // await this.SaveAssetAsync(asset);
                     try
                     {
+                        App._debug("CryptoService:RefreshDataAsync()", "NEW/NO ASYNC: about to call SaveAssetAsync(" + asset.AssetTicker + ")");
                         SaveAssetAsync(asset).ConfigureAwait(false);
+                        App._debug("CryptoService:RefreshDataAsync()", "NEW/NO ASYNC: call to SaveAssetAsync(" + asset.AssetTicker + ") has ended.");
                     }
                     catch (Exception ex)
                     {
@@ -237,6 +247,7 @@ namespace TodoREST
                         );
                     }
                 }
+                // on purpose no else clause: for items that are not included in list, no action is defined.
             }
 
             App._debug("CryptoService:RefreshDataAsync()", "function ended");
@@ -253,16 +264,6 @@ namespace TodoREST
                 Assets = await this.RefreshAssetsAsync();
             }
             return Assets;
-        }
-
-
-        public async Task<List<Comodity>> RefreshComodities()
-        {
-            if (Comodities == null || Comodities.Count < 1)
-            {
-                Comodities = await this.RefreshComoditiesAsync();
-            }
-            return Comodities;
         }
 
 
@@ -293,9 +294,6 @@ namespace TodoREST
 #if DEBUG
                             Debug.WriteLine("Asset {0} with value {1} set to date {2}", asset.AssetName, asset.AssetValue, myDate);
 #endif
-                            // temporär deaktivieren, weil hier wohl falsche Werte stehen. 
-                            // App._debug("CryptoService:RefreshAssetsAsync()", "NEW: about to call SaveAssetAsync(" + asset.AssetTicker + ")");
-                            // await this.SaveAssetAsync(asset);
                         }
                         else
                         {
@@ -303,7 +301,10 @@ namespace TodoREST
                         }
                     }
                 }
-                // TODO: handle unsuccessful response
+                else
+                {
+                    App._debug("CryptoService:RefreshAssetsAsync()", "responsecode <> success: " + response.StatusCode.ToString());
+                }
             }
             catch (Exception ex)
             {
@@ -317,6 +318,16 @@ namespace TodoREST
             }
             App._debug("CryptoService:RefreshAssetsAsync()", "function ended");
             return Assets;
+        }
+
+
+        public async Task<List<Comodity>> RefreshComodities()
+        {
+            if (Comodities == null || Comodities.Count < 1)
+            {
+                Comodities = await this.RefreshComoditiesAsync();
+            }
+            return Comodities;
         }
 
 
@@ -376,6 +387,20 @@ namespace TodoREST
         }
 
 
+        public async Task SaveAssetValues(List<CryptoItem> cryptoList)
+        {
+            foreach (var item in cryptoList)
+            {
+                var asset = FindAssetByTicker(item.ticker.cryptoCode);
+                if (asset != null)
+                {
+                    App._debug("CryptoService:SaveAssetValues()", "about to call SaveAssetAsync(" + asset.AssetTicker + ")");
+                    await this.SaveAssetAsync(asset);
+                }
+            }
+        }
+
+
         public async Task SaveAssetAsync(Asset item, bool isNewItem = false)
         {
             App._debug("CryptoService:SaveAssetAsync(" + item.AssetTicker + ")", "function started");
@@ -404,8 +429,9 @@ namespace TodoREST
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 #if DEBUG
-                    Debug.WriteLine(@"Information: asset " + item.AssetTicker + " will not be saved with value " + item.prettyValue + " in database when debugging is active.");
+                    Debug.WriteLine(@"Information: asset " + item.AssetTicker + " will NOT be saved with value " + item.prettyValue + " in database when debugging is active.");
 #else
+                    Debug.WriteLine(@"Information: asset " + item.AssetTicker + " going to be saved with value " + item.prettyValue + " in database:");
                     HttpResponseMessage response = null;
                     if (isNewItem)
                     {
@@ -414,6 +440,12 @@ namespace TodoREST
                     else
                     {
                         response = await cryptoClient.PutAsync(uri, content);
+                    }
+                    if(!response.IsSuccessStatusCode) {
+                        Debug.WriteLine(@"Response code for save " + item.AssetTicker + " in DB <> success: " + response.StatusCode.ToString());
+                    }
+                    else {
+                        Debug.WriteLine(@"Save in DB finished for asset " + item.AssetTicker);
                     }
                     // TODO: handle response
 #endif
@@ -492,18 +524,6 @@ namespace TodoREST
         }
 
 
-        public async Task SaveAssetValues(List<CryptoItem> cryptoList)
-        {
-            foreach (var item in cryptoList)
-            {
-                var asset = FindAssetByTicker(item.ticker.cryptoCode);
-                if (asset != null)
-                {
-                    App._debug("CryptoService:SaveAssetValues()", "about to call SaveAssetAsync(" + asset.AssetTicker + ")");
-                    await this.SaveAssetAsync(asset);
-                }
-            }
-        }
     }
 
 }
