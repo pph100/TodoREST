@@ -24,10 +24,10 @@ namespace TodoREST
 
                 // Application Build Number (1)
                 var build = AppInfo.BuildString;
-                // var buildVersion = Assembly.GetEntryAssembly().GetName().Version;
+                // var buildVersion = Assembly.GetExecutingAssembly().GetName().Version;
                 // var buildDateTime = new DateTime(2000, 1, 1).Add(new TimeSpan(TimeSpan.TicksPerDay * buildVersion.Build + TimeSpan.TicksPerSecond * 2 * buildVersion.Revision));
-                // build += " built: " + buildDateTime.ToString();
-                xAppInfo.Text += appName;
+                build += " (created May 03, 2020 11:11 CEST)";
+                xAppInfo.Text += appName; // + " (build " + buildDateTime.ToString() + ")";
                 xPackageName.Text += packageName;
                 xVersion.Text += version;
                 xBuild.Text += build;

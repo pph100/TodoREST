@@ -9,7 +9,8 @@
     <!-- <ContentPage.Content> -->
     <chart:SfChart x:Name="mySfChart"
                    HorizontalOptions="FillAndExpand"
-                   VerticalOptions="FillAndExpand">
+                   VerticalOptions="FillAndExpand"
+                   ChartPadding="15">
 
 
         <chart:SfChart.BindingContext>
@@ -35,7 +36,10 @@
         </chart:SfChart.PrimaryAxis>
 
         <chart:SfChart.SecondaryAxis>
-            <chart:NumericalAxis>
+            <chart:NumericalAxis
+                x:Name="myYAxis"
+                Maximum="{Binding Maximum}"
+                ActualRangeChanged="SecondaryAxis_ActualRangeChanged">
                 <chart:NumericalAxis.Title>
                     <chart:ChartAxisTitle Text="Value in €" />
                 </chart:NumericalAxis.Title>
@@ -50,6 +54,11 @@
                 XBindingPath="DT_DMY"
                 YBindingPath="daily_avg"
                 EnableTooltip="True">
+                <!--
+                    <chart:LineSeries.YAxis>
+                    <chart:NumericalAxis Maximum="{Binding Maximum}"/>
+                    </chart:LineSeries.YAxis>
+                -->
             </chart:LineSeries>
         </chart:SfChart.Series>
     </chart:SfChart>

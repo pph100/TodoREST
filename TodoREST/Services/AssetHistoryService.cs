@@ -43,6 +43,25 @@ namespace TodoREST
 
         public ObservableCollection<AssetTotalHistory> _AssetTotalHistory { get; private set; }
 
+        // neu
+        private double maximum;
+
+        public double Maximum
+        {
+            get { return maximum; }
+            set
+            {
+                if (maximum != value)
+                {
+                    maximum = value;
+                    // PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Maximum"));
+                    NotifyPropertyChanged("Maximum");
+                }
+
+            }
+        }
+
+
         public AssetHistoryService()
         {
             assetHistoryClient = new HttpClient();

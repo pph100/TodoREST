@@ -16,6 +16,7 @@ namespace TodoREST
         public string avg_NK_4 { get; set; }
         public string daily_value_formatted { get; set; }
         public string daily_value { get; set; }
+        // public double Maximum { get; set; }
     }
 
     public class AssetTotalHistory

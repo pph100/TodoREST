@@ -117,7 +117,7 @@ namespace TodoREST
 
                         try
                         {
-                            double EPSILON = 0.01;
+                            double EPSILON = 0.001;
                             var response = await cryptoClient.GetAsync(uri);
                             if (response.IsSuccessStatusCode)
                             {
@@ -136,12 +136,29 @@ namespace TodoREST
 
                                     var prettyPrice = (Double.Parse(_item.ticker.price, new CultureInfo("en-US")));
                                     _item.prettyPrice = prettyPrice > 2.0 ? prettyPrice.ToString("C2", new CultureInfo("de-DE")) : prettyPrice.ToString("C4", new CultureInfo("de-DE"));
+
                                     _item.priceAsDouble = (Double.Parse(_item.ticker.price, new CultureInfo("en-US")));
                                     _item.lastPrice = (Double.Parse(asset.AssetValue, new CultureInfo("en-US")));
                                     _item.increased = _item.priceAsDouble > _item.lastPrice ? true : false;
-                                    // _item.decreased = (_item.priceAsDouble < _item.lastPrice);
                                     _item.decreased = _item.priceAsDouble < _item.lastPrice ? true : false;
-                                    _item.stayedFlat = ((Math.Abs(_item.priceAsDouble - _item.lastPrice) < EPSILON) || (Math.Abs(_item.lastPrice) < 0.1));
+                                    _item.stayedFlat = ((Math.Abs(_item.priceAsDouble - _item.lastPrice) < EPSILON) || (Math.Abs(_item.priceAsDouble) < EPSILON));
+
+                                    if (_item.stayedFlat)
+                                    {
+                                        _item.decreased = false;
+                                        _item.increased = false;
+                                    }
+                                    if (_item.increased)
+                                    {
+                                        _item.decreased = false;
+                                        _item.stayedFlat = false;
+                                    }
+                                    if (_item.decreased)
+                                    {
+                                        _item.increased = false;
+                                        _item.stayedFlat = false;
+                                    }
+
                                     _item.lastPrice = _item.priceAsDouble;
 
                                     var prettyValue = (Double.Parse(asset.AssetStock, new CultureInfo("en-US")) * Double.Parse(_item.ticker.price, new CultureInfo("en-US"))).ToString("C2", new CultureInfo("de-DE"));

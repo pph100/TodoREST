@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="net.upworx.TodoREST" android:versionName="2.0.77.0" android:versionCode="158">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="net.upworx.TodoREST" android:versionName="2.0.117.0" android:versionCode="198">
   <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="28" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
