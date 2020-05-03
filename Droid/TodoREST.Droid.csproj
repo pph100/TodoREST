@@ -19,7 +19,7 @@
     <RestorePackages>true</RestorePackages>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
     <NuGetPackageImportStamp>16b9ab36</NuGetPackageImportStamp>
-    <ReleaseVersion>2.0.3</ReleaseVersion>
+    <ReleaseVersion></ReleaseVersion>
     <Description>improved item list display </Description>
     <AndroidSupportedAbis>arm64-v8a;x86_64;x86</AndroidSupportedAbis>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
@@ -52,6 +52,7 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\TodoREST.Droid.xml</DocumentationFile>
     <ConsolePause>false</ConsolePause>
 <MandroidI18n>west</MandroidI18n>
 <JavaMaximumHeapSize>2g</JavaMaximumHeapSize>
@@ -97,7 +98,6 @@
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

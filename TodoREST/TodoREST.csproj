@@ -2,12 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <ReleaseVersion>2.0.3</ReleaseVersion>
+    <ReleaseVersion></ReleaseVersion>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>full</DebugType>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup> 
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
@@ -43,6 +48,9 @@
     </Compile>
     <Compile Update="Views\PersonPage.xaml.cs">
       <DependentUpon>PersonPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Properties\AssemblyInfo.cs">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +115,7 @@
     <Folder Include="Services\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Converters\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Android">
