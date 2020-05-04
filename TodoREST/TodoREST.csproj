@@ -109,6 +109,7 @@
     <None Remove="*\*~" />
     <None Remove="EmptyClass.cs~" />
     <None Remove=".DS_Store" />
+    <None Remove="TodoREST.csproj.SAVE" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App\" />

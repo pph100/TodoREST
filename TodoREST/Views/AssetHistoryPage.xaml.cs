@@ -60,10 +60,9 @@ namespace TodoREST
             ObservableCollection<AssetTotalHistory> newItemsTotalSource;
             ObservableCollection<AssetHistory> newItemsSource;
 
-            // NumericalAxis secondaryAxis = new NumericalAxis();
             secondaryAxis = new NumericalAxis();
-            secondaryAxis.LabelCreated += SecondaryAxis_LabelCreated;                   // set CallBack function, see below
-            mySfChart.SecondaryAxis = secondaryAxis;
+            secondaryAxis.LabelCreated += SecondaryAxis_LabelCreated;       // set CallBack function, see below
+            mySfChart.SecondaryAxis = secondaryAxis;                        // connect to visible Element
 
             myLineSeries.ItemsSource = null;
 
@@ -108,9 +107,11 @@ namespace TodoREST
         {
 
             // TODO: determine safely and differentiate between German ("4,35" or "5.601,00") and US ("4.35" and "5,601.00") format 
-            // var yVal = Convert.ToDouble(e.LabelContent, new CultureInfo("de-DE"));
+#if RELEASE
+            var yVal = Convert.ToDouble(e.LabelContent, new CultureInfo("de-DE"));
+#else
             var yVal = Double.Parse(e.LabelContent, new CultureInfo("en-US"));
-
+#endif
             if (yVal > 999.9)
                 e.LabelContent = yVal.ToString("C0", new CultureInfo("de-DE"));
             else

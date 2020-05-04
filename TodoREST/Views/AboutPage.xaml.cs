@@ -10,27 +10,20 @@ namespace TodoREST
     {
         public AboutPage()
         {
+            var buildVersion = Assembly.GetAssembly(typeof(TodoREST.AboutPage)).GetName().Version;
+            var buildDateTime = new DateTime(2000, 1, 1).Add(new TimeSpan(TimeSpan.TicksPerDay * buildVersion.Build + TimeSpan.TicksPerSecond * 2 * buildVersion.Revision));
+
             InitializeComponent();
+
             if (Device.RuntimePlatform != Device.macOS)
             {
-                // Application Name
                 var appName = AppInfo.Name;
-
-                // Package Name/Application Identifier (com.microsoft.testapp)
                 var packageName = AppInfo.PackageName;
-
-                // Application Version (1.0.0)
                 var version = AppInfo.VersionString;
-
-                // Application Build Number (1)
                 var build = AppInfo.BuildString;
-                var buildVersion = Assembly.GetAssembly(typeof(TodoREST.AboutPage)).GetName().Version;
-                // var buildVersion = Assembly.GetCallingAssembly().GetName().Version; //  GetExecutingAssembly().GetName().Version;
-                var buildDateTime = new DateTime(2000, 1, 1).Add(new TimeSpan(TimeSpan.TicksPerDay * buildVersion.Build + TimeSpan.TicksPerSecond * 2 * buildVersion.Revision));
 
-                // build += " (created May 03, 2020 11:11 CEST)";
                 build += " (built: " + buildDateTime.ToString() + ")";
-                xAppInfo.Text += appName; // + " (build " + buildDateTime.ToString() + ")";
+                xAppInfo.Text += appName;
                 xPackageName.Text += packageName;
                 xVersion.Text += version;
                 xBuild.Text += build;
@@ -47,7 +40,7 @@ namespace TodoREST
                 var version = "x";
 
                 // Application Build Number (1)
-                var build = "y";
+                var build = "built: " + buildDateTime.ToString();
 
                 xAppInfo.Text += appName;
                 xPackageName.Text += packageName;
