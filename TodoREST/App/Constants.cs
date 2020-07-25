@@ -3,7 +3,7 @@
     public static class Constants
     {
         // Cryptonator API
-        public static string CN_BaseURL = "https://api.cryptonator.com/api/ticker/{0}";
+        public static string CN_BaseURL = "https://de.cryptonator.com/api/ticker/{0}";
 
         // my own Crypto-Rate API
         public static string BaseURL = "http://home.ulip.org";
