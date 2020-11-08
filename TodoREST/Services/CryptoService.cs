@@ -247,6 +247,11 @@ namespace TodoREST
                     // 
                     // remove "await" for test purposes
                     // await this.SaveAssetAsync(asset);
+                    //
+                    //
+                    //
+                    // Uli: rausgenommen, da updates, die über die GUI gemacht wurden, immer wieder überschrieben wurden. 
+                    /*
                     try
                     {
                         App._debug("CryptoService:RefreshDataAsync()", "NEW/NO ASYNC: about to call SaveAssetAsync(" + asset.AssetTicker + ")");
@@ -263,6 +268,7 @@ namespace TodoREST
                             "OK"
                         );
                     }
+                    */
                 }
                 // on purpose no else clause: for items that are not included in list, no action is defined.
             }

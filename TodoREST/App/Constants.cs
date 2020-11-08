@@ -35,11 +35,11 @@
         public static string StockUrl = BaseURL + UrlPort + UrlStockPath;
 
         // History
-        public static string UrlHistoryPath = "/api/floating_value_100d?_where=(AssetTicker,eq,{0})&_size=100";
+        public static string UrlHistoryPath = "/api/floating_value_100d?_where=(AssetTicker,eq,{0})&_size=300";
         public static string AssetHistoryUrl = BaseURL + UrlPort + UrlHistoryPath;
 
         // TotalHistory
-        public static string UrlTotalHistoryPath = "/api/floating_TotalValue_100d?_size=100";
+        public static string UrlTotalHistoryPath = "/api/floating_TotalValue_100d?_size=300";
         public static string AssetTotalHistoryUrl = BaseURL + UrlPort + UrlTotalHistoryPath;
     }
 }
