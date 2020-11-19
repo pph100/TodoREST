@@ -84,11 +84,17 @@ namespace TodoREST
         // diese funktion liefert richtige werte!!
         public async Task<List<CryptoItem>> RefreshDataAsync()
         {
-            /*
+            //
+            // Uli / 17.11.2020: wieder aktiviert (war auskommentiert)
+            //
             Assets = await this.RefreshAssetsAsync();
             Comodities = await this.RefreshComoditiesAsync();
-            */
 
+
+            //
+            // Uli / 17.11.2020: kommentiert und durch obigen Block ersetzt, da nach Update der Menge eines Assets falscher Wert bis zum Neustart der App erhalten bleibt und nicht upgedated wird
+            //
+            /*
             if (Assets == null || Assets.Count < 1)
             {
                 Assets = await this.RefreshAssets();
@@ -100,6 +106,7 @@ namespace TodoREST
                 Comodities = await this.RefreshComodities();
                 App._debug("CryptoService:RefreshDataAsync()", "RefreshComodities() called");
             }
+            */
 
             // funktioniert das???
             CryptoItems = new List<CryptoItem>();
@@ -192,13 +199,6 @@ namespace TodoREST
                     if (asset.AssetClass == "Comodity")
                     {
 
-                        //
-                        // Hier weitermachen: 
-                        //
-                        // 1. search actual asset in comodities
-                        // 2. 
-                        //
-
                         foreach (var _c in Comodities)
                         {
                             double EPSILON = 0.1;
@@ -250,13 +250,11 @@ namespace TodoREST
                     //
                     //
                     //
-                    // Uli: rausgenommen, da updates, die über die GUI gemacht wurden, immer wieder überschrieben wurden. 
-                    /*
+                    // Uli: 09.11.2020: rausgenommen, da updates, die über die GUI gemacht wurden, immer wieder überschrieben wurden.
+                    //      16.11.2020: wieder aktiviert, da oben am Beginn der Funktion mittlerweile zwei Refresh...Async calls drin sind 
                     try
                     {
-                        App._debug("CryptoService:RefreshDataAsync()", "NEW/NO ASYNC: about to call SaveAssetAsync(" + asset.AssetTicker + ")");
-                        SaveAssetAsync(asset).ConfigureAwait(false);
-                        App._debug("CryptoService:RefreshDataAsync()", "NEW/NO ASYNC: call to SaveAssetAsync(" + asset.AssetTicker + ") has ended.");
+                        await this.SaveAssetAsync(asset);
                     }
                     catch (Exception ex)
                     {
@@ -268,13 +266,18 @@ namespace TodoREST
                             "OK"
                         );
                     }
-                    */
                 }
                 // on purpose no else clause: for items that are not included in list, no action is defined.
             }
 
             App._debug("CryptoService:RefreshDataAsync()", "function ended");
             return CryptoItems;
+        }
+
+        // new function
+        private Task SaveAssetAsyncPriceOnly(Asset asset)
+        {
+            throw new NotImplementedException();
         }
 
 
@@ -452,9 +455,9 @@ namespace TodoREST
                     var content = new StringContent(json, Encoding.UTF8, "application/json");
 
 #if DEBUG
-                    Debug.WriteLine(@"Information: asset " + item.AssetTicker + " will NOT be saved with value " + item.prettyValue + " in database when debugging is active.");
+                    Debug.WriteLine(@"Information: asset " + item.AssetTicker + " will NOT be saved with value " + item.prettyValue + " and count " + item.AssetStock + " in database when debugging is active.");
 #else
-                    Debug.WriteLine(@"Information: asset " + item.AssetTicker + " going to be saved with value " + item.prettyValue + " in database:");
+                    Debug.WriteLine(@"Information: asset " + item.AssetTicker + " going to be saved with value " + item.prettyValue + " and count " + item.AssetStock + " in database:");
                     HttpResponseMessage response = null;
                     if (isNewItem)
                     {
