@@ -79,16 +79,6 @@
                             Grid.Column="3"
                             VerticalTextAlignment="Center">
                         </Label>
-                            <!-- Text="{Binding Path=prettyValue}" -->
-                        
-                        <!-- 
-                        <Label  
-                            x:Name="xClass"
-                            Text="{Binding AssetClass}" 
-                            Grid.Column="4"
-                            VerticalTextAlignment="Center">
-                        </Label>
-                        -->
 
                      </Grid>
                         

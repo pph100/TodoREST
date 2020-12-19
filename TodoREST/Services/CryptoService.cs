@@ -32,6 +32,8 @@ namespace TodoREST
 
         // public CryptoItem _item { get; private set; }
 
+
+
         public CryptoService()
         {
             cryptoClient = new HttpClient();
@@ -54,6 +56,8 @@ namespace TodoREST
 
             TotalValue = "";
         }
+
+
 
 
         public async Task<List<CryptoItem>> RefreshData()
@@ -90,24 +94,6 @@ namespace TodoREST
             Assets = await this.RefreshAssetsAsync();
             Comodities = await this.RefreshComoditiesAsync();
 
-
-            //
-            // Uli / 17.11.2020: kommentiert und durch obigen Block ersetzt, da nach Update der Menge eines Assets falscher Wert bis zum Neustart der App erhalten bleibt und nicht upgedated wird
-            //
-            /*
-            if (Assets == null || Assets.Count < 1)
-            {
-                Assets = await this.RefreshAssets();
-                App._debug("CryptoService:RefreshDataAsync()", "RefreshAssets() called");
-            }
-
-            if (Comodities == null || Comodities.Count < 1)
-            {
-                Comodities = await this.RefreshComodities();
-                App._debug("CryptoService:RefreshDataAsync()", "RefreshComodities() called");
-            }
-            */
-
             // funktioniert das???
             CryptoItems = new List<CryptoItem>();
 
@@ -116,20 +102,45 @@ namespace TodoREST
 
             foreach (var asset in Assets)
             {
+                var GetFromCoingecko = false;
+
                 if (asset.IncludeInList)
                 {
                     if (asset.AssetClass == "Crypto")
                     {
                         var uri = new Uri(string.Format(Constants.CN_BaseURL, asset.SearchString));
 
+                        if( (asset.Source != null) && (asset.Source != "") && (asset.Source.ToLower().Equals("coingecko")))
+                        {
+                            uri = new Uri(string.Format(Constants.CG_BaseURL, asset.SearchString2));
+                            GetFromCoingecko = true;
+                            Debug.WriteLine("CoinGecko activated for Asset {0}", asset.AssetName);
+                        }
+
                         try
                         {
                             double EPSILON = 0.001;
                             var response = await cryptoClient.GetAsync(uri);
+
                             if (response.IsSuccessStatusCode)
                             {
                                 var content = await response.Content.ReadAsStringAsync();
+                                if (GetFromCoingecko)
+                                {
+                                    content = content.Replace(asset.SearchString2, "CoinGeckoItem");       // replace actual SearchString2, like "bitcoin-cash-sv", with static string "CoinGeckoItem" so that result-JSON can get recognized 
+                                }
+
                                 var _item = JsonConvert.DeserializeObject<CryptoItem>(content);
+
+                                if(GetFromCoingecko)
+                                {
+                                    _item.CoinGeckoItem.SearchString = asset.SearchString2;
+                                    _item.ticker = new TickerItem
+                                    {
+                                        @base = asset.AssetTicker,
+                                        price = _item.CoinGeckoItem.eur
+                                    };
+                                }
 
                                 if (_item.ticker != null && _item.ticker.@base != "")
                                 {
@@ -145,7 +156,7 @@ namespace TodoREST
                                     _item.prettyPrice = prettyPrice > 2.0 ? prettyPrice.ToString("C2", new CultureInfo("de-DE")) : prettyPrice.ToString("C4", new CultureInfo("de-DE"));
 
                                     _item.priceAsDouble = (Double.Parse(_item.ticker.price, new CultureInfo("en-US")));
-                                    _item.lastPrice = (Double.Parse(asset.AssetValue, new CultureInfo("en-US")));
+                                    _item.lastPrice = (Double.Parse( (asset.AssetValue == null ? "0.0" : asset.AssetValue) , new CultureInfo("en-US")));
                                     _item.increased = _item.priceAsDouble > _item.lastPrice ? true : false;
                                     _item.decreased = _item.priceAsDouble < _item.lastPrice ? true : false;
                                     _item.stayedFlat = ((Math.Abs(_item.priceAsDouble - _item.lastPrice) < EPSILON) || (Math.Abs(_item.priceAsDouble) < EPSILON));
@@ -281,6 +292,8 @@ namespace TodoREST
         }
 
 
+
+
         // hier sind zur Laufzeit beim erstn Call falsche Werte!
         public async Task<List<Asset>> RefreshAssets()
         {
@@ -347,6 +360,8 @@ namespace TodoREST
         }
 
 
+
+
         public async Task<List<Comodity>> RefreshComodities()
         {
             if (Comodities == null || Comodities.Count < 1)
@@ -411,6 +426,8 @@ namespace TodoREST
 
             return Comodities;
         }
+
+
 
 
         public async Task SaveAssetValues(List<CryptoItem> cryptoList)
@@ -488,6 +505,7 @@ namespace TodoREST
                 App._debug("CryptoService:SaveAssetAsync()", "function ended");
             }
         }
+
 
 
         public Asset FindAssetByTicker(string tag)

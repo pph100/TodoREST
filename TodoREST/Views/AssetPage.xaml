@@ -5,47 +5,87 @@
              Title="Asset">
 
     <ContentPage.Content>
+
         <StackLayout 
             Margin="20"
-            VerticalOptions="StartAndExpand">
+            VerticalOptions="StartAndExpand"
+            HorizontalOptions="StartAndExpand">
+
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
             
-            <Label Text="Name" />
-            <Entry x:Name="assetName" Text="{Binding Path=AssetName}" />
+                <Label                      Text="Name"                                 Grid.Row="0" Grid.Column="0"/>
+                <Entry x:Name="assetName"   Text="{Binding Path=AssetName}"             Grid.Row="0" Grid.Column="1"/>
 
-            <Label Text="Code" />
-            <Entry x:Name="assetTicker" Text="{Binding Path=AssetTicker}" />
+                <Label                      Text="Code"                                 Grid.Row="1" Grid.Column="0"/>
+                <Entry x:Name="assetTicker" Text="{Binding Path=AssetTicker}"           Grid.Row="1" Grid.Column="1"/>
 
-            <Label Text="Stock" />
-            <Entry x:Name="assetStock" Text="{Binding Path=AssetStock}" Keyboard="Numeric"  />
+                <Label                      Text="Asset Class"                          Grid.Row="2" Grid.Column="0"/>
+                <Entry x:Name="assetClass"  Text="{Binding Path=AssetClass}"            Grid.Row="2" Grid.Column="1"/>
 
+                <Label                      Text="Source"                               Grid.Row="3" Grid.Column="0"/>
+                <Entry x:Name="assetSource" Text="{Binding Path=Source}"                Grid.Row="3" Grid.Column="1" Placeholder="(cryptonator)"/>
+
+                <Label                      Text="Search String"                        Grid.Row="4" Grid.Column="0"/>
+                <Entry x:Name="assetSearchString"  Text="{Binding Path=SearchString}"   Grid.Row="4" Grid.Column="1"/>
+
+                <Label                      Text="CoinGecko Key"                        Grid.Row="5" Grid.Column="0"/>
+                <Entry x:Name="assetSearchString2" Text="{Binding Path=SearchString2}"  Grid.Row="5" Grid.Column="1"/>
+
+                <Label                      Text="Stock"                                Grid.Row="6" Grid.Column="0"/>
+                <Entry x:Name="assetStock"  Text="{Binding Path=AssetStock}"            Grid.Row="6" Grid.Column="1" Keyboard="Numeric"  />
+            </Grid>
+
+
+            
             <StackLayout Grid.Row="2" Orientation="Horizontal">
                 <Label Text="Price as of" />
-                <Label Text="{Binding Path=AssetValueDttm}" />
+                <Label Text="{Binding Path=AssetValueDttm}"/>
             </StackLayout>
-            <Entry x:Name="assetValue" Text="{Binding Path=AssetValue}" IsEnabled="false" Keyboard="Numeric" />
 
-            <Label Text="Asset Class" />
-            <Entry x:Name="assetClass" Text="{Binding Path=AssetClass}" />
+            <Entry x:Name="assetValue" Text="{Binding Path=AssetValue}" IsEnabled="false" Keyboard="Numeric" Placeholder="n/a"/>
 
-            <Label Text="Search String" />
-            <Entry x:Name="assetSearchString" Text="{Binding Path=SearchString}" />
-            
             <StackLayout Orientation="Horizontal">
                 <Label Text="include in List?" />
                 <Switch x:Name="includeInList" IsToggled="{Binding Path=IncludeInList}" />
             </StackLayout>
 
-            <StackLayout Grid.Row="4" Orientation="Horizontal">
-                <Label Text="Created" />
-                <Label x:Name="DttmCreated" Text="{Binding Path=DttmCreated}" />
-                <Label Text="   Updated" />
-                <Label x:Name="DttmLastUpdated" Text="{Binding Path=DttmLastUpdated}" />
-            </StackLayout>
+            <Grid HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand">
 
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="100"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <!-- <StackLayout Grid.Row="4" Orientation="Horizontal"> -->
+                <Label                          Text="Created"                          Grid.Column="0"/>
+                <Label x:Name="DttmCreated"     Text="{Binding Path=DttmCreated}"       Grid.Column="1"/>
+                <Label                          Text="Updated"                          Grid.Column="2"/>
+                <Label x:Name="DttmLastUpdated" Text="{Binding Path=DttmLastUpdated}"   Grid.Column="3" />
+                <!-- </StackLayout> -->
+            </Grid>
             <Button x:Name="SaveButton"   Text="Save"   Clicked="OnSaveActivated" />
             <Button x:Name="CancelButton" Text="Cancel" Clicked="OnCancelActivated" />
         
         </StackLayout>
+
     </ContentPage.Content>
 
 </ContentPage>

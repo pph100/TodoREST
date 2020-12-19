@@ -135,7 +135,7 @@ namespace TodoREST
                 // prüfen, ob aktuelle Liste bereits einen Eintrag für den aktuellen Ticker enthält
                 foreach (var _assetHistoryList in _AssetHistories)
                 {
-                    if ((_assetHistoryList[0] != null) && _assetHistoryList[0].AssetTicker.Equals(assetHistoryTicker))
+                    if ((_assetHistoryList.Count != 0) && (_assetHistoryList[0] != null) && _assetHistoryList[0].AssetTicker.Equals(assetHistoryTicker))
                     {
                         // ja, es gibt schon einen Eintrag mit dem Ticker in der Liste
                         _AssetHistory = _assetHistoryList;
@@ -164,6 +164,10 @@ namespace TodoREST
                 {
                     var content = await response.Content.ReadAsStringAsync();
                     _AssetHistory = JsonConvert.DeserializeObject<ObservableCollection<AssetHistory>>(content);
+                    if(_AssetHistory.Count == 0)
+                    {
+                        return (ObservableCollection<AssetHistory>)null;
+                    }
                     _AssetHistories.Add(_AssetHistory);
                 }
             }

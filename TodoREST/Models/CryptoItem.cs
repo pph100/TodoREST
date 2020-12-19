@@ -7,17 +7,34 @@ namespace TodoREST
     // for CryptoNator API
     public class TickerItem
     {
-        public string @base { get; set; }
+        public string @base { get; set; }           // 
         public string cryptoCode { get; set; }      // code, like "BTC" or "ETH"
         public string target { get; set; }          // e.g. "EUR" or "USD". here: eur
         public string price { get; set; }
         public string volume { get; set; }
         public string change { get; set; }
+
+
+        // added w/CoinGecko
+        // public string SearchString { get; set; }
+        // public string eur { get; set; }
+        // public string eur_24h_vol { get; set; }
+        // public string eur_24h_change { get; set; }
+    }
+
+    // for CoinGecko API
+    public class CoinGeckoItem
+    {
+        public string SearchString { get; set; }
+        public string eur { get; set; }
+        public string eur_24h_vol { get; set; }
+        public string eur_24h_change { get; set; }
     }
 
     public class CryptoItem
     {
         public TickerItem ticker { get; set; }
+        public CoinGeckoItem CoinGeckoItem { get; set; }
         public int timestamp { get; set; }
         public bool success { get; set; }
         public string error { get; set; }

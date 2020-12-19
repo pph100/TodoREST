@@ -5,6 +5,12 @@
         // Cryptonator API
         public static string CN_BaseURL = "https://de.cryptonator.com/api/ticker/{0}";
 
+        // Coingecko API
+        public static string CG_BaseURL = "https://api.coingecko.com/api/v3/simple/price?ids={0}&vs_currencies=eur&include_24hr_vol=true&include_24hr_change=true";
+
+        // new remote base URL, will contain either of above at runtime
+        public static string Remote_BaseURL = "";
+
         // my own Crypto-Rate API
         public static string BaseURL = "http://home.ulip.org";
         public static string UrlPathOrdered = "/api/todo_entry?_sort=Done,-Urgent,Duedate,Author";

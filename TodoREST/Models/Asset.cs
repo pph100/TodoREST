@@ -10,11 +10,15 @@ namespace TodoREST
         public string AssetName { get; set; }       // name, like "Bitcoin" or "Ethereum", "Silbermünzen", "Goldbarren" etc.
         public string AssetStock { get; set; }
         public string SearchString { get; set; }
+        // added w/CoinGecko
+        public string SearchString2 { get; set; }
+        public string Source { get; set; }
+        // added end
         public string AssetClass { get; set; }      // e.g. "Crypto" or "Comodity"
         public string AssetValue { get; set; }      // float: price of asset per piece
         public string prettyValue { get; set; }      // float: price of asset per piece
         public string AssetValueDttm { get; set; }      // float: price of asset per piece
-        public bool IncludeInList { get; set; }     // flag: include this asset in list?
+        public bool   IncludeInList { get; set; }     // flag: include this asset in list?
         public string DttmCreated { get; set; }
         public string DttmLastUpdated { get; set; }
     }
